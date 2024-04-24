@@ -1,0 +1,42 @@
+#pragma once
+#include "Station.h"
+#include "Line.h"
+#include "Metro.h"
+
+using namespace std;
+
+Metro::Metro(string country_name) {
+    this->country = country_name;
+}
+
+void Metro::add_new_line(Line& new_line) {
+    this->lines[new_line.get_color()] = new_line;
+}
+
+Line& Metro::get_line(string& color) {
+    return this->lines[color];
+}
+
+Metro::~Metro() {}
+
+void Metro::build_line(Metro& metro, string color, vector<string>& stationNames) {
+    vector<Station> stations;
+
+    for (const auto& station_name : stationNames) {
+        Station station(station_name);
+        stations.push_back(station);
+    }
+
+    Line line(color);
+
+    for (size_t i = 0; i < stations.size() - 1; ++i) {
+        stations[i].can_go_to(stations[i + 1]);
+        stations[i + 1].can_go_to(stations[i]);
+    }
+
+    for (auto& station : stations) {
+        line.add_new_station(station.get_name(), station.get_neighbors());
+    }
+
+    metro.add_new_line(line);
+}

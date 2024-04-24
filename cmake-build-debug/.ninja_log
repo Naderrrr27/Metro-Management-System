@@ -1,0 +1,9 @@
+# ninja log v5
+1	219	7356464453364745	build.ninja	a8eaa7fe5eda711d
+47	1319	7356539826041176	CMakeFiles/Metro.dir/station.cpp.obj	e59f91c582de074
+41	1482	7356539827692469	CMakeFiles/Metro.dir/line.cpp.obj	ac43d210c9384b01
+33	1718	7356539830049472	CMakeFiles/Metro.dir/metro.cpp.obj	838abc7ad45fa60d
+24	1998	7356539832875658	CMakeFiles/Metro.dir/main.cpp.obj	be5c64b7bc1348f0
+1999	2380	7356539836654850	Metro.exe	8744bb8c4c839040
+8	1683	7356541407097782	CMakeFiles/Metro.dir/main.cpp.obj	be5c64b7bc1348f0
+1684	2033	7356541410573865	Metro.exe	8744bb8c4c839040

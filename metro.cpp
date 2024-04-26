@@ -13,23 +13,27 @@ void Metro::add_new_line(Line& new_line) {
     this->lines[new_line.get_color()] = new_line;
 }
 
-Line& Metro::get_line(string& color) {
-    return this->lines[color];
+//Line& Metro::get_line(string color) {
+//    return this->lines[color];
+//}
+
+Line &Metro::get_line(string &color) {
+    return lines[color];
 }
 
 Metro::~Metro() {}
 
-void Metro::build_line(Metro& metro, string color, vector<string>& stationNames) {
+void Metro::build_line(Metro& metro, string color, vector<string>& station_names) {
     vector<Station> stations;
 
-    for (const auto& station_name : stationNames) {
+    for (auto& station_name : station_names) {
         Station station(station_name);
         stations.push_back(station);
     }
 
     Line line(color);
 
-    for (size_t i = 0; i < stations.size() - 1; ++i) {
+    for (int i = 0; i < stations.size() - 1; i++) {
         stations[i].can_go_to(stations[i + 1]);
         stations[i + 1].can_go_to(stations[i]);
     }
@@ -40,4 +44,11 @@ void Metro::build_line(Metro& metro, string color, vector<string>& stationNames)
 
     metro.add_new_line(line);
 }
+
+void Metro::connect_lines(Line &first_line, Line &second_line, string station_name) {
+    first_line.get_stations()[station_name].insert(first_line.get_stations()[station_name].begin(),second_line.get_stations()[station_name].begin(),second_line.get_stations()[station_name].end());
+    second_line.get_stations()[station_name].insert(second_line.get_stations()[station_name].begin(),first_line.get_stations()[station_name].begin(),first_line.get_stations()[station_name].end());
+}
+
+
 //

@@ -5,7 +5,7 @@
 
 using namespace std;
 //
-void dfs(string root, unordered_map<string, vector<Station>>& gr_line, unordered_map<string, bool>& visited) {
+void dfs(string root, unordered_map<string,vector<Station>> &gr_line, unordered_map<string,vector<Station>> &rd_line, unordered_map<string,vector<Station>> &blu_line, unordered_map<string, bool>& visited) {
 
     visited[root] = true;
     cout << "\n"<<root << "\n    |\n";
@@ -13,10 +13,9 @@ void dfs(string root, unordered_map<string, vector<Station>>& gr_line, unordered
     for (auto& station : gr_line[root]) {
         string s = station.get_name();
         if (!visited[s]) {
-            dfs(s, gr_line, visited);
+            dfs(s, gr_line,rd_line,blu_line, visited);
         }
     }
-
 }
 
 int main() {
@@ -56,27 +55,28 @@ int main() {
             "Ain Helwan", "Helwan"
     };
 
+
+
+
+
+
     Metro::build_line(egypt_metro, "Blue", blue_line_stations);
 
     string color = "Green";
 
-    unordered_map<string,vector<Station>> gr_line=egypt_metro.get_line(color).get_stations();
+    unordered_map<string, bool>visited;
+
+    string green="Green",red="Red",blue="Blue";
+
+    unordered_map<string,vector<Station>> gr_line=egypt_metro.get_line(green).get_stations();
+    unordered_map<string,vector<Station>> rd_line=egypt_metro.get_line(red).get_stations();
+    unordered_map<string,vector<Station>> blu_line=egypt_metro.get_line(blue).get_stations();
 
     string root = gr_line.begin()->first;
 
-    //cout << root << "\n";
-
-    /*string it = gr_line.begin()->second[0].get_name();*/
 
 
-
-    //for (auto& i : gr_line["Rod El Farag"]) {
-    //    cout << i.get_name() << "\n";
-    //}
-    unordered_map<string, bool>visited;
-
-
-    dfs(root, gr_line, visited);
+    dfs(root, gr_line,rd_line,blu_line, visited);
 
     return 0;
 }

@@ -8,6 +8,7 @@
 using namespace std;
 
 class Station;
+class Line;
 
 class Line {
 private:
@@ -23,7 +24,7 @@ public:
     ~Line();
 
     void add_new_station(string name, vector<Station>& stations);
-    unordered_map<string, vector<Station>>& get_stations();
+    unordered_map<string,vector<Station>>& get_stations();
     string get_color();
 
 };

@@ -9,5 +9,8 @@ add_executable(Metro main.cpp
         line.cpp
         line.h
         station.cpp
-        station.h)
+        station.h
+        Statistics.h
+        Statistics.cpp
+)
 

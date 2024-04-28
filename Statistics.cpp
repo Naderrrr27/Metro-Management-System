@@ -39,14 +39,14 @@ void Statistics::showStatisticsMonth(string month, string stationName)
         string str1 = stationName;
         string str2 = it->first.second;
 
-        transform(str1.begin(), str1.end(), str1.begin(), ::tolower); // convert station Name to lower case, to avoid case sensetive errors
+        transform(str1.begin(), str1.end(), str1.begin(), ::tolower); // convert station Name to lower case, to avoid case-sensitive errors
         transform(str2.begin(), str2.end(), str2.begin(), ::tolower);
 
         if (str1 == str2)
         {
             for (int i = 0; i < 3; i++) // check about the targeted month in the dates of the map with key name = station name .
             {
-                char c1 = std::tolower(it->first.first[i]); // make both char lowercase, to avoid case sensetive errors
+                char c1 = std::tolower(it->first.first[i]); // make both char lowercase, to avoid case-sensitive errors
                 char c2 = std::tolower(month[i]);
                 if (c1 == c2)
                     counter++;

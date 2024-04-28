@@ -21,7 +21,7 @@ void Statistics::incrementIncome(string stationName, int income)
 
 void Statistics::showStatisticsDay(string date, string stationName)
 {
-    cout << "Number of passeneger in "<< date << "for the station"<< stationName<< "is: " << stat[{date, stationName}].first << endl;
+    cout << "Number of passenger in "<< date << "for the station"<< stationName<< "is: " << stat[{date, stationName}].first << endl;
     cout << "The total income in " << date << "for the station" << stationName << "is: " << stat[{date, stationName}].second << endl;
 }
 
@@ -44,7 +44,7 @@ void Statistics::showStatisticsMonth(string month, string stationName)
 
         if (str1 == str2)
         {
-            for (int i = 0; i < 3; i++) // check about the targted month in the dates of the map with key name = station name .
+            for (int i = 0; i < 3; i++) // check about the targeted month in the dates of the map with key name = station name .
             {
                 char c1 = std::tolower(it->first.first[i]); // make both char lowercase, to avoid case sensetive errors
                 char c2 = std::tolower(month[i]);
@@ -91,7 +91,7 @@ void Statistics::showStatisticsYear(string year, string stationName)
             int size = it->first.first.size();
 
             //starts from the end to check the year at the end of the date string
-            for (int i = size - 1, j=3 ; i >= size - 4; i--,j--) // check about the targted year in the dates of the map with key name = station name .
+            for (int i = size - 1, j=3 ; i >= size - 4; i--,j--) // check about the targeted year in the dates of the map with key name = station name .
             {
                 if (it->first.first[i] == year[j])
                 {

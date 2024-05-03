@@ -14,42 +14,40 @@
 #include<ctime>
 
 using namespace std;
+struct Plan {
+    string PlanName="";
+    int tripsallowed=0;
+    int Remainingtrips=0;
+    int Duration=0;
+    int stage;
+    map<int, int>stageprices = {};
+    string firstdestination, finaldestination;
+
+    //time
+    chrono::system_clock::time_point Startdate;
+    chrono::system_clock::time_point Enddate;
+};
 class subscription
 {
 public:
-
-    struct Plan {
-        string PlanName="";
-        int tripsallowed=0;
-        int Remainingtrips=0;
-        int Duration=0;
-        int stage;
-        map<int, int>stageprices = {};
-        string firstdestination, finaldestination;
-
-        //time
-        chrono::system_clock::time_point Startdate;
-        chrono::system_clock::time_point Enddate;
-
-
-    }plan;//oblect for the user
-
-
+    Plan plan;
+  ;//oblect for the user
     //map to store plans
-    map<string, Plan> plans;
 
 //methods
     subscription();
-    void Addplan(string name, int trips, int duration, map<int, int> prices);
-    void Removeplan(string planname);
-    void Modifyplan(string name, string newname = {}, int newduration = -1, int newtripsallowed = -1, map<int, int> newprices = {});
+    void Addplan(string name, int trips, int duration, map<int, int> prices, map<string, Plan> &plans);
+    void Removeplan(string planname, map<string, Plan> &plans);
+    void Modifyplan(std::string planname, string newname, int newduration, int newtripsallowed, map<int, int> newprices,
+                    map<string, Plan>& plans);
+    //    void Modifyplan(string name, string newname, int newduration = -1, int newtripsallowed = -1, map<int, int> newprices = {}, map<string, Plan> &plans);
     int Stage();
-    void chooseplan();
-    void calcenddate(string planname);
+    void chooseplan(map<string, Plan>& plans);
+    void calcenddate(string planname, map<string, Plan> &plans);
     bool Isplanactive();
     void Renewplan();
     void Upgrade();
-    void Displayplandetails();
+    void Displayplandetails(string planName, map<string, Plan>& plans);
     void Remainingtrips();//msh 3arfa ahot name wala la
 
 

@@ -47,19 +47,19 @@ cmake_force:
 SHELL = cmd.exe
 
 # The CMake executable.
-CMAKE_COMMAND = "C:\Program Files\JetBrains\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe"
+CMAKE_COMMAND = "D:\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe"
 
 # The command to remove a file.
-RM = "C:\Program Files\JetBrains\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f
+RM = "D:\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe" -E rm -f
 
 # Escaping for special characters.
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = C:\Users\pc\CLionProjects\Metro-Management-System
+CMAKE_SOURCE_DIR = C:\Users\DELL\Metro-Management-System
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = C:\Users\pc\CLionProjects\Metro-Management-System\cmake-build-debug
+CMAKE_BINARY_DIR = C:\Users\DELL\Metro-Management-System\cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -67,7 +67,7 @@ CMAKE_BINARY_DIR = C:\Users\pc\CLionProjects\Metro-Management-System\cmake-build
 # Special rule for the target edit_cache
 edit_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "No interactive CMake dialog available..."
-	"C:\Program Files\JetBrains\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe" -E echo "No interactive CMake dialog available."
+	"D:\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe" -E echo "No interactive CMake dialog available."
 .PHONY : edit_cache
 
 # Special rule for the target edit_cache
@@ -77,7 +77,7 @@ edit_cache/fast: edit_cache
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Running CMake to regenerate build system..."
-	"C:\Program Files\JetBrains\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
+	"D:\CLion 2024.1\bin\cmake\win\x64\bin\cmake.exe" --regenerate-during-build -S$(CMAKE_SOURCE_DIR) -B$(CMAKE_BINARY_DIR)
 .PHONY : rebuild_cache
 
 # Special rule for the target rebuild_cache
@@ -86,9 +86,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\pc\CLionProjects\Metro-Management-System\cmake-build-debug\CMakeFiles C:\Users\pc\CLionProjects\Metro-Management-System\cmake-build-debug\\CMakeFiles\progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DELL\Metro-Management-System\cmake-build-debug\CMakeFiles C:\Users\DELL\Metro-Management-System\cmake-build-debug\\CMakeFiles\progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\pc\CLionProjects\Metro-Management-System\cmake-build-debug\CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start C:\Users\DELL\Metro-Management-System\cmake-build-debug\CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -175,6 +175,30 @@ Users.s: Users.cpp.s
 Users.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Metro.dir\build.make CMakeFiles/Metro.dir/Users.cpp.s
 .PHONY : Users.cpp.s
+
+admin.obj: admin.cpp.obj
+.PHONY : admin.obj
+
+# target to build an object file
+admin.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Metro.dir\build.make CMakeFiles/Metro.dir/admin.cpp.obj
+.PHONY : admin.cpp.obj
+
+admin.i: admin.cpp.i
+.PHONY : admin.i
+
+# target to preprocess a source file
+admin.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Metro.dir\build.make CMakeFiles/Metro.dir/admin.cpp.i
+.PHONY : admin.cpp.i
+
+admin.s: admin.cpp.s
+.PHONY : admin.s
+
+# target to generate assembly for a file
+admin.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Metro.dir\build.make CMakeFiles/Metro.dir/admin.cpp.s
+.PHONY : admin.cpp.s
 
 line.obj: line.cpp.obj
 .PHONY : line.obj
@@ -335,6 +359,9 @@ help:
 	@echo ... Users.obj
 	@echo ... Users.i
 	@echo ... Users.s
+	@echo ... admin.obj
+	@echo ... admin.i
+	@echo ... admin.s
 	@echo ... line.obj
 	@echo ... line.i
 	@echo ... line.s

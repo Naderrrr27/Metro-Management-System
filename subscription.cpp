@@ -10,7 +10,7 @@ subscription::subscription() {
 
 }
 //Admin methodes
-void subscription::Addplan(string name, int trips, int duration, map<int, int> prices) {
+void subscription::Addplan(string name, int trips, int duration, map<int, int> prices, map<string, Plan> &plans) {
     Plan newplan;
     newplan.PlanName = name;
     newplan.tripsallowed = trips;
@@ -19,12 +19,12 @@ void subscription::Addplan(string name, int trips, int duration, map<int, int> p
 
     plans[name] = newplan;
 }
-void subscription::Removeplan(std::string planname) {
+void subscription::Removeplan(std::string planname, map<string, Plan> &plans) {
     auto it = plans.find(planname);
     if (it != plans.end())
         plans.erase(it);
 }
-void subscription::Modifyplan(std::string planname, string newname, int newduration, int newtripsallowed, map<int, int> newprices) {
+void subscription::Modifyplan(std::string planname, string newname, int newduration, int newtripsallowed, map<int, int> newprices, map<string, Plan> &plans) {
     auto key = plans.find(planname);
     if (key != plans.end()) {
         if (!newname.empty())
@@ -45,19 +45,22 @@ void subscription::Modifyplan(std::string planname, string newname, int newdurat
 
 }
 //User methodes
+/*
 void subscription::Renewplan() {
     plan.Startdate = std::chrono::system_clock::now();
     calcenddate(plan.PlanName);
     plan.Remainingtrips = plan.tripsallowed;
 }
-void subscription::Displayplandetails() {
-    cout << "plan name: " << " " << plan.PlanName <<endl;
-    cout << "plan Duration: " << " " << plan.Duration <<  endl;
-    cout << "plan Trips Allowed" << " " << plan.tripsallowed <<  endl;
-    cout << "plan remaining trips" << " " << plan.Remainingtrips <<  endl;
-    calcenddate(plan.PlanName);
-    time_t start_time = chrono::system_clock::to_time_t(plan.Startdate);
-    time_t end_time = chrono::system_clock::to_time_t(plan.Enddate);
+*/
+void subscription::Displayplandetails(string planName, map<string, Plan> &plans) {
+    auto it = plans.find(planName);
+    cout << "plan name: " << " " << it->second.PlanName <<endl;
+    cout << "plan Duration: " << " " << it->second.Duration <<  endl;
+    cout << "plan Trips Allowed" << " " << it->second.tripsallowed <<  endl;
+    cout << "plan remaining trips" << " " << it->second.Remainingtrips <<  endl;
+    //calcenddate();
+    time_t start_time = chrono::system_clock::to_time_t(it->second.Startdate);
+    time_t end_time = chrono::system_clock::to_time_t(it->second.Enddate);
 #pragma warning(suppress : 4996)
     tm* start_tm = localtime(&start_time);
 #pragma warning(suppress : 4996)
@@ -71,7 +74,7 @@ void subscription::Displayplandetails() {
 }
 void subscription::Upgrade() {
 
-    chooseplan();
+   // chooseplan(TODO);
 
 
 }
@@ -87,7 +90,7 @@ int subscription::Stage() {
     else
         return 4;
 }
-void subscription::chooseplan() {
+void subscription::chooseplan(map<string, Plan> &plans) {
 
     for (auto it : plans) {
         if (plan.PlanName != it.second.PlanName) {
@@ -111,7 +114,7 @@ void subscription::chooseplan() {
     cout << "the best stage for you is " << Stage()<<endl;
 
     plan.Startdate = std::chrono::system_clock::now();
-    calcenddate(name);
+    //calcenddate(name);
     plan.PlanName = plans[name].PlanName;
     plan.Duration = plans[name].Duration;
     plan.tripsallowed = plans[name].tripsallowed;
@@ -120,7 +123,7 @@ void subscription::chooseplan() {
 
 
 }
-void subscription::calcenddate(std::string planname) {
+void subscription::calcenddate(std::string planname, map<string, Plan> &plans) {
 
     int duration = plans[planname].Duration;
     plan.Enddate= plan.Startdate + chrono::hours(duration * 30 * 24);

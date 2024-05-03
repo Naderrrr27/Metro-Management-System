@@ -5,6 +5,9 @@
 #include "Users.h"
 #include <string>
 #include <cctype>
+
+#include "subscription.h"
+
 Users::Users()
 {
     this->Data.id = -1;
@@ -115,7 +118,7 @@ Users Users::Login(map<string, personalInformation> &usrData)
     }
     return newUser;
 }
-void Users::begin(map<string, personalInformation> &usrData)
+void Users::begin(map<string, personalInformation> &usrData, map<string, Plan> &plans)
 {
     Users user;
     int operation = 0;
@@ -138,10 +141,11 @@ void Users::begin(map<string, personalInformation> &usrData)
         }
         if (operation != 3)
         {
-            cout << "1: Profile\n2: Log out\n";
+            cout << "1: Subscribtions\n2: Profile\n3: Log out\n";
             operation = 0; cin >> operation;
-            if (operation == 1) Profile(user,usrData);
-            if (operation == 2) LogOut(user);
+            if (operation == 1) Subscribtions(user, plans);
+            else if (operation == 2) Profile(user,usrData);
+            else if (operation == 3) LogOut(user);
         }
     }
 }
@@ -201,6 +205,14 @@ void Users::Profile(Users &user, map<string, personalInformation> &usrData)
             users->second.password = pass;
         }
     }
+}
+void Users::Subscribtions(Users &user, map<string, Plan> &plan)
+{
+    subscription s;
+    s.Displayplandetails("student", plan);
+    cout << endl;
+    cout << "1: Make Subscription\n2: Remove Subscription\n3:Modify Subscription" << endl;
+    int operation; cin >> operation;
 }
 Users::~Users()
 {

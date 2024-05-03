@@ -3,6 +3,7 @@
 #include <vector>
 #include "Metro.h"
 #include "Users.h"
+#include "subscription.h"
 #include <fstream>
 using namespace std;
 //
@@ -62,14 +63,31 @@ int read(map<string, personalInformation>& usrData) {
 }
 
 int main() {
+
     map<string, personalInformation>mappp;
     read(mappp);
     Users user;
     for (auto it: mappp)
         cout << it.first << endl;
-    user.begin(mappp);
+   // user.begin(mappp);
     for (auto it: mappp)
         cout << it.first << endl;
+
+    subscription sub ;
+    //student plan
+    map<int, int> prices;
+    prices={ {1, 33}, { 2,41 }, { 3,50 }, { 4,65 } };
+    sub.Addplan("student", 180, 3, prices);
+    //public monthly plan
+    prices = { {1,230},{2,290},{3,340},{4,450} };
+    sub.Addplan("publicmonthly",60,1,prices);
+    // public yearly plan
+    prices={{1,1500},{2,2500},{3,3500},{4,4500}};
+    sub.Addplan("publicyearly", 730, 12, prices);
+
+
+sub.chooseplan();
+sub.Displayplandetails();
     Metro egypt_metro("Egypt");
 
     vector<string> green_line_stations = {

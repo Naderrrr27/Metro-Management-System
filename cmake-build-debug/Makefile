@@ -152,6 +152,30 @@ Statistics.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles\Metro.dir\build.make CMakeFiles/Metro.dir/Statistics.cpp.s
 .PHONY : Statistics.cpp.s
 
+Users.obj: Users.cpp.obj
+.PHONY : Users.obj
+
+# target to build an object file
+Users.cpp.obj:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Metro.dir\build.make CMakeFiles/Metro.dir/Users.cpp.obj
+.PHONY : Users.cpp.obj
+
+Users.i: Users.cpp.i
+.PHONY : Users.i
+
+# target to preprocess a source file
+Users.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Metro.dir\build.make CMakeFiles/Metro.dir/Users.cpp.i
+.PHONY : Users.cpp.i
+
+Users.s: Users.cpp.s
+.PHONY : Users.s
+
+# target to generate assembly for a file
+Users.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles\Metro.dir\build.make CMakeFiles/Metro.dir/Users.cpp.s
+.PHONY : Users.cpp.s
+
 line.obj: line.cpp.obj
 .PHONY : line.obj
 
@@ -308,6 +332,9 @@ help:
 	@echo ... Statistics.obj
 	@echo ... Statistics.i
 	@echo ... Statistics.s
+	@echo ... Users.obj
+	@echo ... Users.i
+	@echo ... Users.s
 	@echo ... line.obj
 	@echo ... line.i
 	@echo ... line.s

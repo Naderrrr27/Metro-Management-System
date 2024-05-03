@@ -90,6 +90,12 @@
 		<Unit filename="C:/Users/pc/CLionProjects/Metro-Management-System/Statistics.h">
 			<Option target="Metro"/>
 		</Unit>
+		<Unit filename="C:/Users/pc/CLionProjects/Metro-Management-System/Users.cpp">
+			<Option target="Metro"/>
+		</Unit>
+		<Unit filename="C:/Users/pc/CLionProjects/Metro-Management-System/Users.h">
+			<Option target="Metro"/>
+		</Unit>
 		<Unit filename="C:/Users/pc/CLionProjects/Metro-Management-System/line.cpp">
 			<Option target="Metro"/>
 		</Unit>

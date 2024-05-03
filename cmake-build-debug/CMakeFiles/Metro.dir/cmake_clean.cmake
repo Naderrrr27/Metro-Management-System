@@ -1,6 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Metro.dir/Statistics.cpp.obj"
   "CMakeFiles/Metro.dir/Statistics.cpp.obj.d"
+  "CMakeFiles/Metro.dir/Users.cpp.obj"
+  "CMakeFiles/Metro.dir/Users.cpp.obj.d"
   "CMakeFiles/Metro.dir/line.cpp.obj"
   "CMakeFiles/Metro.dir/line.cpp.obj.d"
   "CMakeFiles/Metro.dir/main.cpp.obj"

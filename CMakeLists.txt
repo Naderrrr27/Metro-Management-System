@@ -16,5 +16,6 @@ add_executable(Metro main.cpp
         subscription.h
         wallet.h
         wallet.cpp
+        Users.cpp
 )
 

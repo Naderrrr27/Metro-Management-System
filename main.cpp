@@ -62,13 +62,13 @@ int read(map<string, personalInformation>& usrData) {
 }
 
 int main() {
-    map<string, personalInformation>mapp;
-    read(mapp);
+    map<string, personalInformation>mappp;
+    read(mappp);
     Users user;
-    for (auto it: mapp)
+    for (auto it: mappp)
         cout << it.first << endl;
-    user.begin(mapp);
-    for (auto it: mapp)
+    user.begin(mappp);
+    for (auto it: mappp)
         cout << it.first << endl;
     Metro egypt_metro("Egypt");
 
@@ -127,6 +127,6 @@ int main() {
 
 
     dfs(root, gr_line,rd_line,blu_line, visited);
-    write(mapp);
+    write(mappp);
     return 0;
 }

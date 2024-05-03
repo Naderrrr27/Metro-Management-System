@@ -2,7 +2,8 @@
 #include <iostream>
 #include <vector>
 #include "Metro.h"
-
+#include "Users.h"
+#include <fstream>
 using namespace std;
 //
 void dfs(string root, unordered_map<string,vector<Station>> &gr_line, unordered_map<string,vector<Station>> &rd_line, unordered_map<string,vector<Station>> &blu_line, unordered_map<string, bool>& visited) {
@@ -17,9 +18,58 @@ void dfs(string root, unordered_map<string,vector<Station>> &gr_line, unordered_
         }
     }
 }
+int write(map<string, personalInformation> &usrData)
+{
+    ofstream outputFile("users.txt");
+
+    if (outputFile.is_open()) {
+        for (const auto& pair : usrData) {
+            const personalInformation& user = pair.second;
+            outputFile << user.id << ' '
+                       << user.email << ' '
+                       << user.password <<
+                               ' ' << user.fname <<
+                                       ' '<<user.lname<< '\n';
+        }
+        outputFile.close();
+    } else {
+        cerr << "Error: Unable to open file for writing." << endl;
+        return 1;
+    }
+    return 0;
+}
+
+int read(map<string, personalInformation>& usrData) {
+    ifstream inputFile("users.txt");
+    if (!inputFile.is_open()) {
+        cerr << "Error: Unable to open file for reading." << endl;
+        return 1;
+    }
+    int userId;
+    string email, password, fname, lname;
+    while(inputFile >> userId >> email >> password >> fname >> lname) {
+        personalInformation temp;
+        temp.id = userId;
+        temp.email = email;
+        temp.password = password;
+        temp.fname =fname;
+        temp.lname = lname;
+        usrData.emplace(email, temp);
+    }
+
+    inputFile.close();
+    return 0;
+}
 
 int main() {
-
+    map<string, personalInformation>mappp;
+    read(mappp);
+    Users user;
+    for (auto it: mappp)
+        cout << it.first << endl;
+    user.begin(mappp);
+    for (auto it: mappp)
+        cout << it.first << endl;
     Metro egypt_metro("Egypt");
 
     vector<string> green_line_stations = {
@@ -77,6 +127,6 @@ int main() {
 
 
     dfs(root, gr_line,rd_line,blu_line, visited);
-
+    write(mappp);
     return 0;
 }

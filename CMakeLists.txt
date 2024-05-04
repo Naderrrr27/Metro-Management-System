@@ -12,5 +12,12 @@ add_executable(Metro main.cpp
         station.h
         Statistics.h
         Statistics.cpp
+        subscription.cpp
+        subscription.h
+        wallet.h
+        wallet.cpp
+        Users.cpp
+        admin.cpp
+        admin.h
 )
 

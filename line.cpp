@@ -15,7 +15,7 @@ string Line::get_color() {
 }
 
 void Line::add_new_station(string name, vector<Station>& stations) {
-    this->stations[name] = {stations,{}};
+    this->stations[name] = stations;
 }
 
 //unordered_map<string, pair<vector<Station>,Line>>& Line::get_stations() {

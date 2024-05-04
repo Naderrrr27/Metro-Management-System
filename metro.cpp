@@ -13,9 +13,7 @@ void Metro::add_new_line(Line& new_line) {
     this->lines[new_line.get_color()] = new_line;
 }
 
-//Line& Metro::get_line(string color) {
-//    return this->lines[color];
-//}
+
 
 Line &Metro::get_line(string &color) {
     return lines[color];
@@ -30,14 +28,14 @@ void Metro::build_line(Metro& metro, string color, vector<string>& station_names
         Station station(station_name);
         stations.push_back(station);
     }
-
+///////
     Line line(color);
 
     for (int i = 0; i < stations.size() - 1; i++) {
         stations[i].can_go_to(stations[i + 1]);
         stations[i + 1].can_go_to(stations[i]);
     }
-
+///////
     for (auto& station : stations) {
         line.add_new_station(station.get_name(), station.get_neighbors());
     }
@@ -45,9 +43,8 @@ void Metro::build_line(Metro& metro, string color, vector<string>& station_names
     metro.add_new_line(line);
 }
 
-void Metro::connect_lines(Line &first_line, Line &second_line, string station_name) {
-    first_line.get_stations()[station_name].insert(first_line.get_stations()[station_name].begin(),second_line.get_stations()[station_name].begin(),second_line.get_stations()[station_name].end());
-    second_line.get_stations()[station_name].insert(second_line.get_stations()[station_name].begin(),first_line.get_stations()[station_name].begin(),first_line.get_stations()[station_name].end());
+unordered_map<string, Line> &Metro::get_lines() {
+    return this->lines;
 }
 
 

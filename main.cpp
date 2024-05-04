@@ -1,36 +1,64 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "Metro.h"
 #include "Users.h"
 #include "subscription.h"
 #include <fstream>
 using namespace std;
 //
-void dfs(string root, unordered_map<string,vector<Station>> &gr_line, unordered_map<string,vector<Station>> &rd_line, unordered_map<string,vector<Station>> &blu_line, unordered_map<string, bool>& visited) {
 
-    visited[root] = true;
-    cout << "\n"<<root << "\n    |\n";
 
-    for (auto& station : gr_line[root]) {
-        string s = station.get_name();
-        if (!visited[s]) {
-            dfs(s, gr_line,rd_line,blu_line, visited);
+void testDFS(Metro &metro, string first, string second,unordered_map<string,bool> &visited,vector<string> &path,vector<vector<string>> &allPaths) {
+    visited[first] = true;
+    path.push_back(first);
+    if (first == second) {
+        allPaths.push_back(path);
+    } else {
+        for (auto &line: metro.get_lines()) {
+            for (auto &station: line.second.get_stations()[first]) {
+                if (!visited[station.get_name()]) {
+                    testDFS(metro, station.get_name(), second, visited, path, allPaths);
+                }
+            }
         }
     }
+    path.pop_back();
+    visited[first] = false;
 }
-int write(map<string, personalInformation> &usrData)
-{
+
+void print_all_paths(vector<vector<string>> &allPaths) {
+    for (auto &path: allPaths) {
+        cout << "Path : ";
+        for (auto &station: path) {
+            cout << station << " ";
+        }
+        cout << "\n";
+    }
+}
+void get_all_paths(Metro &metro, string first, string second) {
+    unordered_map<string,bool> visited;
+    vector<string>path;
+    vector<vector<string>> allPaths;
+    testDFS(metro, first, second, visited, path, allPaths);
+
+    print_all_paths(allPaths);
+
+}
+
+
+int write(map<string, personalInformation> &usrData) {
     ofstream outputFile("users.txt");
 
     if (outputFile.is_open()) {
-        for (const auto& pair : usrData) {
-            const personalInformation& user = pair.second;
+        for (const auto &pair: usrData) {
+            const personalInformation &user = pair.second;
             outputFile << user.id << ' '
                        << user.email << ' '
                        << user.password <<
-                               ' ' << user.fname <<
-                                       ' '<<user.lname<< '\n';
+                       ' ' << user.fname <<
+                       ' ' << user.lname << '\n';
         }
         outputFile.close();
     } else {
@@ -40,7 +68,7 @@ int write(map<string, personalInformation> &usrData)
     return 0;
 }
 
-int read(map<string, personalInformation>& usrData) {
+int read(map<string, personalInformation> &usrData) {
     ifstream inputFile("users.txt");
     if (!inputFile.is_open()) {
         cerr << "Error: Unable to open file for reading." << endl;
@@ -48,12 +76,12 @@ int read(map<string, personalInformation>& usrData) {
     }
     int userId;
     string email, password, fname, lname;
-    while(inputFile >> userId >> email >> password >> fname >> lname) {
+    while (inputFile >> userId >> email >> password >> fname >> lname) {
         personalInformation temp;
         temp.id = userId;
         temp.email = email;
         temp.password = password;
-        temp.fname =fname;
+        temp.fname = fname;
         temp.lname = lname;
         usrData.emplace(email, temp);
     }
@@ -62,29 +90,39 @@ int read(map<string, personalInformation>& usrData) {
     return 0;
 }
 
-int main() {
-    subscription sub ;
-    map<string, Plan> plans;
-    //student plan
-    map<int, int> prices;
-    prices={ {1, 33}, { 2,41 }, { 3,50 }, { 4,65 }};
-    sub.Addplan("student", 180, 3, prices, plans);
-    //public monthly plan
-    prices = { {1,230},{2,290},{3,340},{4,450} };
-    sub.Addplan("publicmonthly",60,1,prices, plans);
-    // public yearly plan
-    prices={{1,1500},{2,2500},{3,3500},{4,4500}};
-    sub.Addplan("publicyearly", 730, 12, prices, plans);
-    map<string, personalInformation>mappp;
 
-    subscription plan;
-    read(mappp);
-    Users user;
-    for (auto it: mappp)
-        cout << it.first << endl;
-   user.begin(mappp, plans);
-    for (auto it: mappp)
-        cout << it.first << endl;
+int main() {
+//    subscription sub;
+//    map<string, Plan> plans;
+//    //student plan
+//    map<int, int> prices;
+//    prices = {{1, 33},
+//              {2, 41},
+//              {3, 50},
+//              {4, 65}};
+//    sub.Addplan("student", 180, 3, prices, plans);
+//    //public monthly plan
+//    prices = {{1, 230},
+//              {2, 290},
+//              {3, 340},
+//              {4, 450}};
+//    sub.Addplan("publicmonthly", 60, 1, prices, plans);
+//    // public yearly plan
+//    prices = {{1, 1500},
+//              {2, 2500},
+//              {3, 3500},
+//              {4, 4500}};
+//    sub.Addplan("publicyearly", 730, 12, prices, plans);
+//    map<string, personalInformation> mappp;
+//
+//    subscription plan;
+//    read(mappp);
+//    Users user;
+//    for (auto it: mappp)
+//        cout << it.first << endl;
+//    user.begin(mappp, plans);
+//    for (auto it: mappp)
+//        cout << it.first << endl;
 
 
     Metro egypt_metro("Egypt");
@@ -95,7 +133,7 @@ int main() {
             "Kolleyet El Banat", "Stadium", "Fair Zone", "El Abassya", "Abdo Basha",
             "El Geish", "Bab El Shaarya", "Attaba", "Gamal Abd El Nasser", "Maspero",
             "Safaa Hegazy", "Kit Kat", "Sudan", "Imbaba", "El Bohy", "EL Qawmia",
-            "Ring Road", "Rod El Farag"
+            "Ring Road", "Mehwar Rod El Farag"
     };
 
 
@@ -123,27 +161,26 @@ int main() {
     };
 
 
-
-
-
-
     Metro::build_line(egypt_metro, "Blue", blue_line_stations);
 
-    string color = "Green";
 
-    unordered_map<string, bool>visited;
+    ///
 
-    string green="Green",red="Red",blue="Blue";
+    int cases=1;
+//    cin >> cases;
 
-    unordered_map<string,vector<Station>> gr_line=egypt_metro.get_line(green).get_stations();
-    unordered_map<string,vector<Station>> rd_line=egypt_metro.get_line(red).get_stations();
-    unordered_map<string,vector<Station>> blu_line=egypt_metro.get_line(blue).get_stations();
+    while (cases--) {
+        string start="Attaba", final="Opera";
+//        cin >> start >> final;
+        get_all_paths(egypt_metro, start, final);
 
-    string root = gr_line.begin()->first;
+        cout << "\n\n\n";
+    }
+
+    ///
 
 
 
-    dfs(root, gr_line,rd_line,blu_line, visited);
-    write(mappp);
+//    write(mappp);
     return 0;
 }

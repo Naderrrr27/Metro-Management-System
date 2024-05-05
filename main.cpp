@@ -4,7 +4,6 @@
 #include <algorithm>
 #include "Metro.h"
 #include "Users.h"
-#include "Ride.h"
 #include "subscription.h"
 #include <fstream>
 using namespace std;
@@ -88,7 +87,6 @@ int read(map<string, personalInformation> &usrData) {
 }
 
 int main() {
-    Ride testRide ;
 //    subscription sub;
 //    map<string, Plan> plans;
 //    //student plan
@@ -169,7 +167,6 @@ int main() {
     while (cases--) {
         string start="Alf Maskan", final="Mehwar Rod El Farag";
 //        cin >> start >> final;
-        testRide.getAllPaths(egypt_metro, start, final);
         cout << "\n\n\n";
     }
 

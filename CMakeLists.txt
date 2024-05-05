@@ -19,5 +19,7 @@ add_executable(Metro main.cpp
         Users.cpp
         admin.cpp
         admin.h
+        Ride.cpp
+        Ride.h
 )
 

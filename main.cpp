@@ -4,48 +4,46 @@
 #include <algorithm>
 #include "Metro.h"
 #include "Users.h"
+#include "Ride.h"
 #include "subscription.h"
 #include <fstream>
 using namespace std;
+
+//void testDFS(Metro &metro, string first, string second,unordered_map<string,bool> &visited,vector<string> &path,vector<vector<string>> &allPaths) {
+//    visited[first] = true;
+//    path.push_back(first);
+//    if (first == second) {
+//        allPaths.push_back(path);
+//    } else {
+//        for (auto &line: metro.get_lines()) {
+//            for (auto &station: line.second.get_stations()[first]) {
+//                if (!visited[station.get_name()]) {
+//                    testDFS(metro, station.get_name(), second, visited, path, allPaths);
+//                }
+//            }
+//        }
+//    }
+//    path.pop_back();
+//    visited[first] = false;
+//}
+//void print_all_paths(vector<vector<string>> &allPaths) {
+//    for (auto &path: allPaths) {
+//        cout << "Path : ";
+//        for (auto &station: path) {
+//            cout << station << " ";
+//        }
+//        cout << "\n";
+//    }
+//}
+//void get_all_paths(Metro &metro, string first, string second) {
+//    unordered_map<string,bool> visited;
+//    vector<string>path;
+//    vector<vector<string>> allPaths;
+//    testDFS(metro, first, second, visited, path, allPaths);
 //
-
-
-void testDFS(Metro &metro, string first, string second,unordered_map<string,bool> &visited,vector<string> &path,vector<vector<string>> &allPaths) {
-    visited[first] = true;
-    path.push_back(first);
-    if (first == second) {
-        allPaths.push_back(path);
-    } else {
-        for (auto &line: metro.get_lines()) {
-            for (auto &station: line.second.get_stations()[first]) {
-                if (!visited[station.get_name()]) {
-                    testDFS(metro, station.get_name(), second, visited, path, allPaths);
-                }
-            }
-        }
-    }
-    path.pop_back();
-    visited[first] = false;
-}
-
-void print_all_paths(vector<vector<string>> &allPaths) {
-    for (auto &path: allPaths) {
-        cout << "Path : ";
-        for (auto &station: path) {
-            cout << station << " ";
-        }
-        cout << "\n";
-    }
-}
-void get_all_paths(Metro &metro, string first, string second) {
-    unordered_map<string,bool> visited;
-    vector<string>path;
-    vector<vector<string>> allPaths;
-    testDFS(metro, first, second, visited, path, allPaths);
-
-    print_all_paths(allPaths);
-
-}
+//    print_all_paths(allPaths);
+//
+//}
 
 
 int write(map<string, personalInformation> &usrData) {
@@ -67,7 +65,6 @@ int write(map<string, personalInformation> &usrData) {
     }
     return 0;
 }
-
 int read(map<string, personalInformation> &usrData) {
     ifstream inputFile("users.txt");
     if (!inputFile.is_open()) {
@@ -90,8 +87,8 @@ int read(map<string, personalInformation> &usrData) {
     return 0;
 }
 
-
 int main() {
+    Ride testRide ;
 //    subscription sub;
 //    map<string, Plan> plans;
 //    //student plan
@@ -170,10 +167,9 @@ int main() {
 //    cin >> cases;
 
     while (cases--) {
-        string start="Attaba", final="Opera";
+        string start="Alf Maskan", final="Mehwar Rod El Farag";
 //        cin >> start >> final;
-        get_all_paths(egypt_metro, start, final);
-
+        testRide.getAllPaths(egypt_metro, start, final);
         cout << "\n\n\n";
     }
 

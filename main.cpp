@@ -6,43 +6,8 @@
 #include "Users.h"
 #include "subscription.h"
 #include <fstream>
+#include "Ride.h"
 using namespace std;
-
-//void testDFS(Metro &metro, string first, string second,unordered_map<string,bool> &visited,vector<string> &path,vector<vector<string>> &allPaths) {
-//    visited[first] = true;
-//    path.push_back(first);
-//    if (first == second) {
-//        allPaths.push_back(path);
-//    } else {
-//        for (auto &line: metro.get_lines()) {
-//            for (auto &station: line.second.get_stations()[first]) {
-//                if (!visited[station.get_name()]) {
-//                    testDFS(metro, station.get_name(), second, visited, path, allPaths);
-//                }
-//            }
-//        }
-//    }
-//    path.pop_back();
-//    visited[first] = false;
-//}
-//void print_all_paths(vector<vector<string>> &allPaths) {
-//    for (auto &path: allPaths) {
-//        cout << "Path : ";
-//        for (auto &station: path) {
-//            cout << station << " ";
-//        }
-//        cout << "\n";
-//    }
-//}
-//void get_all_paths(Metro &metro, string first, string second) {
-//    unordered_map<string,bool> visited;
-//    vector<string>path;
-//    vector<vector<string>> allPaths;
-//    testDFS(metro, first, second, visited, path, allPaths);
-//
-//    print_all_paths(allPaths);
-//
-//}
 
 
 int write(map<string, personalInformation> &usrData) {
@@ -156,24 +121,20 @@ int main() {
     };
 
 
+
     Metro::build_line(egypt_metro, "Blue", blue_line_stations);
-
-
     ///
+    Ride r;
 
     int cases=1;
 //    cin >> cases;
 
     while (cases--) {
-        string start="Alf Maskan", final="Mehwar Rod El Farag";
+        string start = "Alf Maskan", final = "Mehwar Rod El Farag";
+        r.getAllPaths(egypt_metro, start, final);
 //        cin >> start >> final;
         cout << "\n\n\n";
     }
-
-    ///
-
-
-
 //    write(mappp);
     return 0;
 }

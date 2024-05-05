@@ -51,6 +51,7 @@ vector<string> Ride::bfsShortestPath(unordered_map<string, vector<Station>>& gra
     }
 
 }
+///Get All paths
 bool Ride::compare(const vector<string>&v1, const vector<string>&v2){
     return v1.size() < v2.size(); /// false v2 before v1..
 }
@@ -180,4 +181,26 @@ void Ride::getAllPaths(Metro &metro, string &firstDestination, string &secondDes
     prepareAllPaths(metro,firstDestination,secondDestination);
     sort(pathHandler.allPaths.begin(),pathHandler.allPaths.end(), Ride::compare);
     printAllPaths(metro, firstDestination, secondDestination);
+}
+////Handel time and date
+void Ride::calculateRideDateTime(){
+    time_t t = time(0);
+    tm* now = localtime(&t);
+    rideDate.append(to_string(now->tm_mon + 1));
+    rideDate.append("-");
+    rideDate.append(to_string(now->tm_mday));
+    rideDate.append("-");
+    rideDate.append(to_string(now->tm_year + 1900));
+
+    rideTime.append(to_string(now->tm_hour));
+    rideTime.append(":");
+    rideTime.append(to_string(now->tm_min));
+    rideTime.append(":");
+    rideTime.append(to_string(now->tm_sec));
+}
+string Ride::getTime(){
+    return rideTime;
+}
+string Ride::getDate(){
+    return rideDate;
 }

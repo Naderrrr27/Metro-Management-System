@@ -22,6 +22,7 @@ private:
     };
     PathExplorer pathHandler;
     string firstD,finalD;
+    string rideDate,rideTime;
 
     void prepareAllPaths(Metro &metro, string firstDestination, string &secondDestination);
     void printAllPaths(Metro &metro,string &firstDestination, string &secondDestination);
@@ -35,10 +36,13 @@ public:
     Ride(string,string);
     Ride();
     ~Ride();
+    void calculateRideDateTime();
     bool isExisted(string,string);
     pair<int,int>getStationNumber(unordered_map<string, vector<Station>>& graphstring ,string ,string);
     vector<string>bfsShortestPath(unordered_map<string, vector<Station>>&graph ,string ,string);
     void getAllPaths(Metro &metro, string &firstDestination, string &secondDestination);
+    string getTime();
+    string getDate();
 
 };
 

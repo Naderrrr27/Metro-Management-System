@@ -5,14 +5,16 @@
 #include "Users.h"
 #include <string>
 #include <cctype>
+#include <iomanip>
 
 #include "subscription.h"
 
-Users::Users()
+Users::Users(): Data()
 {
     this->Data.id = -1;
 }
-Users::Users(string fname, string lname,string password, string email)
+
+Users::Users(string fname, string lname,string password, string email): Data()
 {
     this->Data.email = email;
     this->Data.password = password;
@@ -20,6 +22,7 @@ Users::Users(string fname, string lname,string password, string email)
     this->Data.lname = lname;
     //usrData.insert({email, Data});
 }
+
 Users Users::Register(map<string, personalInformation> &usrData)
 {
     string fname, lname, email, password;
@@ -143,7 +146,7 @@ void Users::begin(map<string, personalInformation> &usrData, map<string, Plan> &
         {
             cout << "1: Subscribtions\n2: Profile\n3: Log out\n";
             operation = 0; cin >> operation;
-            if (operation == 1) Subscribtions(user, plans);
+            if (operation == 1) Subscribtions(user, usrData, plans);
             else if (operation == 2) Profile(user,usrData);
             else if (operation == 3) LogOut(user);
         }
@@ -164,12 +167,24 @@ void Users::Profile(Users &user, map<string, personalInformation> &usrData)
 {
 
     int op = 0;
-    auto users = usrData.find(user.GetEmail());
+    map<string, personalInformation>::iterator users;
     while(op != 5)
     {
-        cout << "Email\t\t\t\tFirst Name\tLast Name\tPassword\n";
-        cout << user.Data.email << "\t" << user.Data.fname << "\t\t" << user.Data.lname<< "\t\t" << user.Data.password;
-        cout << "\n1: Modify first name\n2: Modify last name\n3: Modify e-mail\n4: Modify Password\n";
+        users = usrData.find(user.GetEmail());
+        cout << left << setw(30) << "Email"
+            << setw(20) << "First Name"
+            << setw(20) << "Last Name"
+            << "Password" << endl;
+
+        // Print user data
+        cout << setw(30) << users->second.email
+             << setw(20) << users->second.fname
+             << setw(20) << users->second.lname
+             << users->second.password << endl;
+        cout << "1: Modify first name\n"
+        << "2: Modify last name\n"
+        << "3: Modify e-mail\n"
+        << "4: Modify Password\n";
         cin >> op;
         if (op == 1)
         {
@@ -206,14 +221,42 @@ void Users::Profile(Users &user, map<string, personalInformation> &usrData)
         }
     }
 }
-void Users::Subscribtions(Users &user, map<string, Plan> &plan)
+void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData, map<string, Plan> &plan)
 {
     subscription s;
-    s.Displayplandetails("student", plan);
+    auto it = usrData.find(user.GetEmail());
+    s.DisplaySubscriptionPlan(plan);
     cout << endl;
-    cout << "1: Make Subscription\n2: Remove Subscription\n3:Modify Subscription" << endl;
-    int operation; cin >> operation;
+    int operation;
+    while(operation != 5){
+        cout << "1: Make Subscription\n2: Manage Subscribtions\n" << endl;
+        cin >> operation;
+
+        if (operation == 1)
+        {
+            it->second.plan.chooseplan(plan);
+        }
+        else if (operation == 2)
+        {
+            cout << left << setw(20) << "Name"
+         << setw(15) << "From"
+         << setw(15) << "To"
+         << setw(15) << "Trips"
+         << endl;
+
+            // Displaying plan information in a formatted table
+            cout << setw(20) << it->second.plan.plan.PlanName
+                     << setw(15) << it->second.plan.firstDestination
+                     << setw(15) << it->second.plan.secondDestination
+                     << setw(15) << it->second.plan.getTrips()
+                     << endl;
+        }
+
+
+
+    }
 }
+
 Users::~Users()
 {
 

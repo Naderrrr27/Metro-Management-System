@@ -1,3 +1,3 @@
-D:/Metro/cmake-build-debug/CMakeFiles/Metro.dir
-D:/Metro/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Metro/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/DELL/Metro-Management-System/cmake-build-debug/CMakeFiles/Metro.dir
+C:/Users/DELL/Metro-Management-System/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/DELL/Metro-Management-System/cmake-build-debug/CMakeFiles/rebuild_cache.dir

@@ -6,7 +6,8 @@
 #define METRO_WALLET_H
 
 #pragma once
-#include"subscription.h"
+#include "Users.h"
+#include <string>
 class wallet
 {
 public:

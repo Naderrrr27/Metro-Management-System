@@ -10,23 +10,36 @@
 using namespace std;
 
 
-int write(map<string, personalInformation> &usrData) {
-    ofstream outputFile("users.txt");
+#include <iostream>
+#include <fstream>
+#include <map>
+#include <string>
 
-    if (outputFile.is_open()) {
-        for (const auto &pair: usrData) {
-            const personalInformation &user = pair.second;
-            outputFile << user.id << ' '
-                       << user.email << ' '
-                       << user.password <<
-                       ' ' << user.fname <<
-                       ' ' << user.lname << '\n';
-        }
-        outputFile.close();
-    } else {
+using namespace std;
+
+
+int write(const map<string, personalInformation> &usrData) {
+    ofstream outputFile("users.txt");
+    if (!outputFile.is_open()) {
         cerr << "Error: Unable to open file for writing." << endl;
         return 1;
     }
+
+    for (const auto &pair : usrData) {
+        const personalInformation &user = pair.second;
+        outputFile << user.id << ' '
+                   << user.email << ' '
+                   << user.password << ' '
+                   << user.fname << ' '
+                   << user.lname << ' '
+                   << user.plan.plan.PlanName << ' '
+                   << user.plan.firstDestination << ' '
+                   << user.plan.secondDestination << ' '
+                   << user.plan.plan.Duration << ' '
+                   << user.plan.plan.tripsallowed << '\n';
+    }
+
+    outputFile.close();
     return 0;
 }
 int read(map<string, personalInformation> &usrData) {
@@ -35,54 +48,64 @@ int read(map<string, personalInformation> &usrData) {
         cerr << "Error: Unable to open file for reading." << endl;
         return 1;
     }
-    int userId;
-    string email, password, fname, lname;
-    while (inputFile >> userId >> email >> password >> fname >> lname) {
+
+    int userId, duration, trip;
+    string email, password, fname, lname, pname, fd, ld;
+
+    while (inputFile >> userId >> email >> password >> fname >> lname >> pname >> fd >> ld >> duration >> trip) {
         personalInformation temp;
         temp.id = userId;
         temp.email = email;
         temp.password = password;
         temp.fname = fname;
         temp.lname = lname;
+        temp.plan.plan.PlanName = pname;
+        temp.plan.firstDestination = fd;
+        temp.plan.secondDestination = ld;
+        temp.plan.plan.Duration = duration;
+        temp.plan.plan.tripsallowed = trip;
+
         usrData.emplace(email, temp);
     }
 
     inputFile.close();
     return 0;
 }
-
 int main() {
-//    subscription sub;
-//    map<string, Plan> plans;
-//    //student plan
-//    map<int, int> prices;
-//    prices = {{1, 33},
-//              {2, 41},
-//              {3, 50},
-//              {4, 65}};
-//    sub.Addplan("student", 180, 3, prices, plans);
-//    //public monthly plan
-//    prices = {{1, 230},
-//              {2, 290},
-//              {3, 340},
-//              {4, 450}};
-//    sub.Addplan("publicmonthly", 60, 1, prices, plans);
-//    // public yearly plan
-//    prices = {{1, 1500},
-//              {2, 2500},
-//              {3, 3500},
-//              {4, 4500}};
-//    sub.Addplan("publicyearly", 730, 12, prices, plans);
-//    map<string, personalInformation> mappp;
-//
-//    subscription plan;
-//    read(mappp);
-//    Users user;
-//    for (auto it: mappp)
-//        cout << it.first << endl;
-//    user.begin(mappp, plans);
-//    for (auto it: mappp)
-//        cout << it.first << endl;
+    /*
+    subscription sub;
+    map<string, Plan> plans;
+    //student plan
+    map<int, int> prices;    prices = {{1, 33},
+              {2, 41},
+              {3, 50},
+              {4, 65}};
+    sub.Addplan("student", 180, 3, prices, plans);
+    //public monthly plan
+    prices = {{1, 230},
+              {2, 290},
+              {3, 340},
+              {4, 450}};
+    sub.Addplan("publicmonthly", 60, 1, prices, plans);
+    // public yearly plan
+    prices = {{1, 1500},
+              {2, 2500},
+              {3, 3500},
+              {4, 4500}};
+    sub.Addplan("publicyearly", 730, 12, prices, plans);
+    map<string, personalInformation> mappp;
+   // write(mappp);
+    subscription plan;
+    read(mappp);
+    Users user;
+
+    for (auto it: mappp)
+        cout << it.first << endl;
+    user.begin(mappp, plans);
+    //user = mappp.find(user.GetEmail());
+    for (auto it: mappp)
+        cout << it.first << endl;
+        */
 
 
     Metro egypt_metro("Egypt");
@@ -135,6 +158,6 @@ int main() {
 //        cin >> start >> final;
         cout << "\n\n\n";
     }
-//    write(mappp);
+  //  write(mappp);
     return 0;
 }

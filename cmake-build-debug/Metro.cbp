@@ -8,138 +8,136 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="D:/Metro-Management-Systemm/cmake-build-debug"/>
+				<Option working_dir="C:/Users/DELL/Metro-Management-System/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Metro">
-				<Option output="D:/Metro-Management-Systemm/cmake-build-debug/Metro.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/Metro-Management-Systemm/cmake-build-debug"/>
+				<Option output="C:/Users/DELL/Metro-Management-System/cmake-build-debug/Metro.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/DELL/Metro-Management-System/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include/c++/13.2.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include/c++/13.2.0/x86_64-w64-mingw32"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include/c++/13.2.0/backward"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 Metro"/>
-					<CompileFile command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 Metro"/>
+					<CompileFile command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="Metro/fast">
-				<Option output="D:/Metro-Management-Systemm/cmake-build-debug/Metro.exe" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="D:/Metro-Management-Systemm/cmake-build-debug"/>
+				<Option output="C:/Users/DELL/Metro-Management-System/cmake-build-debug/Metro.exe" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="C:/Users/DELL/Metro-Management-System/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/x86_64-w64-mingw32"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include/c++/backward"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../include"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/include-fixed"/>
-					<Add directory="D:/CLion 2023.2.1/bin/mingw/bin/../lib/gcc/x86_64-w64-mingw32/13.1.0/../../../../x86_64-w64-mingw32/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include/c++/13.2.0"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include/c++/13.2.0/x86_64-w64-mingw32"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include/c++/13.2.0/backward"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/../../../../include"/>
+					<Add directory="C:/msys64/mingw64/bin/../lib/gcc/x86_64-w64-mingw32/13.2.0/include-fixed"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 Metro/fast"/>
-					<CompileFile command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 Metro/fast"/>
+					<CompileFile command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="D:/Metro-Management-Systemm/cmake-build-debug"/>
+				<Option working_dir="C:/Users/DELL/Metro-Management-System/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="D:/Metro-Management-Systemm/cmake-build-debug"/>
+				<Option working_dir="C:/Users/DELL/Metro-Management-System/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="D:/CLion 2023.2.1/bin/mingw/bin/mingw32-make.exe -f &quot;D:/Metro-Management-Systemm/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="C:/PROGRA~1/CODEBL~1/MinGW/bin/mingw32-make.exe -f &quot;C:/Users/DELL/Metro-Management-System/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="D:/Metro-Management-Systemm/Ride.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/Ride.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/Ride.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/Ride.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/Statistics.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/Statistics.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/Statistics.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/Statistics.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/Users.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/Users.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/Users.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/Users.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/admin.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/admin.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/admin.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/admin.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/line.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/line.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/line.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/line.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/main.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/main.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/metro.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/metro.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/metro.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/metro.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/station.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/station.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/station.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/station.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/subscription.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/subscription.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/subscription.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/subscription.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/wallet.cpp">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/wallet.cpp">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/wallet.h">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/wallet.h">
 			<Option target="Metro"/>
 		</Unit>
-		<Unit filename="D:/Metro-Management-Systemm/CMakeLists.txt">
+		<Unit filename="C:/Users/DELL/Metro-Management-System/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

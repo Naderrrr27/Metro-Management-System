@@ -72,6 +72,7 @@ int read(map<string, personalInformation> &usrData) {
     return 0;
 }
 int main() {
+    /*
     subscription sub;
     map<string, Plan> plans;
     //student plan
@@ -104,6 +105,7 @@ int main() {
     //user = mappp.find(user.GetEmail());
     for (auto it: mappp)
         cout << it.first << endl;
+        */
 
 
     Metro egypt_metro("Egypt");
@@ -156,6 +158,6 @@ int main() {
 //        cin >> start >> final;
         cout << "\n\n\n";
     }
-    write(mappp);
+  //  write(mappp);
     return 0;
 }

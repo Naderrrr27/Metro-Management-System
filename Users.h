@@ -24,7 +24,7 @@ struct personalInformation
 
 class Users {
     personalInformation Data;
-
+    bool isLogged_In = false;
 private:
     string Email(map<string, personalInformation> &usrData);
     bool CheckTemplate(string email);

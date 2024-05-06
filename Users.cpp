@@ -35,6 +35,7 @@ Users Users::Register(map<string, personalInformation> &usrData)
 
     Users newUser(fname, lname, password, email);
     usrData.insert({email, newUser.Data});
+    isLogged_In = true;
     return newUser;
 }
 string Users::Email(map<string, personalInformation> &usrData)
@@ -119,38 +120,57 @@ Users Users::Login(map<string, personalInformation> &usrData)
             else cout << "Username or password are wrong\n";
         }
     }
+    isLogged_In = true;
     return newUser;
 }
-void Users::begin(map<string, personalInformation> &usrData, map<string, Plan> &plans)
-{
-    Users user;
+void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans) {
     int operation = 0;
+
     cout << "Welcome To Metro Mate\n";
 
+    while (true) {
+        if (!isLogged_In) {
+            cout << "Please choose an operation\n";
+            cout << "1: Login\n2: Register\n3: Exit\n";
+            cin >> operation;
 
-    while (operation != 3)
-    {
+            if (operation == 1) {
+                *this = Login(usrData);
+                isLogged_In = true;
+            } else if (operation == 2) {
+                *this = Register(usrData);
+                isLogged_In = true;
+            } else if (operation == 3) {
+                break; // Exit the loop and terminate the program
+            } else {
+                cout << "Invalid choice. Please try again.\n";
+                continue;
+            }
+        }
 
-        cout << "Please choose an operation\n";
-        cout << "1: Login\n2: Register\n3: Exit\n";
-        cin >> operation;
-        if (operation == 1)
-        {
-            user =  user.Login(usrData);
-        }
-        else if (operation == 2)
-        {
-            user = user.Register(usrData);
-        }
-        if (operation != 3)
-        {
-            cout << "1: Subscribtions\n2: Profile\n3: Log out\n";
-            operation = 0; cin >> operation;
-            if (operation == 1) Subscribtions(user, usrData, plans);
-            else if (operation == 2) Profile(user,usrData);
-            else if (operation == 3) LogOut(user);
+        if (isLogged_In) {
+            cout << "1: Subscriptions\n2: Profile\n3: Log out\n";
+            cin >> operation;
+
+            switch (operation) {
+            case 1:
+                Subscribtions(*this, usrData, plans);
+                break;
+            case 2:
+                Profile(*this, usrData);
+                break;
+            case 3:
+                LogOut(*this);
+                isLogged_In = false; // Reset login status
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+                break;
+            }
         }
     }
+
+    cout << "Exiting Metro Mate. Goodbye!\n";
 }
 void Users::clear(Users &user)
 {

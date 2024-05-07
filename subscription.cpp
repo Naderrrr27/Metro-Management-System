@@ -94,7 +94,7 @@ void subscription::chooseplan(map<string, Plan> &plans)
     cout << "Enter Plan Name:";
     string name;
     cin >> name;
-auto it =plans.find(name);
+auto it = plans.find(name);
     if (it != plans.end()) {
         plan = plans.find(name)->second;
         string first, last;
@@ -112,31 +112,34 @@ auto it =plans.find(name);
         plan.tripsallowed = plans[name].tripsallowed;
         stage = Stage();
         remainingtrips = plan.tripsallowed;
+        chrono::time_point<chrono::system_clock> start, end;
+        start = chrono::system_clock::now();
+        chrono::hours hoursInDays(it->second.Duration * 24 * 30);
+        end = start + hoursInDays;
+        this->start = Date(start);
+        this->end = Date(end);
+        cout << this->start << " " << this->end << endl;
+
     }
     else
         cout<<"invalid plan name\n";
 }
 
-/*void subscription::Date() {
-    //chrono::system_clock::time_point Startdate;
-    std::time_t start_time = std::time(0);
-     start_tm = std::localtime(&start_time);
-    chrono::hours durationToAdd(24 * 30*plan.Duration);
-    chrono::system_clock::time_point end_time_point = std::chrono::system_clock::from_time_t(start_time)+ durationToAdd;
-    time_t end_time_t = std::chrono::system_clock::to_time_t(end_time_point);
-    // Convert end time to tm structure for formatting
-     end_tm = std::localtime(&end_time_t);
-}*/
-bool subscription::Isplanactive() {
-    chrono::system_clock::time_point now = std::chrono::system_clock::now();
-
-  if (remainingtrips > 0 )
-        return true;
-
-    else
-       return false;
+string subscription::Date(chrono::time_point<chrono::system_clock> start) {
+    time_t start_t = chrono::system_clock::to_time_t(start);
+    tm *local = localtime(&start_t);
+    int year = 1900 + local->tm_year;
+    int month = 1 + local->tm_mon;
+    int day = local->tm_mday;
+    return formatstring(day, month, year);
 }
+    string subscription::formatstring(int day, int month, int year) {
+    string formatted_day = (day < 10) ? "0" + to_string(day) : to_string(day);
+    string formatted_month = (month < 10) ? "0" + to_string(month) : to_string(month);
+    string formatted_year = to_string(year);
 
+    return formatted_day + "/" + formatted_month + "/" + formatted_year;
+}
 
 //feha klam ayza akhod object mn class tane
 void subscription::Remainingtrips() {

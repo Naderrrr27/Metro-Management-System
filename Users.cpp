@@ -7,6 +7,7 @@
 #include <cctype>
 #include <iomanip>
 
+#include "admin.h"
 #include "subscription.h"
 
 Users::Users(): Data()
@@ -107,20 +108,27 @@ Users Users::Login(map<string, personalInformation> &usrData)
         cin >> email;
         email = ToLower(email);
         cout << "Password:"; cin >> password;
-        map<string, personalInformation>::iterator it = usrData.find(email);
-        if (it == usrData.end()) cout << "This account doesn't exist\n";
-        else
+        if (email == "admin" && password == "admin")
         {
-            if (password == it->second.password)
-            {
-                 newUser.Data = it->second;
-                check = true;
-                cout << "User has logged in successfully\n";
-            }
-            else cout << "Username or password are wrong\n";
+            isAdmin = true;
+            isLogged_In = true;
+            check  = true;
+            return *this;
         }
-    }
-    isLogged_In = true;
+            map<string, personalInformation>::iterator it = usrData.find(email);
+            if (it == usrData.end()) cout << "This account doesn't exist\n";
+            else
+            {
+                if (password == it->second.password)
+                {
+                    newUser.Data = it->second;
+                    check = true;
+                    cout << "User has logged in successfully\n";
+                }
+                else cout << "Username or password are wrong\n";
+            }
+        }
+        isLogged_In = true;
     return newUser;
 }
 void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans) {
@@ -148,7 +156,7 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
             }
         }
 
-        if (isLogged_In) {
+        if (isLogged_In && !isAdmin) {
             cout << "1: Subscriptions\n2: Profile\n3: Log out\n";
             cin >> operation;
 
@@ -161,13 +169,18 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
                 break;
             case 3:
                 LogOut(*this);
-                isLogged_In = false; // Reset login status
                 break;
             default:
                 cout << "Invalid choice. Please try again.\n";
                 break;
             }
         }
+        if (isLogged_In && isAdmin)
+        {
+            admin Admin;
+            Admin.begin(*this,usrData, plans);
+        }
+
     }
 
     cout << "Exiting Metro Mate. Goodbye!\n";
@@ -179,6 +192,8 @@ void Users::clear(Users &user)
 void Users::LogOut(Users &user)
 {
     clear(user);
+    this->isAdmin = false;
+    this->isLogged_In = false;
     cout <<"Logged out\n";
 
 }
@@ -348,9 +363,8 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                      << setw(15) << it->second.plan.secondDestination
                      << setw(15) << it->second.plan.getTrips()
                      << setw(15) << it->second.plan.stage
-                     //<<setw(17)<<it->second.plan.start_tm->tm_mday<<'/'<<it->second.plan.start_tm->tm_mon+1<<"/"<<it->second.plan.start_tm->tm_year+1900
-                     //  <<setw(17)<<it->second.plan.end_tm->tm_mday<<"/"<<it->second.plan.end_tm->tm_mon+1<<"/"<<it->second.plan.end_tm->tm_year+1900
-                     << endl;
+                     <<setw(15)<<it->second.plan.start
+                    <<setw(15)<<it->second.plan.end << endl;
                 cout << "1: Renew Plan\n2: Upgrade Plan\n";
                 int n;
                 cin >> n;

@@ -6,11 +6,18 @@
 #define METRO_ADMIN_H
 #include "Users.h"
 #include "subscription.h"
-/*class admin: public Users{
+#include "Users.h"
+using namespace std;
+class admin: public Users
+{
     subscription plan;
-
-
-};*/
+public:
+    admin();
+    void begin(Users &user, map<string, personalInformation> &usrData, map<string, Plan> &plans);
+    void users(map<string, personalInformation> &usrData, map<string, Plan> &plans);
+    void DisplayUserData(map<string, personalInformation> &usrData);
+    ~admin();
+};
 
 
 

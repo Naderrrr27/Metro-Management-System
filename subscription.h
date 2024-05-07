@@ -29,8 +29,8 @@ public:
     string firstDestination, secondDestination;
     int remainingtrips;
     int stage;
-    tm* start_tm;
-    tm* end_tm;
+    string start;
+    string end;
 
     Plan plan;
 
@@ -45,7 +45,8 @@ public:
     void Modifyplan(std::map<string, Plan>& plans,string planname, string newname="", int newduration=-1, int newtripsallowed=-1, map<int, int> newprices={});
     int Stage();
     void chooseplan(map<string, Plan>& plans);
-    void Date();
+    string Date(chrono::time_point<chrono::system_clock> start);
+    string formatstring(int day, int month, int year);
     bool Isplanactive();
     void Renewplan();
     void Upgrade(map<string, Plan> &plans);

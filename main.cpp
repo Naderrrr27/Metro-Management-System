@@ -72,7 +72,6 @@ int read(map<string, personalInformation> &usrData) {
     return 0;
 }
 int main() {
-    /*
     subscription sub;
     map<string, Plan> plans;
     //student plan
@@ -105,10 +104,9 @@ int main() {
     //user = mappp.find(user.GetEmail());
     for (auto it: mappp)
         cout << it.first << endl;
-        */
 
 
-    Metro egypt_metro("Egypt");
+    /*Metro egypt_metro("Egypt");
 
     vector<string> green_line_stations = {
             "Adly Mansour", "El Haykesteb", "Omar Ibn El Khatab", "Qubaa", "Hesham Barakat",
@@ -157,7 +155,7 @@ int main() {
         r.getAllPaths(egypt_metro, start, final);
 //        cin >> start >> final;
         cout << "\n\n\n";
-    }
-  //  write(mappp);
+    }*/
+ write(mappp);
     return 0;
 }

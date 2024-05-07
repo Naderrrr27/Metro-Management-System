@@ -4,9 +4,13 @@
 
 #ifndef METRO_ADMIN_H
 #define METRO_ADMIN_H
+#include "Users.h"
+#include "subscription.h"
+/*class admin: public Users{
+    subscription plan;
 
 
-
+};*/
 
 
 

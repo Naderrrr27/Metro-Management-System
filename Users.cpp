@@ -225,35 +225,123 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
 {
     subscription s;
     auto it = usrData.find(user.GetEmail());
-    s.DisplaySubscriptionPlan(plan);
-    cout << endl;
-    int operation;
-    while(operation != 5){
-        cout << "1: Make Subscription\n2: Manage Subscribtions\n" << endl;
-        cin >> operation;
+    //Admin operations
+   if(it->second.email=="Admin@gmail.com"||it->second.password=="1234admiN"){
+       int adminoperation;
+       while(adminoperation!=5) {
+           cout << "1: Add Plan\n2: Remove Plan\n3: Modify plan\n4:Display Plans";
+           cin >> adminoperation;
+           if (adminoperation == 1) {
+               cout << "Plan name: \n";
+               string newname;
+               cin >> newname;
+               cout << "Trips allowed: \n";
+               int trips;
+               cin >> trips;
+               cout << "Duration: \n";
+               int duration;
+               cin >> duration;
+               map<int, int> prices;
+               for (int i = 1; i <= 4; i++) {
+                   cout << "Stage " << i << "price: \n";
+                   int x;
+                   cin >> x;
+                   prices[i] = x;
+               }
+               it->second.plan.Addplan(newname, trips, duration, prices, plan);
+           }
+           else if (adminoperation == 2) {
+               cout << "Plan name: \n";
+               string planamee;
+               cin >> planamee;
+               it->second.plan.Removeplan(planamee, plan);
+           }
+           else if (adminoperation == 3) {
+               cout << "Plan name: ";
+               string planname;
+               cin >> planname;
+               int op = 0;
+               while (true) {
+                   cout << "choose what you want to change:\n"
+                        << "1: Plan Name\n"
+                        << "2: Plan Duration\n"
+                        << "3: Plan Trips allowed\n"
+                        << "4: Plan Prices\n"
+                        << "5:Exist Modify\n";
+                   cin >> op;
+                   if (op == 1) {
+                       cout << "New Name\n";
+                       string namee;
+                       cin >> namee;
+                       it->second.plan.Modifyplan(plan, planname, namee, -1, -1, {});
+                   } else if (op == 2) {
+                       cout << "New Duration\n";
+                       int durationn;
+                       cin >> durationn;
+                       it->second.plan.Modifyplan(plan, planname, "", durationn, -1, {});
+                   } else if (op == 3) {
+                       cout << "New trips allowed\n";
+                       int trips;
+                       cin >> trips;
+                       it->second.plan.Modifyplan(plan, planname, "", -1, trips, {});
+                   } else if (op == 4) {
+                       map<int, int> pricess;
+                       for (int i = 1; i <= 4; i++) {
+                           cout << "Stage " << i << "price: \n";
+                           int x;
+                           cin >> x;
+                           pricess[i] = x;
+                       }
+                       it->second.plan.Modifyplan(plan, planname, "", -1, -1, pricess);
+                   } else
+                       break;
+               }
+           }
+               else if (adminoperation == 4)
+                   it->second.plan.DisplaySubscriptionPlan(plan);
+           }
 
-        if (operation == 1)
-        {
-            it->second.plan.chooseplan(plan);
-        }
-        else if (operation == 2)
-        {
-            cout << left << setw(20) << "Name"
-         << setw(15) << "From"
-         << setw(15) << "To"
-         << setw(15) << "Trips"
-         << endl;
+   }
+    else {
+        s.DisplaySubscriptionPlan(plan);
+        cout << endl;
+        int operation = 0;
+        while (operation != 5) {
+            cout << "1: Make Subscription\n2: Manage Subscribtions\n" << endl;
+            cin >> operation;
 
-            // Displaying plan information in a formatted table
-            cout << setw(20) << it->second.plan.plan.PlanName
+            if (operation == 1) {
+                it->second.plan.chooseplan(plan);
+            } else if (operation == 2) {
+                cout << left << setw(20) << "Name"
+                     << setw(15) << "From"
+                     << setw(15) << "To"
+                     << setw(15) << "Trips"
+                     << setw(15) << "Stage"
+                     << setw(15) << "Start Date"
+                     << setw(15) << "End Date"
+                     << endl;
+
+                // Displaying plan information in a formatted table
+                cout << setw(20) << it->second.plan.plan.PlanName
                      << setw(15) << it->second.plan.firstDestination
                      << setw(15) << it->second.plan.secondDestination
                      << setw(15) << it->second.plan.getTrips()
+                     << setw(15) << it->second.plan.stage
+                     //<<setw(17)<<it->second.plan.start_tm->tm_mday<<'/'<<it->second.plan.start_tm->tm_mon+1<<"/"<<it->second.plan.start_tm->tm_year+1900
+                     //  <<setw(17)<<it->second.plan.end_tm->tm_mday<<"/"<<it->second.plan.end_tm->tm_mon+1<<"/"<<it->second.plan.end_tm->tm_year+1900
                      << endl;
+                cout << "1: Renew Plan\n2: Upgrade Plan\n";
+                int n;
+                cin >> n;
+                if (n == 1)
+                    it->second.plan.Renewplan();
+                else if (n == 2)
+                    it->second.plan.Upgrade(plan);
+            }
+
+
         }
-
-
-
     }
 }
 

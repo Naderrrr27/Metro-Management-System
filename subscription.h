@@ -9,55 +9,47 @@
 
 
 #include<iostream>
+#include<cmath>
 #include<map>
 #include<chrono>
 #include<ctime>
+#include "Ride.h"
 
 
 using namespace std;
 struct Plan {
     string PlanName="";
     int tripsallowed=0;
-    //int Remainingtrips=0;
     int Duration=0;
-    //int stage;
-    //map<int, int>stageprices = {};
-   // string firstdestination, finaldestination;
-
-    //time
-    //chrono::system_clock::time_point Startdate;
-    //chrono::system_clock::time_point Enddate;
+   map<int, int>stageprices = {};
 };
 class subscription
 {
-
-
-    chrono::system_clock::time_point Startdate;
-    chrono::system_clock::time_point Enddate;
-
-
 public:
     string firstDestination, secondDestination;
+    int remainingtrips;
+    int stage;
+    tm* start_tm;
+    tm* end_tm;
+
     Plan plan;
-  ;//oblect for the user
-    //map to store plans
+
+    //
+    Ride ride;
 
 //methods
     subscription();
     subscription(Plan plan, string firstDestination, string secondDestination);
     void Addplan(string name, int trips, int duration, map<int, int> prices, map<string, Plan> &plans);
     void Removeplan(string planname, map<string, Plan> &plans);
-    void Modifyplan(std::string planname, string newname, int newduration, int newtripsallowed, map<int, int> newprices,
-                    map<string, Plan>& plans);
-    //    void Modifyplan(string name, string newname, int newduration = -1, int newtripsallowed = -1, map<int, int> newprices = {}, map<string, Plan> &plans);
+    void Modifyplan(std::map<string, Plan>& plans,string planname, string newname="", int newduration=-1, int newtripsallowed=-1, map<int, int> newprices={});
     int Stage();
     void chooseplan(map<string, Plan>& plans);
-    void calcenddate(string planname, map<string, Plan> &plans);
+    void Date();
     bool Isplanactive();
     void Renewplan();
-    void Upgrade();
+    void Upgrade(map<string, Plan> &plans);
     void DisplaySubscriptionPlan(map<string, Plan>& plans);
-    void Displayplandetails(string planName, map<string, Plan>& plans);
     void Remainingtrips();//msh 3arfa ahot name wala la
     string getPlanName()
     {
@@ -65,7 +57,7 @@ public:
     }
     int getTrips()
     {
-        return plan.tripsallowed;
+        return remainingtrips;
     }
     int getDuration()
     {

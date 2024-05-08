@@ -6,12 +6,12 @@
 #define METRO_WALLET_H
 
 #pragma once
-#include "Users.h"
 #include <string>
+using namespace std;
 class wallet
 {
 public:
-    int Balance;
+    double Balance;
 
     //Ride ride take shortestpath
     //from another classes

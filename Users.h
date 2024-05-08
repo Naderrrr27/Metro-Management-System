@@ -11,6 +11,8 @@
 #include <map>
 #include "subscription.h"
 #include <fstream>
+
+#include "wallet.h"
 using namespace std;
 struct personalInformation
 {
@@ -18,6 +20,7 @@ struct personalInformation
     string email, fname,  lname, password;
     subscription plan;
     //Rides usrHistory;
+    wallet balance;
     personalInformation() = default;
     personalInformation(int user_id, const string& email, const string& string, const std::string& fname, const std::string& lname);
 };
@@ -36,6 +39,7 @@ private:
 public:
     Users();
     Users(string fname, string lname, string password, string email);
+    void Wallet( Users& users, map<string, personalInformation>& map);
     void begin(map<string, personalInformation>& usrData, map<string, Plan>& plans);
     void Subscribtions(Users& user, map<string, personalInformation>& usrData, map<string, Plan>& plan);
     personalInformation getData()
@@ -60,6 +64,7 @@ public:
     }
     void LogOut(Users &user);
     void Profile(Users &user, map<string, personalInformation> &usrData);
+    void Charge(Users& user, map<string, personalInformation>& usrData);
     ~Users();
 };
 

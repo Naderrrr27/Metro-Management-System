@@ -4,6 +4,7 @@
 
 #include "wallet.h"
 #include "wallet.h"
+#include <iostream>
 wallet::wallet() {
     Balance = 0;
 }

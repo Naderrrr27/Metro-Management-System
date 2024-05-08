@@ -77,7 +77,7 @@ string Users::Password()
     string password;
     while(!check)
     {
-        cout << "Password: ";
+        cout << "Password:";
          cin >> password;
         if (CheckPassword(password)) check = true;
         else cout << "Please enter a strong password\n";
@@ -157,7 +157,7 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
         }
 
         if (isLogged_In && !isAdmin) {
-            cout << "1: Subscriptions\n2: Profile\n3: Log out\n";
+            cout << "1: Subscriptions\n2: Wallet\n3: Profile\n4: Log out\n";
             cin >> operation;
 
             switch (operation) {
@@ -165,9 +165,12 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
                 Subscribtions(*this, usrData, plans);
                 break;
             case 2:
-                Profile(*this, usrData);
+                Wallet(*this, usrData);
                 break;
             case 3:
+                Profile(*this, usrData);
+                break;
+            case 4:
                 LogOut(*this);
                 break;
             default:
@@ -378,6 +381,44 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
         }
     }
 }
+void Users::Charge(Users &user, map<string, personalInformation> &usrData){
+    cout << "Balance:\n";
+    auto currentUser = usrData.find(user.GetEmail());
+    wallet wallett;
+    int balance;
+    while(true)
+    {
+         cin >> balance;
+
+        if (balance % 10 == 0)
+        {
+            break;
+        }
+        cout << "Invalid input please try again\n";
+    }
+        currentUser->second.balance.Addbalance(balance);
+        cout << "Successfull operation\n";
+        cout << "Your current balance: " << currentUser->second.balance.getbalance() << endl;
+}
+void Users::Wallet(Users &user, map<string, personalInformation> &usrData)
+{
+    int op;
+    auto currentUser = usrData.find(user.GetEmail());
+    while (true)
+    {
+        cout << "1: Charge wallet\n";
+        cout << "2: Check Balance\n";
+        cout << "Back\n";
+        cin >> op;
+        if (op == 1) Charge(user, usrData);
+        else if (op == 2)
+        {
+            cout << "Your Balance is " << currentUser->second.balance.Balance << endl;
+        }
+        if (op == 3) return;
+    }
+}
+
 
 Users::~Users()
 {

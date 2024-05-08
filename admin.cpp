@@ -21,7 +21,7 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
         users(usrData, plans);
         break;
     case 2:
-        Profile(*this, usrData);
+        Subscription(user, usrData, plans);
         break;
     case 3:
         LogOut(user);
@@ -46,6 +46,15 @@ void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& 
         {
         case 1:
             DisplayUserData(usrData);
+            break;
+        case 2:
+            AddUser(usrData);
+            break;
+        case 3:
+            DeleteUser(usrData);
+            break;
+        case 4:
+            ModifyUser(usrData, plans);
             break;
         default:
             break;
@@ -97,6 +106,7 @@ void admin::Subscription(Users &user,map<string, personalInformation> &usrData,m
                     prices[i] = x;
                 }
                 it->second.plan.Addplan(newname, trips, duration, prices, plan);
+                    break;
             }
             case 2: {
                 cout << "Plan name: \n";
@@ -156,6 +166,109 @@ void admin::Subscription(Users &user,map<string, personalInformation> &usrData,m
 
     }
 }
+void admin::AddUser(map<string, personalInformation> &usrData)
+{
+    Users newUser;
+    string fname, lname, password, email;
+    cout << "First Name:";
+    cin >> fname;
+
+    cout << "Last Name:";
+    cin >> lname;
+
+    cout << "Email:";
+    cin >> email;
+
+    cout << "Password:";
+    cin >> password;
+    newUser.Data.password = password;
+    newUser.Data.fname = fname;
+    newUser.Data.lname = lname;
+    newUser.Data.email = email;
+    usrData.emplace(email, newUser.getData());
+}
+void admin::DeleteUser(map<string, personalInformation> &usrData)
+{
+    cout << "Enter Email\n";
+
+    string email; cin >> email;
+    if (usrData.find(email) != usrData.end())
+    {
+        usrData.erase(email);
+    }
+}
+void admin::ModifyUser(map<string, personalInformation> &usrData, map<string, Plan> &plan)
+{
+    cout << "Enter Email\n";
+    string email; cin >> email;
+    auto user = usrData.find(email);
+    if (user == usrData.end())
+    {
+        cout << "This User can not be found\n";
+    }
+    else
+    {
+
+
+        while (true)
+        {
+            cout << "1: Modify First Name\n";
+            cout << "2: Modify Last Name\n";
+            cout << "3: Modify E-mail\n";
+            cout << "4: Modify Password\n";
+            cout << "5: Modify Subscription Plan\n";
+            cout << "6: Modify Balance\n";
+            cout << "7: back\n";
+            int op; cin >> op;
+            string s;
+            if (op == 1)
+            {
+                cout << "First Name\n";
+                cin >> s;
+                user->second.fname = s;
+            }
+            else if (op == 2)
+            {
+                cout << "Last Name:";
+                cin >> s;
+                user->second.lname = s;
+            }
+            else if (op == 3)
+            {
+                cout << "E-mail";
+                cin >> s;
+                user->second.email = s;
+                usrData.insert({user->second.email, user->second});
+                usrData.erase(user);
+                user = usrData.find(s);
+            }
+            else if (op == 4)
+            {
+                cout << "Password:";
+                cin >> s;
+                user->second.password = s;
+            }
+            else if (op == 7) return;
+            else if (op == 5)
+            {
+                subscription s;
+                s.chooseplan(plan);
+                user->second.plan = s;
+            }
+            else if (op == 6)
+            {
+                cout << "Balance:";
+                int balance; cin >> balance;
+                user->second.balance.Balance = balance;
+            }
+
+        }
+
+
+    }
+
+}
+
 admin::~admin()
 {
 

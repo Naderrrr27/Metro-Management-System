@@ -11,7 +11,7 @@ using namespace std;
 class wallet
 {
 public:
-    double Balance;
+    int Balance;
 
     wallet();
     void Addbalance(int amount);

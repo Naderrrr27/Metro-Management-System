@@ -26,6 +26,7 @@ struct personalInformation
 };
 
 class Users {
+public:
     personalInformation Data;
     bool isLogged_In = false;
     bool isAdmin = false;

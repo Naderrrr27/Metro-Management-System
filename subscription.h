@@ -29,8 +29,8 @@ public:
     string firstDestination, secondDestination;
     int remainingtrips;
     int stage;
-    string start;
-    string end;
+    string StartDate;
+    string Enddate;
 
     Plan plan;
 

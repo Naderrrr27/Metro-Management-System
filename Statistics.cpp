@@ -90,7 +90,7 @@ void Statistics::showStatisticsYear(string year, string stationName)
         {
             int size = it->first.first.size();
 
-            //starts from the end to check the year at the end of the date string
+            //starts from the Enddate to check the year at the Enddate of the date string
             for (int i = size - 1, j=3 ; i >= size - 4; i--,j--) // check about the targeted year in the dates of the map with key name = station name .
             {
                 if (it->first.first[i] == year[j])

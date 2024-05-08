@@ -260,86 +260,7 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
 {
     subscription s;
     auto it = usrData.find(user.GetEmail());
-    //Admin operations
-   if(it->second.email=="Admin@gmail.com"||it->second.password=="1234admiN"){
-       int adminoperation;
-       while(adminoperation!=5) {
-           cout << "1: Add Plan\n2: Remove Plan\n3: Modify plan\n4:Display Plans";
-           cin >> adminoperation;
-           if (adminoperation == 1) {
-               cout << "Plan name: \n";
-               string newname;
-               cin >> newname;
-               cout << "Trips allowed: \n";
-               int trips;
-               cin >> trips;
-               cout << "Duration: \n";
-               int duration;
-               cin >> duration;
-               map<int, int> prices;
-               for (int i = 1; i <= 4; i++) {
-                   cout << "Stage " << i << "price: \n";
-                   int x;
-                   cin >> x;
-                   prices[i] = x;
-               }
-               it->second.plan.Addplan(newname, trips, duration, prices, plan);
-           }
-           else if (adminoperation == 2) {
-               cout << "Plan name: \n";
-               string planamee;
-               cin >> planamee;
-               it->second.plan.Removeplan(planamee, plan);
-           }
-           else if (adminoperation == 3) {
-               cout << "Plan name: ";
-               string planname;
-               cin >> planname;
-               int op = 0;
-               while (true) {
-                   cout << "choose what you want to change:\n"
-                        << "1: Plan Name\n"
-                        << "2: Plan Duration\n"
-                        << "3: Plan Trips allowed\n"
-                        << "4: Plan Prices\n"
-                        << "5:Exist Modify\n";
-                   cin >> op;
-                   if (op == 1) {
-                       cout << "New Name\n";
-                       string namee;
-                       cin >> namee;
-                       it->second.plan.Modifyplan(plan, planname, namee, -1, -1, {});
-                   } else if (op == 2) {
-                       cout << "New Duration\n";
-                       int durationn;
-                       cin >> durationn;
-                       it->second.plan.Modifyplan(plan, planname, "", durationn, -1, {});
-                   } else if (op == 3) {
-                       cout << "New trips allowed\n";
-                       int trips;
-                       cin >> trips;
-                       it->second.plan.Modifyplan(plan, planname, "", -1, trips, {});
-                   } else if (op == 4) {
-                       map<int, int> pricess;
-                       for (int i = 1; i <= 4; i++) {
-                           cout << "Stage " << i << "price: \n";
-                           int x;
-                           cin >> x;
-                           pricess[i] = x;
-                       }
-                       it->second.plan.Modifyplan(plan, planname, "", -1, -1, pricess);
-                   } else
-                       break;
-               }
-           }
-               else if (adminoperation == 4)
-                   it->second.plan.DisplaySubscriptionPlan(plan);
-           }
-
-   }
-    else {
         s.DisplaySubscriptionPlan(plan);
-        cout << endl;
         int operation = 0;
         while (operation != 5) {
             cout << "1: Make Subscription\n2: Manage Subscribtions\n" << endl;
@@ -363,8 +284,8 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                      << setw(15) << it->second.plan.secondDestination
                      << setw(15) << it->second.plan.getTrips()
                      << setw(15) << it->second.plan.stage
-                     <<setw(15)<<it->second.plan.start
-                    <<setw(15)<<it->second.plan.end << endl;
+                     << setw(15) << it->second.plan.StartDate
+                     << setw(15) << it->second.plan.Enddate << endl;
                 cout << "1: Renew Plan\n2: Upgrade Plan\n";
                 int n;
                 cin >> n;
@@ -377,7 +298,7 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
 
         }
     }
-}
+
 
 Users::~Users()
 {

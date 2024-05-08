@@ -42,7 +42,12 @@ void subscription::Modifyplan(map<string, Plan> &plans,std::string planname, str
 //User methodes
 void subscription::Renewplan() {
     remainingtrips = plan.tripsallowed;
-    //renew time
+    chrono::time_point<chrono::system_clock> start, end;
+    start = chrono::system_clock::now();
+    chrono::hours hoursInDays(plan.Duration * 24 * 30);
+    end = start + hoursInDays;
+    this->StartDate = Date(start);
+    this->Enddate = Date(end);
 }
 void subscription::Upgrade(map<string, Plan> &plans) {
 
@@ -55,7 +60,7 @@ void subscription::DisplaySubscriptionPlan(map<string, Plan> &plans)
     cout << left << setw(30) << "Name"
             << setw(30) << "Duration"
             << setw(30) << "Trips Allowed"
-           /* <<setw(17)<<"Stage 1 Price"
+            /*<<setw(17)<<"Stage 1 Price"
             <<setw(17)<<"Stage 2 Price"
             <<setw(17)<<"Stage 3 Price"
             <<setw(17)<<"Stage 4 Price"*/
@@ -63,14 +68,16 @@ void subscription::DisplaySubscriptionPlan(map<string, Plan> &plans)
 
     // Print each plan
     for (const auto &it : plans) {
-        cout << setw(30) << it.second.PlanName
-             << setw(30) << it.second.Duration
-             << setw(30) << it.second.tripsallowed<<endl ;
-            /* for(auto &it2 : it.second.stageprices)
-                    cout <<setw(15)<<it2.second;*/
-             cout<< endl;
-        //remaining trips not trips allowed
+        std::cout << std::left << std::setw(30) << it.second.PlanName
+                  << std::setw(30) << it.second.Duration
+                  << std::setw(30) << it.second.tripsallowed;
+        /*for (const auto &it2 : it.second.stageprices) {
+            std::cout << std::setw(17) << it2.second;
+        }*/
+        std::cout << std::endl;
     }
+
+        //remaining trips not trips allowed
 
 }
 //class methodes
@@ -116,15 +123,23 @@ auto it = plans.find(name);
         start = chrono::system_clock::now();
         chrono::hours hoursInDays(it->second.Duration * 24 * 30);
         end = start + hoursInDays;
-        this->start = Date(start);
-        this->end = Date(end);
-        cout << this->start << " " << this->end << endl;
+        this->StartDate = Date(start);
+        this->Enddate = Date(end);
+       //cout << this->StartDate << " " << this->Enddate << endl;
 
     }
     else
         cout<<"invalid plan name\n";
 }
-
+bool subscription::Isplanactive() {
+    chrono::time_point<chrono::system_clock> current;
+    current = chrono::system_clock::now();
+    string now=Date(current);
+    if(remainingtrips>0 && now != Enddate)
+        return true;
+    else
+        return false;
+}
 string subscription::Date(chrono::time_point<chrono::system_clock> start) {
     time_t start_t = chrono::system_clock::to_time_t(start);
     tm *local = localtime(&start_t);
@@ -133,7 +148,7 @@ string subscription::Date(chrono::time_point<chrono::system_clock> start) {
     int day = local->tm_mday;
     return formatstring(day, month, year);
 }
-    string subscription::formatstring(int day, int month, int year) {
+string subscription::formatstring(int day, int month, int year) {
     string formatted_day = (day < 10) ? "0" + to_string(day) : to_string(day);
     string formatted_month = (month < 10) ? "0" + to_string(month) : to_string(month);
     string formatted_year = to_string(year);

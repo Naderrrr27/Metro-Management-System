@@ -19,7 +19,7 @@ using namespace std;
 
 
 int write(const map<string, personalInformation> &usrData) {
-    ofstream outputFile("users.txt");
+    ofstream outputFile("C:\\Users\\DELL\\Metro-Management-System\\cmake-build-debug\\users.txt");
     if (!outputFile.is_open()) {
         cerr << "Error: Unable to open file for writing." << endl;
         return 1;
@@ -43,7 +43,7 @@ int write(const map<string, personalInformation> &usrData) {
     return 0;
 }
 int read(map<string, personalInformation> &usrData) {
-    ifstream inputFile("users.txt");
+    ifstream inputFile("C:\\Users\\DELL\\Metro-Management-System\\cmake-build-debug\\users.txt");
     if (!inputFile.is_open()) {
         cerr << "Error: Unable to open file for reading." << endl;
         return 1;
@@ -72,6 +72,7 @@ int read(map<string, personalInformation> &usrData) {
     return 0;
 }
 int main() {
+
     subscription sub;
     map<string, Plan> plans;
     //student plan
@@ -93,7 +94,7 @@ int main() {
               {4, 4500}};
     sub.Addplan("publicyearly", 730, 12, prices, plans);
     map<string, personalInformation> mappp;
-   // write(mappp);
+    //write(mappp);
     subscription plan;
     read(mappp);
     Users user;
@@ -106,7 +107,8 @@ int main() {
         cout << it.first << endl;
 
 
-    /*Metro egypt_metro("Egypt");
+
+    Metro egypt_metro("Egypt");
 
     vector<string> green_line_stations = {
             "Adly Mansour", "El Haykesteb", "Omar Ibn El Khatab", "Qubaa", "Hesham Barakat",
@@ -155,7 +157,7 @@ int main() {
         r.getAllPaths(egypt_metro, start, final);
 //        cin >> start >> final;
         cout << "\n\n\n";
-    }*/
- write(mappp);
+    }
+    //write(mappp);
     return 0;
 }

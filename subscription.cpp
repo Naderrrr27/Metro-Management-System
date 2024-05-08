@@ -106,13 +106,14 @@ auto it = plans.find(name);
     if (it != plans.end()) {
         plan = plans.find(name)->second;
         string first, last;
-      //  while(true) {
+       // Metro m;
+        //while(true) {
             cout << "From:";
             cin >> first;
             cout << "To:";
             cin >> last;
-        //    if(ride.isExisted(first, last) ==true)
-          //      break;
+           // if(ride.isExisted(first, last,m) ==true)
+             //  break;
             //else
               //  cout<<"Invalid station";
         //}

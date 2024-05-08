@@ -37,7 +37,7 @@ public:
     Ride();
     ~Ride();
     void calculateRideDateTime();
-    bool isExisted(string,string);
+    bool isExisted(string &first_station,string &second_station,Metro &metro);
     pair<int,int>getStationNumber(unordered_map<string, vector<Station>>& graphstring ,string ,string);
     vector<string>bfsShortestPath(unordered_map<string, vector<Station>>&graph ,string ,string);
     void getAllPaths(Metro &metro, string &firstDestination, string &);

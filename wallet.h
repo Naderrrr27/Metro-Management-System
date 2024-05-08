@@ -14,13 +14,11 @@ public:
     int Balance;
 
     wallet();
-    void Addbalance(int amount);
+    int Addbalance(int amount);
     int getbalance();
     void Deduct(int ticketprice);
     void Ticketprice(int stations);
 
-    //take first and last distantion from check out and checkin
-    //User user
 };
 
 

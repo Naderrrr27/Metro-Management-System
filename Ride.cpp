@@ -182,6 +182,20 @@ void Ride::getAllPaths(Metro &metro, string &firstDestination, string &secondDes
     sort(pathHandler.allPaths.begin(),pathHandler.allPaths.end(), Ride::compare);
     printAllPaths(metro, firstDestination, secondDestination);
 }
+bool Ride::isExisted(string &first_station,string &second_station,Metro &metro) {
+
+        bool fir,sec;
+        fir= sec = false;
+
+        for(auto &line : metro.get_lines()) {
+            if(line.second.get_stations().count(first_station))
+                fir=true;
+
+            if(line.second.get_stations().count(second_station) )
+                sec=true;
+        }
+        return fir&&sec;
+    }
 ////Handel time and date
 void Ride::calculateRideDateTime(){
     time_t t = time(0);

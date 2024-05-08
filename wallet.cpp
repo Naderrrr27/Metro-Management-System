@@ -11,9 +11,16 @@ wallet::wallet() {
 int wallet::getbalance() {
     return Balance;
 }
-void wallet::Addbalance(int amount) {
-        Balance += amount;
-
+int wallet::Addbalance(int amount) {
+        int check =Balance+amount;
+        if(check <=400) {
+            Balance = check;
+            return 1;
+        }
+        else {
+            cout << "Balance limit can't exceed 400";
+        }
+    return 0;
 }
 void wallet::Deduct(int ticketprice) {
 

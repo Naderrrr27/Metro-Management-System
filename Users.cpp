@@ -314,18 +314,18 @@ void Users::Charge(Users &user, map<string, personalInformation> &usrData){
     cout << "Balance:\n";
     auto currentUser = usrData.find(user.GetEmail());
     wallet wallett;
-    int balance;
+    int amount;
     while(true)
     {
-         cin >> balance;
-
-        if (balance % 10 == 0)
-        {
-            break;
+         cin >> amount;
+        if (amount % 10 == 0) {
+            if( currentUser->second.balance.Addbalance(amount)==1)
+                break;
         }
-        cout << "Invalid input please try again\n";
-    }
-        currentUser->second.balance.Addbalance(balance);
+        else
+          cout << "Invalid input please try again\n";
+
+        }
         cout << "Successfull operation\n";
         cout << "Your current balance: " << currentUser->second.balance.getbalance() << endl;
 }
@@ -337,7 +337,7 @@ void Users::Wallet(Users &user, map<string, personalInformation> &usrData)
     {
         cout << "1: Charge wallet\n";
         cout << "2: Check Balance\n";
-        cout << "Back\n";
+        cout << "3: Back\n";
         cin >> op;
         if (op == 1) Charge(user, usrData);
         else if (op == 2)

@@ -267,39 +267,47 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
         cout << endl;
         int operation = 0;
         while (operation != 5) {
-            cout << "1: Make Subscription\n2: Manage Subscribtions\n" << endl;
-            cin >> operation;
-
-            if (operation == 1) {
-                it->second.plan.chooseplan(plan);
-            } else if (operation == 2) {
-                cout << left << setw(20) << "Name"
-                     << setw(15) << "From"
-                     << setw(15) << "To"
-                     << setw(15) << "Trips"
-                     << setw(15) << "Stage"
-                     << setw(15) << "Start Date"
-                     << setw(15) << "End Date"
-                     << endl;
-
-                // Displaying plan information in a formatted table
-                cout << setw(20) << it->second.plan.plan.PlanName
-                     << setw(15) << it->second.plan.firstDestination
-                     << setw(15) << it->second.plan.secondDestination
-                     << setw(15) << it->second.plan.getTrips()
-                     << setw(15) << it->second.plan.stage
-                     <<setw(15)<<it->second.plan.StartDate
-                    <<setw(15)<<it->second.plan.Enddate<< endl;
-                cout << "1: Renew Plan\n2: Upgrade Plan\n";
-                int n;
-                cin >> n;
-                if (n == 1)
-                    it->second.plan.Renewplan();
-                else if (n == 2)
-                    it->second.plan.Upgrade(plan);
+            if (it->second.plan.plan.PlanName.empty()) {
+                cout << "1: Make Subscription\n2: Exist" << endl;
+                cin >> operation;
+                if (operation == 1) {
+                    it->second.plan.chooseplan(plan);
+                } else if (operation == 2)
+                    break;
             }
+            else {
+                cout << "1:Display your plan details\n2:Renew your plan\n3:Upgrade your plan\n4:Exist";
+                cin >> operation;
+                switch (operation) {
+                    case 1:
+                        cout << left << setw(20) << "Name"
+                             << setw(15) << "From"
+                             << setw(15) << "To"
+                             << setw(15) << "Trips"
+                             << setw(15) << "Stage"
+                             << setw(15) << "Start Date"
+                             << setw(15) << "End Date"
+                             << endl;
 
-
+                        // Displaying plan information in a formatted table
+                        cout << setw(20) << it->second.plan.plan.PlanName
+                             << setw(15) << it->second.plan.firstDestination
+                             << setw(15) << it->second.plan.secondDestination
+                             << setw(15) << it->second.plan.getTrips()
+                             << setw(15) << it->second.plan.stage
+                             << setw(15) << it->second.plan.StartDate
+                             << setw(15) << it->second.plan.Enddate << endl;
+                        break;
+                    case 2:
+                        it->second.plan.Renewplan();
+                        break;
+                    case 3:
+                        it->second.plan.Upgrade(plan);
+                        break;
+                    case 4:
+                        return;
+                }
+            }
         }
     }
 void Users::Charge(Users &user, map<string, personalInformation> &usrData){

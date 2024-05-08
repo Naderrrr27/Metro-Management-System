@@ -16,6 +16,7 @@ public:
     void begin(Users &user, map<string, personalInformation> &usrData, map<string, Plan> &plans);
     void users(map<string, personalInformation> &usrData, map<string, Plan> &plans);
     void DisplayUserData(map<string, personalInformation> &usrData);
+    void Subscription(Users &user,map<string, personalInformation> &usrData,map<string, Plan> &plans);
     ~admin();
 };
 

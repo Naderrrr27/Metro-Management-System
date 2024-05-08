@@ -121,24 +121,25 @@ auto it = plans.find(name);
         firstDestination = first;
         secondDestination = last;
         int stagee = Stage();
-        price = this->plan.stageprices[stagee];
-       // cout << price << endl;
-        cout << "the best stage for you is " << Stage() << endl;
+        Price = this->plan.stageprices[stagee];
+       // cout << Price << endl;
+        cout << "the best stage for you is " << Stage();
+        cout << "for " << Price << " LE" << endl;
         cout<<"Confirm subscription\n1:Yes\n2:No\n";
         int confirm;cin>>confirm;
         if(confirm==1) {
             plan.PlanName = plans[name].PlanName;
             plan.Duration = plans[name].Duration;
             plan.tripsallowed = plans[name].tripsallowed;
-            stage = Stage();
+            stage = stagee;
             remainingtrips = plan.tripsallowed;
+            Price=plans[name].stageprices[stage];
             chrono::time_point<chrono::system_clock> start, end;
             start = chrono::system_clock::now();
             chrono::hours hoursInDays(it->second.Duration * 24 * 30);
             end = start + hoursInDays;
             this->StartDate = Date(start);
             this->Enddate = Date(end);
-            cout << price << endl;
         }
         else
             plan.PlanName={};

@@ -30,9 +30,9 @@ public:
     string firstDestination, secondDestination;
     int remainingtrips;
     int stage;
+    int Price;
     string StartDate;
     string Enddate;
-    int price;
 
     Plan plan;
 
@@ -65,17 +65,6 @@ public:
     {
         return plan.Duration;
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 };

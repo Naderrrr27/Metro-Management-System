@@ -285,6 +285,7 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                              << setw(15) << "To"
                              << setw(15) << "Trips"
                              << setw(15) << "Stage"
+                             <<setw(15)<<"Price"
                              << setw(15) << "Start Date"
                              << setw(15) << "End Date"
                              << endl;
@@ -295,6 +296,7 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                              << setw(15) << it->second.plan.secondDestination
                              << setw(15) << it->second.plan.getTrips()
                              << setw(15) << it->second.plan.stage
+                             << setw(15) << it->second.plan.Price
                              << setw(15) << it->second.plan.StartDate
                              << setw(15) << it->second.plan.Enddate << endl;
                         break;

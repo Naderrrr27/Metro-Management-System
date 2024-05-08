@@ -99,7 +99,7 @@ void admin::Subscription(Users &user,map<string, personalInformation> &usrData,m
                 cin >> duration;
                 map<int, int> prices;
                 for (int i = 1; i <= 4; i++) {
-                    cout << "Stage " << i << "price: \n";
+                    cout << "Stage " << i << "Price: \n";
                     int x;
                     cin >> x;
                     prices[i] = x;
@@ -147,7 +147,7 @@ void admin::Subscription(Users &user,map<string, personalInformation> &usrData,m
                         case 4:{
                         map<int, int> pricess;
                         for (int i = 1; i <= 4; i++) {
-                            cout << "Stage " << i << "price: \n";
+                            cout << "Stage " << i << "Price: \n";
                             int x;
                             cin >> x;
                             pricess[i] = x;

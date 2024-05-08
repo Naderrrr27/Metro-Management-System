@@ -33,7 +33,7 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
 }
 void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& plans)
 {
-    int op; cin >> op;
+    int op;
     while (op != 5)
     {
         cout << "1: Display Users Data" << endl;
@@ -60,8 +60,6 @@ void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& 
             break;
         }
     }
-
-
 }
 void admin::DisplayUserData(map<string, personalInformation> &usrData)
 {
@@ -77,7 +75,8 @@ void admin::DisplayUserData(map<string, personalInformation> &usrData)
         << setw(colWidth) << it.second.lname
         << setw(30) << it.second.email
         << setw(30) << it.second.password
-        << setw(30) << it.second.plan.plan.PlanName << endl;
+        << setw(30) << it.second.plan.plan.PlanName <<
+            setw(30) << it.second.balance.Balance;
     }
 }
 void admin::Subscription(Users &user,map<string, personalInformation> &usrData,map<std::string, Plan> &plan) {
@@ -218,7 +217,7 @@ void admin::ModifyUser(map<string, personalInformation> &usrData, map<string, Pl
             cout << "4: Modify Password\n";
             cout << "5: Modify Subscription Plan\n";
             cout << "6: Modify Balance\n";
-            cout << "7: back\n";
+            cout << "7: Back\n";
             int op; cin >> op;
             string s;
             if (op == 1)

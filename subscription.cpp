@@ -19,7 +19,7 @@ void subscription::Addplan(string name, int trips, int duration, map<int, int> p
     newplan.PlanName = name;
     newplan.tripsallowed = trips;
     newplan.Duration = duration;
-    //newplan.stageprices = prices;
+    newplan.stageprices = prices;
     plans[name] = newplan;
 
 }
@@ -120,6 +120,9 @@ auto it = plans.find(name);
         //set the plan for the user
         firstDestination = first;
         secondDestination = last;
+        int stagee = Stage();
+        price = this->plan.stageprices[stagee];
+       // cout << price << endl;
         cout << "the best stage for you is " << Stage() << endl;
         cout<<"Confirm subscription\n1:Yes\n2:No\n";
         int confirm;cin>>confirm;
@@ -135,6 +138,7 @@ auto it = plans.find(name);
             end = start + hoursInDays;
             this->StartDate = Date(start);
             this->Enddate = Date(end);
+            cout << price << endl;
         }
         else
             plan.PlanName={};

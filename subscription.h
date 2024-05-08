@@ -32,6 +32,7 @@ public:
     int stage;
     string StartDate;
     string Enddate;
+    int price;
 
     Plan plan;
 

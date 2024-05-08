@@ -40,7 +40,7 @@ public:
     bool isExisted(string,string);
     pair<int,int>getStationNumber(unordered_map<string, vector<Station>>& graphstring ,string ,string);
     vector<string>bfsShortestPath(unordered_map<string, vector<Station>>&graph ,string ,string);
-    void getAllPaths(Metro &metro, string &firstDestination, string &secondDestination);
+    void getAllPaths(Metro &metro, string &firstDestination, string &);
     string getTime();
     string getDate();
 

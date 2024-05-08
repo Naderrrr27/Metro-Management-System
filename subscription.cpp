@@ -82,7 +82,7 @@ void subscription::DisplaySubscriptionPlan(map<string, Plan> &plans)
 }
 //class methodes
 int subscription::Stage() {
-    int stations = shortestpath(firstDestination, secondDestination);
+    int stations = 5;
     if (stations >= 1 && stations <= 9) {
         return 1;
     }
@@ -98,6 +98,7 @@ int subscription::Stage() {
 }
 void subscription::chooseplan(map<string, Plan> &plans)
 {
+    Ride ride;
     cout << "Enter Plan Name:";
     string name;
     cin >> name;
@@ -105,31 +106,38 @@ auto it = plans.find(name);
     if (it != plans.end()) {
         plan = plans.find(name)->second;
         string first, last;
-        cout << "From:";
-        cin >> first;
-        cout << "To:";
-        cin >> last;
+      //  while(true) {
+            cout << "From:";
+            cin >> first;
+            cout << "To:";
+            cin >> last;
+        //    if(ride.isExisted(first, last) ==true)
+          //      break;
+            //else
+              //  cout<<"Invalid station";
+        //}
         //set the plan for the user
         firstDestination = first;
         secondDestination = last;
         cout << "the best stage for you is " << Stage() << endl;
-
-        plan.PlanName = plans[name].PlanName;
-        plan.Duration = plans[name].Duration;
-        plan.tripsallowed = plans[name].tripsallowed;
-        stage = Stage();
-        remainingtrips = plan.tripsallowed;
-        chrono::time_point<chrono::system_clock> start, end;
-        start = chrono::system_clock::now();
-        chrono::hours hoursInDays(it->second.Duration * 24 * 30);
-        end = start + hoursInDays;
-        this->StartDate = Date(start);
-        this->Enddate = Date(end);
-       //cout << this->StartDate << " " << this->Enddate << endl;
-
+        cout<<"Confirm subscription\n1:Yes\n2:No\n";
+        int confirm;cin>>confirm;
+        if(confirm==1) {
+            plan.PlanName = plans[name].PlanName;
+            plan.Duration = plans[name].Duration;
+            plan.tripsallowed = plans[name].tripsallowed;
+            stage = Stage();
+            remainingtrips = plan.tripsallowed;
+            chrono::time_point<chrono::system_clock> start, end;
+            start = chrono::system_clock::now();
+            chrono::hours hoursInDays(it->second.Duration * 24 * 30);
+            end = start + hoursInDays;
+            this->StartDate = Date(start);
+            this->Enddate = Date(end);
+        }
+        else
+            plan.PlanName={};
     }
-    else
-        cout<<"invalid plan name\n";
 }
 bool subscription::Isplanactive() {
     chrono::time_point<chrono::system_clock> current;
@@ -159,12 +167,6 @@ string subscription::formatstring(int day, int month, int year) {
 //feha klam ayza akhod object mn class tane
 void subscription::Remainingtrips() {
     //plan.Remainingtrips = plan.tripsallowed;
-}
-
-
-//3lshan elpro
-int subscription::shortestpath(std::string first, std::string last) {
-    return 1;
 }
 
 

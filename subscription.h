@@ -13,6 +13,7 @@
 #include<map>
 #include<chrono>
 #include<ctime>
+#include "metro.h"
 #include "Ride.h"
 
 
@@ -35,7 +36,6 @@ public:
     Plan plan;
 
     //
-    Ride ride;
 
 //methods
     subscription();
@@ -43,15 +43,15 @@ public:
     void Addplan(string name, int trips, int duration, map<int, int> prices, map<string, Plan> &plans);
     void Removeplan(string planname, map<string, Plan> &plans);
     void Modifyplan(std::map<string, Plan>& plans,string planname, string newname="", int newduration=-1, int newtripsallowed=-1, map<int, int> newprices={});
-    int Stage();
     void chooseplan(map<string, Plan>& plans);
-    string Date(chrono::time_point<chrono::system_clock> start);
-    string formatstring(int day, int month, int year);
-    bool Isplanactive();
     void Renewplan();
     void Upgrade(map<string, Plan> &plans);
+    bool Isplanactive();
     void DisplaySubscriptionPlan(map<string, Plan>& plans);
-    void Remainingtrips();//msh 3arfa ahot name wala la
+    int Stage();
+    string Date(chrono::time_point<chrono::system_clock> start);
+    string formatstring(int day, int month, int year);
+    void Remainingtrips();
     string getPlanName()
     {
         return plan.PlanName;
@@ -68,8 +68,7 @@ public:
 
 
 
-    //from another class Ride
-    int shortestpath(string first, string last);
+
 
 
 

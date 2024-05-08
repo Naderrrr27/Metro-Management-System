@@ -12,20 +12,17 @@ int wallet::getbalance() {
     return Balance;
 }
 void wallet::Addbalance(int amount) {
-    if (amount % 10 == 0 && amount + Balance <= 400)
         Balance += amount;
+
 }
 void wallet::Deduct(int ticketprice) {
 
     if (Balance >= ticketprice)
         Balance -= ticketprice;
     else
-        cout << "recharge your balance";
+        cout << "Recharge your balance";
 }
-void wallet::Ticketprice() {
-    int c=6;
-
-    int stations = c;//shortestpath(firstdestination, finaldestination);
+void wallet::Ticketprice(int stations) {
     if (stations >= 1 && stations <= 9)
         Deduct(6);
     else if (stations > 9 && stations <= 16)

@@ -13,16 +13,11 @@ class wallet
 public:
     double Balance;
 
-    //Ride ride take shortestpath
-    //from another classes
-    int shortestpath(string firstdist, string lastdist);
-
-
     wallet();
     void Addbalance(int amount);
     int getbalance();
     void Deduct(int ticketprice);
-    void Ticketprice();
+    void Ticketprice(int stations);
 
     //take first and last distantion from check out and checkin
     //User user

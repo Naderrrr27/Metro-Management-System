@@ -72,39 +72,39 @@ int read(map<string, personalInformation> &usrData) {
     return 0;
 }
 int main() {
-
-    subscription sub;
-    map<string, Plan> plans;
-    //student plan
-    map<int, int> prices;    prices = {{1, 33},
-              {2, 41},
-              {3, 50},
-              {4, 65}};
-    sub.Addplan("student", 180, 3, prices, plans);
-    //public monthly plan
-    prices = {{1, 230},
-              {2, 290},
-              {3, 340},
-              {4, 450}};
-    sub.Addplan("publicmonthly", 60, 1, prices, plans);
-    // public yearly plan
-    prices = {{1, 1500},
-              {2, 2500},
-              {3, 3500},
-              {4, 4500}};
-    sub.Addplan("publicyearly", 730, 12, prices, plans);
-    map<string, personalInformation> mappp;
-    //write(mappp);
-    subscription plan;
-    read(mappp);
-    Users user;
-
-    for (auto it: mappp)
-        cout << it.first << endl;
-    user.begin(mappp, plans);
-    //user = mappp.find(user.GetEmail());
-    for (auto it: mappp)
-        cout << it.first << endl;
+//
+//    subscription sub;
+//    map<string, Plan> plans;
+//    //student plan
+//    map<int, int> prices;    prices = {{1, 33},
+//              {2, 41},
+//              {3, 50},
+//              {4, 65}};
+//    sub.Addplan("student", 180, 3, prices, plans);
+//    //public monthly plan
+//    prices = {{1, 230},
+//              {2, 290},
+//              {3, 340},
+//              {4, 450}};
+//    sub.Addplan("publicmonthly", 60, 1, prices, plans);
+//    // public yearly plan
+//    prices = {{1, 1500},
+//              {2, 2500},
+//              {3, 3500},
+//              {4, 4500}};
+//    sub.Addplan("publicyearly", 730, 12, prices, plans);
+//    map<string, personalInformation> mappp;
+//    //write(mappp);
+//    subscription plan;
+//    read(mappp);
+//    Users user;
+//
+//    for (auto it: mappp)
+//        cout << it.first << endl;
+//    user.begin(mappp, plans);
+//    //user = mappp.find(user.GetEmail());
+//    for (auto it: mappp)
+//        cout << it.first << endl;
 
 
 
@@ -154,8 +154,13 @@ int main() {
 
     while (cases--) {
         string start = "Alf Maskan", final = "Mehwar Rod El Farag";
-        r.getAllPaths(egypt_metro, start, final);
-//        cin >> StartDate >> final;
+//        cin>>start>>final;
+        vector<string>path=r.bfsShortestPath(start,final,egypt_metro);
+
+        for(auto &station:path){
+            cout<<station<<"\n";
+        }
+
         cout << "\n\n\n";
     }
     //write(mappp);

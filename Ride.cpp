@@ -7,6 +7,7 @@
 #include "Ride.h"
 #include "Station.h"
 #include "metro.h"
+
 Ride::Ride(string firstD, string finalD) {
     this->firstD=firstD;
     this->finalD=finalD;
@@ -16,41 +17,69 @@ Ride::Ride() {}
 Ride::~Ride() {
 }
 
-vector<string> Ride::bfsShortestPath(unordered_map<string, vector<Station>>& graph, string firstD, string finalD) {
+vector<string> Ride::bfsShortestPath(string &first_station,string &second_station,Metro &metro) {
 
-    if(!graph.count(firstD)||!graph.count(finalD)){
-        cout<<"change the Destination ";
-        return {};
+    if(!exists(first_station,metro)){
+        cout<<"\nThere's No Station Named \""<<first_station<<"\"\n";
+        return { };
+    }
+    else if(!exists(second_station,metro)){
+        cout<<"\nThere's No Station Named \""<<second_station<<"\"\n";
+        return { };
     }
     else{
-        queue<pair<string, vector<string>>> q;
-        unordered_set<string> visited;
 
-        q.push({firstD, {firstD}});
-        visited.insert(firstD);
+        queue<string>q;
+        q.push(first_station);
 
-        while (!q.empty()) {
-            auto current = q.front();
+        unordered_map<string,bool>visited;
+
+        visited[first_station]=true;
+
+        unordered_map<string,string>parent;
+        parent[first_station]="-1";
+
+        while(!q.empty()){
+
+            string current_parent=q.front();
             q.pop();
-            string currentNode = current.first;
-            vector<string> pathSoFar = current.second;
 
-            if (currentNode == finalD) {
-                return pathSoFar;
+            if(current_parent==second_station){
+                break;
             }
 
-            for (Station neighbor: graph.at(currentNode)) {
-                if (visited.find(neighbor.get_name()) == visited.end()) {
-                    visited.insert(neighbor.get_name());
-                    vector<string> newPath = pathSoFar;
-                    newPath.push_back(neighbor.get_name());
-                    q.push({neighbor.get_name(), newPath});
+            for(auto &line:metro.get_lines()){
+                if(line.second.get_stations().count(current_parent)){
+                    for(auto &child:line.second.get_stations()[current_parent]){
+                        if(!visited[child.get_name()]){
+                            visited[child.get_name()]=true;
+                            parent[child.get_name()]=current_parent;
+                            q.push(child.get_name());
+                        }
+                    }
                 }
             }
+
         }
+        vector<string> path;
+        fill_path(parent,path,second_station);
+        return path;
     }
 
 }
+
+void Ride::fill_path(unordered_map<string,string>&parent,vector<string>&path,string root) {
+    if(root=="-1"){
+        return;
+    }
+    else{
+        fill_path(parent,path,parent[root]);
+        path.push_back(root);
+    }
+}
+
+
+
 ///Get All paths
 bool Ride::compare(const vector<string>&v1, const vector<string>&v2){
     return v1.size() < v2.size(); /// false v2 before v1..
@@ -182,20 +211,14 @@ void Ride::getAllPaths(Metro &metro, string &firstDestination, string &secondDes
     sort(pathHandler.allPaths.begin(),pathHandler.allPaths.end(), Ride::compare);
     printAllPaths(metro, firstDestination, secondDestination);
 }
-bool Ride::isExisted(string &first_station,string &second_station,Metro &metro) {
-
-        bool fir,sec;
-        fir= sec = false;
-
-        for(auto &line : metro.get_lines()) {
-            if(line.second.get_stations().count(first_station))
-                fir=true;
-
-            if(line.second.get_stations().count(second_station) )
-                sec=true;
+bool Ride::exists(string &station,Metro &metro) {
+    for(auto &line : metro.get_lines()) {
+        if(line.second.get_stations().count(station)){
+            return true;
         }
-        return fir&&sec;
     }
+    return false;
+}
 ////Handel time and date
 void Ride::calculateRideDateTime(){
     time_t t = time(0);
@@ -218,3 +241,4 @@ string Ride::getTime(){
 string Ride::getDate(){
     return rideDate;
 }
+

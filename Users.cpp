@@ -286,8 +286,8 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                              << setw(15) << "Trips"
                              << setw(15) << "Stage"
                              <<setw(15)<<"Price"
-                             << setw(15) << "Start Date"
-                             << setw(15) << "End Date"
+                             << setw(15) << "StartDate"
+                             << setw(15) << "EndDate"
                              << endl;
 
                         // Displaying plan information in a formatted table
@@ -301,10 +301,19 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                              << setw(15) << it->second.plan.Enddate << endl;
                         break;
                     case 2:
-                        it->second.plan.Renewplan();
+                        cout<<it->second.plan.Price<<" LE will be Deducted from your wallet\n";
+                        cout<<"confirm\n1:Yes\n2:No";
+                        int n;cin>>n;
+                        if(n==1) {
+                            it->second.plan.Renewplan();
+                            cout << "Your plan is Renewed\n";
+                        }
+                        else
+                            return;
                         break;
                     case 3:
                         it->second.plan.Upgrade(plan);
+                        cout << "Your plan is Upgraded\n";
                         break;
                     case 4:
                         return;

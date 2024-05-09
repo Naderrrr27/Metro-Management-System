@@ -2,6 +2,7 @@
 // Created by pc on 01/05/2024.
 //
 #include "subscription.h"
+#include "wallet.h"
 
 #include <iomanip>
 
@@ -99,6 +100,7 @@ int subscription::Stage() {
 void subscription::chooseplan(map<string, Plan> &plans)
 {
     Ride ride;
+    wallet wallett;
     cout << "Enter Plan Name:";
     string name;
     cin >> name;
@@ -128,6 +130,7 @@ auto it = plans.find(name);
         cout<<"Confirm subscription\n1:Yes\n2:No\n";
         int confirm;cin>>confirm;
         if(confirm==1) {
+            //wallett.Deduct(Price);
             plan.PlanName = plans[name].PlanName;
             plan.Duration = plans[name].Duration;
             plan.tripsallowed = plans[name].tripsallowed;

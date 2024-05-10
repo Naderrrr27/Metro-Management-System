@@ -50,10 +50,10 @@ void subscription::Renewplan() {
     this->StartDate = Date(start);
     this->Enddate = Date(end);
 }
-void subscription::Upgrade(map<string, Plan> &plans) {
+void subscription::Upgrade(map<string, Plan> &plans,Metro metro) {
 
     DisplaySubscriptionPlan(plans);
-    chooseplan(plans);
+    chooseplan(plans,metro);
 
 }
 void subscription::DisplaySubscriptionPlan(map<string, Plan> &plans)
@@ -82,8 +82,10 @@ void subscription::DisplaySubscriptionPlan(map<string, Plan> &plans)
 
 }
 //class methodes
-int subscription::Stage() {
-    int stations = 5;
+int subscription::Stage(Metro &metro) {
+    Ride ride;
+     vector<string> v = ride.bfsShortestPath(firstDestination,secondDestination,metro);
+     int stations =v.size();
     if (stations >= 1 && stations <= 9) {
         return 1;
     }
@@ -97,7 +99,7 @@ int subscription::Stage() {
         return 4;
     }
 }
-void subscription::chooseplan(map<string, Plan> &plans)
+void subscription::chooseplan(map<string, Plan> &plans,Metro &metro)
 {
     Ride ride;
     wallet wallett;
@@ -109,24 +111,27 @@ auto it = plans.find(name);
         plan = plans.find(name)->second;
         string first, last;
        // Metro m;
-        //while(true) {
+        while(true) {
             cout << "From:";
             cin >> first;
-            cout << "To:";
-            cin >> last;
-           // if(ride.isExisted(first, last,m) ==true)
-             //  break;
-            //else
-              //  cout<<"Invalid station";
-        //}
+            if(ride.exists(first,metro) ==true) {
+                cout << "To:";
+                cin >> last;
+                if (ride.exists(last, metro) == true)
+                    break;
+                else
+                   cout << "Last station is invalid\n";
+            }
+            else
+                cout<<"First station is invalid\n";
+        }
         //set the plan for the user
         firstDestination = first;
         secondDestination = last;
-        int stagee = Stage();
+        int stagee = Stage(metro);
         Price = this->plan.stageprices[stagee];
-       // cout << Price << endl;
-        cout << "the best stage for you is " << Stage();
-        cout << "for " << Price << " LE" << endl;
+        cout << "the best stage for you is " << stagee;
+        cout << " for " << Price << " LE" << endl;
         cout<<"Confirm subscription\n1:Yes\n2:No\n";
         int confirm;cin>>confirm;
         if(confirm==1) {
@@ -147,6 +152,8 @@ auto it = plans.find(name);
         else
             plan.PlanName={};
     }
+    else
+        cout<<"Invalid plan name\n";
 }
 bool subscription::Isplanactive() {
     chrono::time_point<chrono::system_clock> current;

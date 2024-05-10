@@ -10,7 +10,7 @@ admin::admin()
 {
 
 }
-void admin::begin(Users &user,map<string, personalInformation>& usrData, map<string, Plan>& plans)
+void admin::begin(Users &user,map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro)
 {
     int operation;
     cout << "1: Users\n2: Subscriptions\n3: Log out\n";
@@ -18,7 +18,7 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
 
     switch (operation) {
     case 1:
-        users(usrData, plans);
+        users(usrData, plans,metro);
         break;
     case 2:
         Subscription(user, usrData, plans);
@@ -31,7 +31,7 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
         break;
     }
 }
-void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& plans)
+void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro)
 {
     int op;
     while (op != 5)
@@ -54,7 +54,7 @@ void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& 
             DeleteUser(usrData);
             break;
         case 4:
-            ModifyUser(usrData, plans);
+            ModifyUser(usrData, plans,metro);
             break;
         default:
             break;
@@ -196,7 +196,7 @@ void admin::DeleteUser(map<string, personalInformation> &usrData)
         usrData.erase(email);
     }
 }
-void admin::ModifyUser(map<string, personalInformation> &usrData, map<string, Plan> &plan)
+void admin::ModifyUser(map<string, personalInformation> &usrData, map<string, Plan> &plan,Metro &metro)
 {
     cout << "Enter Email\n";
     string email; cin >> email;
@@ -251,7 +251,7 @@ void admin::ModifyUser(map<string, personalInformation> &usrData, map<string, Pl
             else if (op == 5)
             {
                 subscription s;
-                s.chooseplan(plan);
+                s.chooseplan(plan,metro);
                 user->second.plan = s;
             }
             else if (op == 6)

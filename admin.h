@@ -13,13 +13,13 @@ class admin: public Users
     subscription plan;
 public:
     admin();
-    void begin(Users &user, map<string, personalInformation> &usrData, map<string, Plan> &plans);
-    void users(map<string, personalInformation> &usrData, map<string, Plan> &plans);
+    void begin(Users &user, map<string, personalInformation> &usrData, map<string, Plan> &plans,Metro &metro);
+    void users(map<string, personalInformation> &usrData, map<string, Plan> &plans,Metro &metro);
     void DisplayUserData(map<string, personalInformation> &usrData);
     void Subscription(Users &user,map<string, personalInformation> &usrData,map<string, Plan> &plans);
     void AddUser(map<string, personalInformation> &usrData);
     void DeleteUser(map<string, personalInformation> &usrData);
-    void ModifyUser(map<string, personalInformation>& usrData, map<string, Plan>& plan);
+    void ModifyUser(map<string, personalInformation>& usrData, map<string, Plan>& plan,Metro &metro);
 
 
     ~admin();

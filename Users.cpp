@@ -131,7 +131,7 @@ Users Users::Login(map<string, personalInformation> &usrData)
         isLogged_In = true;
     return newUser;
 }
-void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans) {
+void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro) {
     int operation = 0;
 
     cout << "Welcome To Metro Mate\n";
@@ -162,7 +162,7 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
 
             switch (operation) {
             case 1:
-                Subscribtions(*this, usrData, plans);
+                Subscribtions(*this, usrData, plans,metro);
                 break;
             case 2:
                 Wallet(*this, usrData);
@@ -181,7 +181,7 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
         if (isLogged_In && isAdmin)
         {
             admin Admin;
-            Admin.begin(*this,usrData, plans);
+            Admin.begin(*this,usrData, plans,metro);
         }
 
     }
@@ -259,7 +259,7 @@ void Users::Profile(Users &user, map<string, personalInformation> &usrData)
         }
     }
 }
-void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData, map<string, Plan> &plan)
+void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData, map<string, Plan> &plan,Metro &metro)
 {
     subscription s;
     auto it = usrData.find(user.GetEmail());
@@ -271,7 +271,7 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                 cout << "1: Make Subscription\n2: Exist" << endl;
                 cin >> operation;
                 if (operation == 1) {
-                    it->second.plan.chooseplan(plan);
+                    it->second.plan.chooseplan(plan,metro);
                 } else if (operation == 2)
                     break;
             }
@@ -286,8 +286,8 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                              << setw(15) << "Trips"
                              << setw(15) << "Stage"
                              <<setw(15)<<"Price"
-                             << setw(15) << "StartDate"
                              << setw(15) << "EndDate"
+                             << setw(15) << "StartDate"
                              << endl;
 
                         // Displaying plan information in a formatted table
@@ -312,7 +312,7 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                             return;
                         break;
                     case 3:
-                        it->second.plan.Upgrade(plan);
+                        it->second.plan.Upgrade(plan,metro);
                         cout << "Your plan is Upgraded\n";
                         break;
                     case 4:

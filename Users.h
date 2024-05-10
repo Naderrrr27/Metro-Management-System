@@ -41,8 +41,8 @@ public:
     Users();
     Users(string fname, string lname, string password, string email);
     void Wallet( Users& users, map<string, personalInformation>& map);
-    void begin(map<string, personalInformation>& usrData, map<string, Plan>& plans);
-    void Subscribtions(Users& user, map<string, personalInformation>& usrData, map<string, Plan>& plan);
+    void begin(map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro);
+    void Subscribtions(Users& user, map<string, personalInformation>& usrData, map<string, Plan>& plan,Metro &metro);
     personalInformation getData()
     {
         return Data;

@@ -19,15 +19,15 @@ Ride::~Ride() {
 
 vector<string> Ride::bfsShortestPath(string &first_station,string &second_station,Metro &metro) {
 
-    if(!exists(first_station,metro)){
-        cout<<"\nThere's No Station Named \""<<first_station<<"\"\n";
+ /*   if(!exists(first_station,metro)){
+       // cout<<"\nThere's No Station Named \""<<first_station<<"\"\n";
         return { };
     }
     else if(!exists(second_station,metro)){
-        cout<<"\nThere's No Station Named \""<<second_station<<"\"\n";
+     //   cout<<"\nThere's No Station Named \""<<second_station<<"\"\n";
         return { };
     }
-    else{
+    else{*/
 
         queue<string>q;
         q.push(first_station);
@@ -66,7 +66,7 @@ vector<string> Ride::bfsShortestPath(string &first_station,string &second_statio
         return path;
     }
 
-}
+//}
 
 void Ride::fill_path(unordered_map<string,string>&parent,vector<string>&path,string root) {
     if(root=="-1"){

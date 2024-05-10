@@ -36,23 +36,21 @@ public:
 
     Plan plan;
 
-    //
 
 //methods
     subscription();
-    subscription(Plan plan, string firstDestination, string secondDestination);
     void Addplan(string name, int trips, int duration, map<int, int> prices, map<string, Plan> &plans);
     void Removeplan(string planname, map<string, Plan> &plans);
     void Modifyplan(std::map<string, Plan>& plans,string planname, string newname="", int newduration=-1, int newtripsallowed=-1, map<int, int> newprices={});
     void chooseplan(map<string, Plan>& plans,Metro &metro);
     void Renewplan();
     void Upgrade(map<string, Plan> &plans,Metro metro);
-    bool Isplanactive();
+    bool Isplanactive(subscription s);
+    bool IsStationValidInPlan(Metro &metro,string fdest,string ldest);
     void DisplaySubscriptionPlan(map<string, Plan>& plans);
     int Stage(Metro &metro);
     string Date(chrono::time_point<chrono::system_clock> start);
     string formatstring(int day, int month, int year);
-    void Remainingtrips();
     string getPlanName()
     {
         return plan.PlanName;

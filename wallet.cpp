@@ -22,20 +22,20 @@ int wallet::Addbalance(int amount) {
         }
     return 0;
 }
-void wallet::Deduct(int amount) {
-
+void wallet::Deduct(int stations) {
+int amount = Ticketprice(stations);
     if (Balance >= amount)
         Balance -= amount;
     else
         cout << "Recharge your balance";
 }
-void wallet::Ticketprice(int stations) {
+int wallet::Ticketprice(int stations) {
     if (stations >= 1 && stations <= 9)
-        Deduct(6);
+        return 6;
     else if (stations > 9 && stations <= 16)
-        Deduct(8);
+        return 8;
     else if (stations > 16 && stations <= 23)
-        Deduct(12);
+        return 12;
     else
-        Deduct(15);
+        return 15;
 }

@@ -15,9 +15,9 @@ public:
 
     wallet();
     int Addbalance(int amount);
-    int getbalance();
     void Deduct(int ticketprice);
-    void Ticketprice(int stations);
+    int Ticketprice(int stations);
+    int getbalance();
 
 };
 

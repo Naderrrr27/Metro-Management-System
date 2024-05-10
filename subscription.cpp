@@ -155,14 +155,26 @@ auto it = plans.find(name);
     else
         cout<<"Invalid plan name\n";
 }
-bool subscription::Isplanactive() {
+bool subscription::Isplanactive(subscription s) {
     chrono::time_point<chrono::system_clock> current;
     current = chrono::system_clock::now();
     string now=Date(current);
-    if(remainingtrips>0 && now != Enddate)
+    if(s.remainingtrips>0 && now != s.Enddate)
         return true;
     else
         return false;
+}
+bool subscription::IsStationValidInPlan(Metro &metro, std::string fdest, std::string ldest) {
+    Ride ride;
+    bool fcheck=false,lcheck=false;
+    vector<string> check=ride.bfsShortestPath(firstDestination,secondDestination,metro);
+    for (auto &str : check){
+            if(str==fdest)
+                fcheck=true;
+            if(str==ldest)
+                lcheck=true;
+    }
+    return fcheck&lcheck;
 }
 string subscription::Date(chrono::time_point<chrono::system_clock> start) {
     time_t start_t = chrono::system_clock::to_time_t(start);
@@ -179,11 +191,5 @@ string subscription::formatstring(int day, int month, int year) {
 
     return formatted_day + "/" + formatted_month + "/" + formatted_year;
 }
-
-//feha klam ayza akhod object mn class tane
-void subscription::Remainingtrips() {
-    //plan.Remainingtrips = plan.tripsallowed;
-}
-
 
 

@@ -362,11 +362,32 @@ void Users::Wallet(Users &user, map<string, personalInformation> &usrData)
 }
 void Users::CheckIn(Metro& metro, Users& user)
 {
-    string fdest, ldest;
+    wallet walet;
     Ride ride;
+
+    string fdest, ldest;
     cout << "Check in station: ";
     string fstation = getStationName(metro, ride);
     string lstation = getStationName(metro, ride);
+    vector<string> path=ride.bfsShortestPath(fdest,ldest,metro);
+
+    int op;
+    while(true) {
+        cin>>op;
+        if (op == 2)//wallet option
+        {
+            int ticket = walet.Ticketprice(path.size());
+            cout << "Ticket Price is: " << ticket << " LE\n";
+            cout << "Book\n1:Yes\n2:No";
+            int book;
+            cin >> book;
+            if (book == 1)
+                walet.Deduct(ticket);
+            else
+                break;
+        }
+
+    }
 }
 string Users::getStationName(Metro& metro, Ride& ride)
 {

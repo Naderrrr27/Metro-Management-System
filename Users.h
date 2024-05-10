@@ -66,6 +66,8 @@ public:
     void LogOut(Users &user);
     void Profile(Users &user, map<string, personalInformation> &usrData);
     void Charge(Users& user, map<string, personalInformation>& usrData);
+    void CheckIn(Metro &metro, Users &user);
+    string getStationName(Metro& metro, Ride& ride);
     ~Users();
 };
 

@@ -118,7 +118,7 @@ int main() {
 //    cin >> cases;
 
     while (cases--) {
-        string start = "Alf Maskan", final = "Mehwar Rod El Farag";
+        string start = "Adly Mansour", final = "New El Marg";
 //        cin>>start>>final;
         vector<string>path=r.bfsShortestPath(start,final,egypt_metro);
 

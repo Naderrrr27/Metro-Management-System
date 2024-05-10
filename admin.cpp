@@ -260,12 +260,8 @@ void admin::ModifyUser(map<string, personalInformation> &usrData, map<string, Pl
                 int balance; cin >> balance;
                 user->second.balance.Balance = balance;
             }
-
         }
-
-
     }
-
 }
 
 admin::~admin()

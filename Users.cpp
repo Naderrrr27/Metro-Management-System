@@ -6,7 +6,7 @@
 #include <string>
 #include <cctype>
 #include <iomanip>
-
+#include  <bits/stdc++.h>
 #include "admin.h"
 #include "subscription.h"
 
@@ -157,20 +157,22 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
         }
 
         if (isLogged_In && !isAdmin) {
-            cout << "1: Subscriptions\n2: Wallet\n3: Profile\n4: Log out\n";
+            cout << "1: Check In\n2: Subscriptions\n3: Wallet\n4: Profile\n5: Log out\n";
             cin >> operation;
 
             switch (operation) {
             case 1:
+                CheckIn(metro, *this);
+            case 2:
                 Subscribtions(*this, usrData, plans,metro);
                 break;
-            case 2:
+            case 3:
                 Wallet(*this, usrData);
                 break;
-            case 3:
+            case 4:
                 Profile(*this, usrData);
                 break;
-            case 4:
+            case 5:
                 LogOut(*this);
                 break;
             default:
@@ -358,8 +360,26 @@ void Users::Wallet(Users &user, map<string, personalInformation> &usrData)
         if (op == 3) return;
     }
 }
+void Users::CheckIn(Metro& metro, Users& user)
+{
+    string fdest, ldest;
+    Ride ride;
+    cout << "Check in station: ";
+    string fstation = getStationName(metro, ride);
+    string lstation = getStationName(metro, ride);
+}
+string Users::getStationName(Metro& metro, Ride& ride)
+{
+    string station;
 
+    getline(cin, station);
+        if (ride.exists(station, metro))
+        {
+            return station;
+        }
+    return "Invalid";
 
+}
 Users::~Users()
 {
 

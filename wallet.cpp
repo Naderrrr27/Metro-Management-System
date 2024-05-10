@@ -4,33 +4,38 @@
 
 #include "wallet.h"
 #include "wallet.h"
+#include <iostream>
 wallet::wallet() {
     Balance = 0;
 }
 int wallet::getbalance() {
     return Balance;
 }
-void wallet::Addbalance(int amount) {
-    if (amount % 10 == 0 && amount + Balance <= 400)
-        Balance += amount;
+int wallet::Addbalance(int amount) {
+        int check =Balance+amount;
+        if(check <=400) {
+            Balance = check;
+            return 1;
+        }
+        else {
+            cout << "Balance limit can't exceed 400";
+        }
+    return 0;
 }
-void wallet::Deduct(int ticketprice) {
-
-    if (Balance >= ticketprice)
-        Balance -= ticketprice;
+void wallet::Deduct(int stations) {
+int amount = Ticketprice(stations);
+    if (Balance >= amount)
+        Balance -= amount;
     else
-        cout << "recharge your balance";
+        cout << "Recharge your balance";
 }
-void wallet::Ticketprice() {
-    int c=6;
-
-    int stations = c;//shortestpath(firstdestination, finaldestination);
+int wallet::Ticketprice(int stations) {
     if (stations >= 1 && stations <= 9)
-        Deduct(6);
+        return 6;
     else if (stations > 9 && stations <= 16)
-        Deduct(8);
+        return 8;
     else if (stations > 16 && stations <= 23)
-        Deduct(12);
+        return 12;
     else
-        Deduct(15);
+        return 15;
 }

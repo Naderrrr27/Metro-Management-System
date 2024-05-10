@@ -9,57 +9,60 @@
 
 
 #include<iostream>
+#include<cmath>
 #include<map>
 #include<chrono>
 #include<ctime>
+#include "metro.h"
+#include "Ride.h"
+
 
 using namespace std;
 struct Plan {
     string PlanName="";
     int tripsallowed=0;
-    int Remainingtrips=0;
     int Duration=0;
-    int stage;
-    map<int, int>stageprices = {};
-    string firstdestination, finaldestination;
-
-    //time
-    chrono::system_clock::time_point Startdate;
-    chrono::system_clock::time_point Enddate;
+   map<int, int>stageprices = {};
 };
 class subscription
 {
 public:
+    string firstDestination, secondDestination;
+    int remainingtrips;
+    int stage;
+    int Price;
+    string StartDate;
+    string Enddate;
+
     Plan plan;
-  ;//oblect for the user
-    //map to store plans
+
 
 //methods
     subscription();
     void Addplan(string name, int trips, int duration, map<int, int> prices, map<string, Plan> &plans);
     void Removeplan(string planname, map<string, Plan> &plans);
-    void Modifyplan(std::string planname, string newname, int newduration, int newtripsallowed, map<int, int> newprices,
-                    map<string, Plan>& plans);
-    //    void Modifyplan(string name, string newname, int newduration = -1, int newtripsallowed = -1, map<int, int> newprices = {}, map<string, Plan> &plans);
-    int Stage();
-    void chooseplan(map<string, Plan>& plans);
-    void calcenddate(string planname, map<string, Plan> &plans);
-    bool Isplanactive();
+    void Modifyplan(std::map<string, Plan>& plans,string planname, string newname="", int newduration=-1, int newtripsallowed=-1, map<int, int> newprices={});
+    void chooseplan(map<string, Plan>& plans,Metro &metro);
     void Renewplan();
-    void Upgrade();
-    void Displayplandetails(string planName, map<string, Plan>& plans);
-    void Remainingtrips();//msh 3arfa ahot name wala la
-
-
-
-    //from another class Ride
-    int shortestpath(string first, string last);
-
-
-
-
-
-
+    void Upgrade(map<string, Plan> &plans,Metro metro);
+    bool Isplanactive(subscription s);
+    bool IsStationValidInPlan(Metro &metro,string fdest,string ldest);
+    void DisplaySubscriptionPlan(map<string, Plan>& plans);
+    int Stage(Metro &metro);
+    string Date(chrono::time_point<chrono::system_clock> start);
+    string formatstring(int day, int month, int year);
+    string getPlanName()
+    {
+        return plan.PlanName;
+    }
+    int getTrips()
+    {
+        return remainingtrips;
+    }
+    int getDuration()
+    {
+        return plan.Duration;
+    }
 
 
 };

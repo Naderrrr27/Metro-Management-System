@@ -19,9 +19,9 @@ public:
 
     void add_new_line(Line& new_line);
 
-    static void connect_lines(Line& first,Line& second,string station_name);
-
     static void build_line(Metro& metro, string color, vector<string>& stationNames);
+
+    unordered_map<string,Line>&get_lines();
 
 };
 

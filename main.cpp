@@ -1,93 +1,79 @@
 #pragma once
 #include <iostream>
 #include <vector>
+#include <algorithm>
 #include "Metro.h"
 #include "Users.h"
 #include "subscription.h"
 #include <fstream>
+#include "Ride.h"
 using namespace std;
-//
-void dfs(string root, unordered_map<string,vector<Station>> &gr_line, unordered_map<string,vector<Station>> &rd_line, unordered_map<string,vector<Station>> &blu_line, unordered_map<string, bool>& visited) {
 
-    visited[root] = true;
-    cout << "\n"<<root << "\n    |\n";
 
-    for (auto& station : gr_line[root]) {
-        string s = station.get_name();
-        if (!visited[s]) {
-            dfs(s, gr_line,rd_line,blu_line, visited);
-        }
-    }
-}
-int write(map<string, personalInformation> &usrData)
-{
-    ofstream outputFile("users.txt");
+#include <iostream>
+#include <fstream>
+#include <map>
+#include <string>
 
-    if (outputFile.is_open()) {
-        for (const auto& pair : usrData) {
-            const personalInformation& user = pair.second;
-            outputFile << user.id << ' '
-                       << user.email << ' '
-                       << user.password <<
-                               ' ' << user.fname <<
-                                       ' '<<user.lname<< '\n';
-        }
-        outputFile.close();
-    } else {
+using namespace std;
+
+
+int write(const map<string, personalInformation> &usrData) {
+    ofstream outputFile("C:\\Users\\DELL\\Metro-Management-System\\cmake-build-debug\\users.txt");
+    if (!outputFile.is_open()) {
         cerr << "Error: Unable to open file for writing." << endl;
         return 1;
     }
+
+    for (const auto &pair : usrData) {
+        const personalInformation &user = pair.second;
+        outputFile << user.id << ' '
+                   << user.email << ' '
+                   << user.password << ' '
+                   << user.fname << ' '
+                   << user.lname << ' '
+                   << user.plan.plan.PlanName << ' '
+                   << user.plan.firstDestination << ' '
+                   << user.plan.secondDestination << ' '
+                   << user.plan.plan.Duration << ' '
+                   << user.plan.plan.tripsallowed << '\n';
+    }
+
+    outputFile.close();
     return 0;
 }
-
-int read(map<string, personalInformation>& usrData) {
-    ifstream inputFile("users.txt");
+int read(map<string, personalInformation> &usrData) {
+    ifstream inputFile("C:\\Users\\DELL\\Metro-Management-System\\cmake-build-debug\\users.txt");
     if (!inputFile.is_open()) {
         cerr << "Error: Unable to open file for reading." << endl;
         return 1;
     }
-    int userId;
-    string email, password, fname, lname;
-    while(inputFile >> userId >> email >> password >> fname >> lname) {
+
+    int userId, duration, trip;
+    string email, password, fname, lname, pname, fd, ld;
+
+    while (inputFile >> userId >> email >> password >> fname >> lname >> pname >> fd >> ld >> duration >> trip) {
         personalInformation temp;
         temp.id = userId;
         temp.email = email;
         temp.password = password;
-        temp.fname =fname;
+        temp.fname = fname;
         temp.lname = lname;
+        temp.plan.plan.PlanName = pname;
+        temp.plan.firstDestination = fd;
+        temp.plan.secondDestination = ld;
+        temp.plan.plan.Duration = duration;
+        temp.plan.plan.tripsallowed = trip;
+
         usrData.emplace(email, temp);
     }
 
     inputFile.close();
     return 0;
 }
-
 int main() {
-    subscription sub ;
-    map<string, Plan> plans;
-    //student plan
-    map<int, int> prices;
-    prices={ {1, 33}, { 2,41 }, { 3,50 }, { 4,65 }};
-    sub.Addplan("student", 180, 3, prices, plans);
-    //public monthly plan
-    prices = { {1,230},{2,290},{3,340},{4,450} };
-    sub.Addplan("publicmonthly",60,1,prices, plans);
-    // public yearly plan
-    prices={{1,1500},{2,2500},{3,3500},{4,4500}};
-    sub.Addplan("publicyearly", 730, 12, prices, plans);
-    map<string, personalInformation>mappp;
-
-    subscription plan;
-    read(mappp);
-    Users user;
-    for (auto it: mappp)
-        cout << it.first << endl;
-   user.begin(mappp, plans);
-    for (auto it: mappp)
-        cout << it.first << endl;
-
-
     Metro egypt_metro("Egypt");
+
 
     vector<string> green_line_stations = {
             "Adly Mansour", "El Haykesteb", "Omar Ibn El Khatab", "Qubaa", "Hesham Barakat",
@@ -95,7 +81,7 @@ int main() {
             "Kolleyet El Banat", "Stadium", "Fair Zone", "El Abassya", "Abdo Basha",
             "El Geish", "Bab El Shaarya", "Attaba", "Gamal Abd El Nasser", "Maspero",
             "Safaa Hegazy", "Kit Kat", "Sudan", "Imbaba", "El Bohy", "EL Qawmia",
-            "Ring Road", "Rod El Farag"
+            "Ring Road", "Mehwar Rod El Farag"
     };
 
 
@@ -124,26 +110,61 @@ int main() {
 
 
 
-
-
-
     Metro::build_line(egypt_metro, "Blue", blue_line_stations);
+    ///
+    Ride r;
 
-    string color = "Green";
+    int cases=1;
+//    cin >> cases;
 
-    unordered_map<string, bool>visited;
+    while (cases--) {
+        string start = "Adly Mansour", final = "New El Marg";
+//        cin>>start>>final;
+        vector<string>path=r.bfsShortestPath(start,final,egypt_metro);
 
-    string green="Green",red="Red",blue="Blue";
+        for(auto &station:path){
+            cout<<station<<"\n";
+        }
 
-    unordered_map<string,vector<Station>> gr_line=egypt_metro.get_line(green).get_stations();
-    unordered_map<string,vector<Station>> rd_line=egypt_metro.get_line(red).get_stations();
-    unordered_map<string,vector<Station>> blu_line=egypt_metro.get_line(blue).get_stations();
-
-    string root = gr_line.begin()->first;
-
+        cout << "\n\n\n";
+    }
 
 
-    dfs(root, gr_line,rd_line,blu_line, visited);
-    write(mappp);
+
+
+    subscription sub;
+
+    map<string, Plan> plans;
+    //student plan
+    map<int, int> prices;    prices = {{1, 33},
+                                       {2, 41},
+                                       {3, 50},
+                                       {4, 65}};
+    sub.Addplan("student", 180, 3, prices, plans);
+    //public monthly plan
+    prices = {{1, 230},
+              {2, 290},
+              {3, 340},
+              {4, 450}};
+    sub.Addplan("publicmonthly", 60, 1, prices, plans);
+    // public yearly plan
+    prices = {{1, 1500},
+              {2, 2500},
+              {3, 3500},
+              {4, 4500}};
+    sub.Addplan("publicyearly", 730, 12, prices, plans);
+    map<string, personalInformation> mappp;
+    //write(mappp);
+    subscription plan;
+    read(mappp);
+    Users user;
+
+    for (auto it: mappp)
+        cout << it.first << endl;
+    user.begin(mappp, plans,egypt_metro);
+    //user = mappp.find(user.GetEmail());
+    for (auto it: mappp)
+        cout << it.first << endl;
+    //write(mappp);
     return 0;
 }

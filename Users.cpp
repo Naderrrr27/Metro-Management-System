@@ -5,14 +5,17 @@
 #include "Users.h"
 #include <string>
 #include <cctype>
-
+#include <iomanip>
+#include  <bits/stdc++.h>
+#include "admin.h"
 #include "subscription.h"
 
-Users::Users()
+Users::Users(): Data()
 {
     this->Data.id = -1;
 }
-Users::Users(string fname, string lname,string password, string email)
+
+Users::Users(string fname, string lname,string password, string email): Data()
 {
     this->Data.email = email;
     this->Data.password = password;
@@ -20,6 +23,7 @@ Users::Users(string fname, string lname,string password, string email)
     this->Data.lname = lname;
     //usrData.insert({email, Data});
 }
+
 Users Users::Register(map<string, personalInformation> &usrData)
 {
     string fname, lname, email, password;
@@ -32,6 +36,7 @@ Users Users::Register(map<string, personalInformation> &usrData)
 
     Users newUser(fname, lname, password, email);
     usrData.insert({email, newUser.Data});
+    isLogged_In = true;
     return newUser;
 }
 string Users::Email(map<string, personalInformation> &usrData)
@@ -72,7 +77,7 @@ string Users::Password()
     string password;
     while(!check)
     {
-        cout << "Password: ";
+        cout << "Password:";
          cin >> password;
         if (CheckPassword(password)) check = true;
         else cout << "Please enter a strong password\n";
@@ -103,51 +108,87 @@ Users Users::Login(map<string, personalInformation> &usrData)
         cin >> email;
         email = ToLower(email);
         cout << "Password:"; cin >> password;
-        map<string, personalInformation>::iterator it = usrData.find(email);
-        if (it == usrData.end()) cout << "This account doesn't exist\n";
-        else
+        if (email == "admin" && password == "admin")
         {
-            if (password == it->second.password)
-            {
-                 newUser.Data = it->second;
-                check = true;
-                cout << "User has logged in successfully\n";
-            }
-            else cout << "Username or password are wrong\n";
+            isAdmin = true;
+            isLogged_In = true;
+            check  = true;
+            return *this;
         }
-    }
+            map<string, personalInformation>::iterator it = usrData.find(email);
+            if (it == usrData.end()) cout << "This account doesn't exist\n";
+            else
+            {
+                if (password == it->second.password)
+                {
+                    newUser.Data = it->second;
+                    check = true;
+                    cout << "User has logged in successfully\n";
+                }
+                else cout << "Username or password are wrong\n";
+            }
+        }
+        isLogged_In = true;
     return newUser;
 }
-void Users::begin(map<string, personalInformation> &usrData, map<string, Plan> &plans)
-{
-    Users user;
+void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro) {
     int operation = 0;
+
     cout << "Welcome To Metro Mate\n";
 
+    while (true) {
+        if (!isLogged_In) {
+            cout << "Please choose an operation\n";
+            cout << "1: Login\n2: Register\n3: Exit\n";
+            cin >> operation;
 
-    while (operation != 3)
-    {
+            if (operation == 1) {
+                *this = Login(usrData);
+                isLogged_In = true;
+            } else if (operation == 2) {
+                *this = Register(usrData);
+                isLogged_In = true;
+            } else if (operation == 3) {
+                break; // Exit the loop and terminate the program
+            } else {
+                cout << "Invalid choice. Please try again.\n";
+                continue;
+            }
+        }
 
-        cout << "Please choose an operation\n";
-        cout << "1: Login\n2: Register\n3: Exit\n";
-        cin >> operation;
-        if (operation == 1)
-        {
-            user =  user.Login(usrData);
+        if (isLogged_In && !isAdmin) {
+            cout << "1: Check In\n2: Subscriptions\n3: Wallet\n4: Profile\n5: Log out\n";
+            cin >> operation;
+
+            switch (operation) {
+            case 1:
+                CheckIn(metro, *this);
+            case 2:
+                Subscribtions(*this, usrData, plans,metro);
+                break;
+            case 3:
+                Wallet(*this, usrData);
+                break;
+            case 4:
+                Profile(*this, usrData);
+                break;
+            case 5:
+                LogOut(*this);
+                break;
+            default:
+                cout << "Invalid choice. Please try again.\n";
+                break;
+            }
         }
-        else if (operation == 2)
+        if (isLogged_In && isAdmin)
         {
-            user = user.Register(usrData);
+            admin Admin;
+            Admin.begin(*this,usrData, plans,metro);
         }
-        if (operation != 3)
-        {
-            cout << "1: Subscribtions\n2: Profile\n3: Log out\n";
-            operation = 0; cin >> operation;
-            if (operation == 1) Subscribtions(user, plans);
-            else if (operation == 2) Profile(user,usrData);
-            else if (operation == 3) LogOut(user);
-        }
+
     }
+
+    cout << "Exiting Metro Mate. Goodbye!\n";
 }
 void Users::clear(Users &user)
 {
@@ -156,6 +197,8 @@ void Users::clear(Users &user)
 void Users::LogOut(Users &user)
 {
     clear(user);
+    this->isAdmin = false;
+    this->isLogged_In = false;
     cout <<"Logged out\n";
 
 }
@@ -164,12 +207,24 @@ void Users::Profile(Users &user, map<string, personalInformation> &usrData)
 {
 
     int op = 0;
-    auto users = usrData.find(user.GetEmail());
+    map<string, personalInformation>::iterator users;
     while(op != 5)
     {
-        cout << "Email\t\t\t\tFirst Name\tLast Name\tPassword\n";
-        cout << user.Data.email << "\t" << user.Data.fname << "\t\t" << user.Data.lname<< "\t\t" << user.Data.password;
-        cout << "\n1: Modify first name\n2: Modify last name\n3: Modify e-mail\n4: Modify Password\n";
+        users = usrData.find(user.GetEmail());
+        cout << left << setw(30) << "Email"
+            << setw(20) << "First Name"
+            << setw(20) << "Last Name"
+            << "Password" << endl;
+
+        // Print user data
+        cout << setw(30) << users->second.email
+             << setw(20) << users->second.fname
+             << setw(20) << users->second.lname
+             << users->second.password << endl;
+        cout << "1: Modify first name\n"
+        << "2: Modify last name\n"
+        << "3: Modify e-mail\n"
+        << "4: Modify Password\n";
         cin >> op;
         if (op == 1)
         {
@@ -206,13 +261,145 @@ void Users::Profile(Users &user, map<string, personalInformation> &usrData)
         }
     }
 }
-void Users::Subscribtions(Users &user, map<string, Plan> &plan)
+void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData, map<string, Plan> &plan,Metro &metro)
 {
     subscription s;
-    s.Displayplandetails("student", plan);
-    cout << endl;
-    cout << "1: Make Subscription\n2: Remove Subscription\n3:Modify Subscription" << endl;
-    int operation; cin >> operation;
+    auto it = usrData.find(user.GetEmail());
+        s.DisplaySubscriptionPlan(plan);
+        cout << endl;
+        int operation = 0;
+        while (operation != 5) {
+            if (it->second.plan.plan.PlanName.empty()) {
+                cout << "1: Make Subscription\n2: Exist" << endl;
+                cin >> operation;
+                if (operation == 1) {
+                    it->second.plan.chooseplan(plan,metro);
+                } else if (operation == 2)
+                    break;
+            }
+            else {
+                cout << "1:Display your plan details\n2:Renew your plan\n3:Upgrade your plan\n4:Exist";
+                cin >> operation;
+                switch (operation) {
+                    case 1:
+                        cout << left << setw(20) << "Name"
+                             << setw(15) << "From"
+                             << setw(15) << "To"
+                             << setw(15) << "Trips"
+                             << setw(15) << "Stage"
+                             <<setw(15)<<"Price"
+                             << setw(15) << "EndDate"
+                             << setw(15) << "StartDate"
+                             << endl;
+
+                        // Displaying plan information in a formatted table
+                        cout << setw(20) << it->second.plan.plan.PlanName
+                             << setw(15) << it->second.plan.firstDestination
+                             << setw(15) << it->second.plan.secondDestination
+                             << setw(15) << it->second.plan.getTrips()
+                             << setw(15) << it->second.plan.stage
+                             << setw(15) << it->second.plan.Price
+                             << setw(15) << it->second.plan.StartDate
+                             << setw(15) << it->second.plan.Enddate << endl;
+                        break;
+                    case 2:
+                        cout<<it->second.plan.Price<<" LE will be Deducted from your wallet\n";
+                        cout<<"confirm\n1:Yes\n2:No";
+                        int n;cin>>n;
+                        if(n==1) {
+                            it->second.plan.Renewplan();
+                            cout << "Your plan is Renewed\n";
+                        }
+                        else
+                            return;
+                        break;
+                    case 3:
+                        it->second.plan.Upgrade(plan,metro);
+                        cout << "Your plan is Upgraded\n";
+                        break;
+                    case 4:
+                        return;
+                }
+            }
+        }
+    }
+void Users::Charge(Users &user, map<string, personalInformation> &usrData){
+    cout << "Balance:\n";
+    auto currentUser = usrData.find(user.GetEmail());
+    wallet wallett;
+    int amount;
+    while(true)
+    {
+         cin >> amount;
+        if (amount % 10 == 0) {
+            if( currentUser->second.balance.Addbalance(amount)==1)
+                break;
+        }
+        else
+          cout << "Invalid input please try again\n";
+
+        }
+        cout << "Successfull operation\n";
+        cout << "Your current balance: " << currentUser->second.balance.getbalance() << endl;
+}
+void Users::Wallet(Users &user, map<string, personalInformation> &usrData)
+{
+    int op;
+    auto currentUser = usrData.find(user.GetEmail());
+    while (true)
+    {
+        cout << "1: Charge wallet\n";
+        cout << "2: Check Balance\n";
+        cout << "3: Back\n";
+        cin >> op;
+        if (op == 1) Charge(user, usrData);
+        else if (op == 2)
+        {
+            cout << "Your Balance is " << currentUser->second.balance.Balance << endl;
+        }
+        if (op == 3) return;
+    }
+}
+void Users::CheckIn(Metro& metro, Users& user)
+{
+    wallet walet;
+    Ride ride;
+
+    string fdest, ldest;
+    cout << "Check in station: ";
+    string fstation = getStationName(metro, ride);
+    string lstation = getStationName(metro, ride);
+    vector<string> path=ride.bfsShortestPath(fdest,ldest,metro);
+
+    int op;
+    while(true) {
+        cin>>op;
+        if (op == 2)//wallet option
+        {
+            int ticket = walet.Ticketprice(path.size());
+            cout << "Ticket Price is: " << ticket << " LE\n";
+            cout << "Book\n1:Yes\n2:No";
+            int book;
+            cin >> book;
+            if (book == 1)
+                walet.Deduct(ticket);
+            else
+                break;
+        }
+
+    }
+}
+string Users::getStationName(Metro& metro, Ride& ride)
+{
+    string station;
+
+    getline(cin, station);
+        if (ride.exists(station, metro))
+        {
+            return station;
+        }
+    return "Invalid";
+
 }
 Users::~Users()
 {

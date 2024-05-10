@@ -6,25 +6,19 @@
 #define METRO_WALLET_H
 
 #pragma once
-#include"subscription.h"
+#include <string>
+using namespace std;
 class wallet
 {
 public:
     int Balance;
 
-    //Ride ride take shortestpath
-    //from another classes
-    int shortestpath(string firstdist, string lastdist);
-
-
     wallet();
-    void Addbalance(int amount);
-    int getbalance();
+    int Addbalance(int amount);
     void Deduct(int ticketprice);
-    void Ticketprice();
+    int Ticketprice(int stations);
+    int getbalance();
 
-    //take first and last distantion from check out and checkin
-    //User user
 };
 
 

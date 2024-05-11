@@ -21,8 +21,12 @@ private:
         vector<string> path;
     };
     PathExplorer pathHandler;
+    vector<string> ridePath;
     string firstD,finalD;
     string rideDate,rideTime;
+    string subscriptionType;
+    int fare;
+
 
     void prepareAllPaths(Metro &metro, string firstDestination, string &secondDestination);
     void printAllPaths(Metro &metro,string &firstDestination, string &secondDestination);
@@ -41,10 +45,16 @@ public:
     pair<int,int>getStationNumber(unordered_map<string, vector<Station>>& graphstring ,string ,string);
     vector<string> bfsShortestPath(string &first_station,string &second_station,Metro &metro);
     void fill_path(unordered_map<string,string>&parent,vector<string>&path,string root);
+    void printShortestPath(vector<string>& path, Metro& metro);
     void getAllPaths(Metro &metro, string &firstDestination, string &);
     string getTime();
     string getDate();
-
+    int getFare();
+    void SetRideData(int pathNumber, string& fdest, string& ldest, const string& type, Metro& metro);
+    void setFirstDestination(string &fdest);
+    string getFirstDestination();
+    int GetAllPathsSize();
+    void DisplayRideData();
 };
 
 

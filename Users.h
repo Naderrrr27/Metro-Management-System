@@ -43,6 +43,7 @@ private:
     void SubscriptionTrip(Users& user, map<string, personalInformation>& usrData, string& fdest, string& ldest,
                           Metro& metro,
                           Ride& ride, unordered_map<string, vector<Ride>>& rides);
+    void RideHistoryy(unordered_map<string, vector<Ride>>& rides, map<string, personalInformation>& usrData, Users& users);
 
 public:
     Users();

@@ -55,6 +55,7 @@ public:
     string getFirstDestination();
     int GetAllPathsSize();
     void DisplayRideData();
+    void DisplayHistory();
 };
 
 

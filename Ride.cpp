@@ -302,6 +302,12 @@ void Ride::DisplayRideData()
     cout << left << setw(15)<< subscriptionType << setw(15) << firstD << setw(15) << finalD << setw(15) << fare <<
    setw(15) << ridePath.size() <<setw(15) << rideDate << setw(15) << rideTime << endl;
 }
+void Ride::DisplayHistory()
+{
+    cout << left << setw(15)<< subscriptionType << setw(15) << firstD << setw(15) << finalD << setw(15) << fare <<
+   setw(15) << ridePath.size() <<setw(15) << rideDate << setw(15) << rideTime << endl;
+}
+
 
 
 

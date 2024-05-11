@@ -157,23 +157,32 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
         }
 
         if (isLogged_In && !isAdmin) {
-            cout << "1: Check In\n2: Subscriptions\n3: Wallet\n4: Profile\n5: Log out\n";
+            cout << "1: Check In\n2: Subscriptions\n3: Wallet\n4: Profile\n5: Ride History\n6: Log out\n";
             cin >> operation;
 
             switch (operation) {
             case 1:
+                cout << endl;
                 CheckIn(metro, *this, usrData, rides);
                 break;
             case 2:
+                cout << endl;
                 Subscribtions(*this, usrData, plans,metro);
                 break;
             case 3:
+                cout << endl;
                 Wallet(*this, usrData);
                 break;
             case 4:
+                cout << endl;
                 Profile(*this, usrData);
                 break;
             case 5:
+                cout << endl;
+                RideHistoryy(rides, usrData, *this);
+                break;
+            case 6:
+                cout << endl;
                 LogOut(*this);
                 break;
             default:
@@ -473,6 +482,7 @@ void Users::WalletTrip(Users& user, map<string, personalInformation> &usrData, s
         else rideMap->second.push_back(ride);
         cout << "Your ticket has been reserved\n";
         ride.DisplayRideData();
+        cout << endl;
     }
     }
 
@@ -487,6 +497,7 @@ void Users::SubscriptionTrip(Users& user, map<string, personalInformation> &usrD
     << "Remaining Trips" << endl;
     cout << left << setw(20) << fdest << setw(20) << ldest << setw(20) << path.size() << setw(20) << person->second.plan.remainingtrips;
     cout << endl;
+    ride.printShortestPath(path, metro);
     cout << "1: Reserve\n";
     cout << "2: Return\n";
     cin >> operation;
@@ -504,7 +515,25 @@ void Users::SubscriptionTrip(Users& user, map<string, personalInformation> &usrD
         cout << "Your Ticket has been Reserved\n";
         ride.DisplayRideData();
     }
+}
+void Users::RideHistoryy(unordered_map<string, vector<Ride>> &rides, map<string, personalInformation> &usrData, Users &users)
+{
+    auto usrHistory = rides.find(users.GetEmail());
+    if (usrHistory != rides.end())
+    {
+        if (!usrHistory->second.empty())
+        {
+            cout << left << setw(15)<< "Type" << setw(15) << "From" << setw(15) << "To" << setw(15) << "Price" <<
+            setw(15) << "stations" <<setw(15) << "Date" << setw(15) << "Time" << endl;
 
+            for (auto ride: usrHistory->second)
+            {
+                ride.DisplayHistory();
+                cout << endl;
+            }
+        }
+    }
+    else cout << "No Previous Rides\n\n";
 }
 Users::~Users()
 {

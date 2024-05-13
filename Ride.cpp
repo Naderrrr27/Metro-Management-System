@@ -5,8 +5,12 @@
 #include <iostream>
 #include <algorithm>
 #include "Ride.h"
+
+#include <iomanip>
+
 #include "Station.h"
 #include "metro.h"
+#include "wallet.h"
 
 Ride::Ride(string firstD, string finalD) {
     this->firstD=firstD;
@@ -17,17 +21,16 @@ Ride::Ride() {}
 Ride::~Ride() {
 }
 
-vector<string> Ride::bfsShortestPath(string &first_station,string &second_station,Metro &metro) {
-
- /*   if(!exists(first_station,metro)){
-       // cout<<"\nThere's No Station Named \""<<first_station<<"\"\n";
-        return { };
+///Shortest path
+bool Ride::exists(string &station,Metro &metro) {
+    for(auto &line : metro.get_lines()) {
+        if(line.second.get_stations().count(station)){
+            return true;
+        }
     }
-    else if(!exists(second_station,metro)){
-     //   cout<<"\nThere's No Station Named \""<<second_station<<"\"\n";
-        return { };
-    }
-    else{*/
+    return false;
+}
+vector<string> Ride::bfsShortestPath(string& first_station, string& second_station, Metro& metro) {
 
         queue<string>q;
         q.push(first_station);
@@ -65,9 +68,6 @@ vector<string> Ride::bfsShortestPath(string &first_station,string &second_statio
         fill_path(parent,path,second_station);
         return path;
     }
-
-//}
-
 void Ride::fill_path(unordered_map<string,string>&parent,vector<string>&path,string root) {
     if(root=="-1"){
         return;
@@ -77,9 +77,43 @@ void Ride::fill_path(unordered_map<string,string>&parent,vector<string>&path,str
         path.push_back(root);
     }
 }
-
-
-
+void Ride::printShortestPath(vector<string>&path,Metro &metro){
+    string lineNamee ,color , empty = "", change = "";
+    if(!checkTransformationPointOrNot(path[0]))
+        lineNamee = sameLineOrNot(metro,path[0],empty);
+    else
+        lineNamee = linkTwoStations(metro,path[1],path[0],empty,lineNamee,change);
+    setColor(lineNamee,color);
+    cout<<"\nPlease take the  \n";
+    cout<<"                "<<"\\";
+    colorText(color,"                 "+lineNamee + " line\n                  \\");
+    cout<<"then take the following stations"<<" - ["<<path.size()<<"]stations";
+    for (int i = 0 ; i < path.size() ; ++i) {
+        if(i != 0){
+            if(i != path.size()-1)
+                color = linkTwoStations(metro,path[i-1],path[i],path[i+1],lineNamee,change);
+            else
+                color = linkTwoStations(metro,path[i-1],path[i],empty,lineNamee,change);
+        }
+        if(!change.empty()){
+            cout<<"\n";
+            cout<<">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>_>>";
+            system("echo \033[0m");
+            cout<<change;
+        }
+        setColor(lineNamee,color);
+        system(color.c_str());
+        if(!change.empty()){
+            cout<<">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>_>>\n\n";
+            change.clear();
+        }
+        cout<<path[i];
+        if(i != path.size()-1)
+            cout<<"\n|\n";
+    }
+    system("echo \033[0m");
+    cout<<"_\n\n";
+}
 ///Get All paths
 bool Ride::compare(const vector<string>&v1, const vector<string>&v2){
     return v1.size() < v2.size(); /// false v2 before v1..
@@ -167,6 +201,7 @@ string Ride::linkTwoStations(Metro &metro,string &firstDestination,string &secDe
 void Ride::printAllPaths(Metro &metro,string &firstDestination, string &secondDestination){
     string lineNamee ,color , empty = "", change = "";
     int pathCount = 1;
+    wallet Fare;
     cout << "All Paths from " << firstDestination << " to " << secondDestination<<" : ";
     for (auto &path: pathHandler.allPaths) {
         if(!checkTransformationPointOrNot(path[0]))
@@ -177,7 +212,7 @@ void Ride::printAllPaths(Metro &metro,string &firstDestination, string &secondDe
         cout<<"\nPlease take the  \n";
         cout<<"                "<<"\\";
         colorText(color,"                 "+lineNamee + " line\n                  \\");
-        cout<<"then take the following stations (path "<<pathCount <<" -["<<path.size()<<"]stations"<<") :";;
+        cout<<"then take the following stations (path "<<pathCount <<" - ["<<path.size()<<"]stations" << " - ["  << Fare.Ticketprice(path.size()) <<"]LE) :";
         for (int i = 0 ; i < path.size() ; ++i) {
             if(i != 0){
                 if(i != path.size()-1)
@@ -187,14 +222,14 @@ void Ride::printAllPaths(Metro &metro,string &firstDestination, string &secondDe
             }
             if(!change.empty()){
                 cout<<"\n";
-                cout<<"_>_>__>_>_>_>_>_>_>_>_>_>_>_>";
+                cout<<">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>_>>";
                 system("echo \033[0m");
                 cout<<change;
             }
             setColor(lineNamee,color);
             system(color.c_str());
             if(!change.empty()){
-                cout<<"_>_>__>_>_>_>_>_>_>_>_>_>_>_>\n\n";
+                cout<<">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>_>>\n\n";
                 change.clear();
             }
             cout<<path[i];
@@ -202,7 +237,7 @@ void Ride::printAllPaths(Metro &metro,string &firstDestination, string &secondDe
                 cout<<"\n|\n";
         }
         system("echo \033[0m");
-        cout<<"________________________________________\n\n";
+        cout<<"\n\n";
         pathCount++;
     }
 }
@@ -210,14 +245,6 @@ void Ride::getAllPaths(Metro &metro, string &firstDestination, string &secondDes
     prepareAllPaths(metro,firstDestination,secondDestination);
     sort(pathHandler.allPaths.begin(),pathHandler.allPaths.end(), Ride::compare);
     printAllPaths(metro, firstDestination, secondDestination);
-}
-bool Ride::exists(string &station,Metro &metro) {
-    for(auto &line : metro.get_lines()) {
-        if(line.second.get_stations().count(station)){
-            return true;
-        }
-    }
-    return false;
 }
 ////Handel time and date
 void Ride::calculateRideDateTime(){
@@ -241,4 +268,49 @@ string Ride::getTime(){
 string Ride::getDate(){
     return rideDate;
 }
+////stuffs to handle Ride date
+int Ride::getFare(){
+    return fare;
+}
+void Ride::SetRideData(int pathNumber, string &fdest, string &ldest, const string &type, Metro &metro){
+    wallet ticketPrice;
+    subscriptionType = type;
+    if (subscriptionType == "Subscription")
+    {
+        fare = 0;
+        ridePath = bfsShortestPath(fdest, ldest, metro);
+
+    }
+
+
+    else
+    {
+        fare = ticketPrice.Ticketprice((int)ridePath.size());
+        ridePath = pathHandler.allPaths[pathNumber - 1];
+    }
+    firstD = fdest;
+    finalD = ldest;
+    calculateRideDateTime();
+}
+int Ride::GetAllPathsSize(){
+    return (int)pathHandler.allPaths.size();
+}
+void Ride::DisplayRideData()
+{
+    cout << left << setw(15)<< "Type" << setw(15) << "From" << setw(15) << "To" << setw(15) << "Price" <<
+       setw(15) << "stations" <<setw(15) << "Date" << setw(15) << "Time" << endl;
+    cout << left << setw(15)<< subscriptionType << setw(15) << firstD << setw(15) << finalD << setw(15) << fare <<
+   setw(15) << ridePath.size() <<setw(15) << rideDate << setw(15) << rideTime << endl;
+}
+void Ride::DisplayHistory()
+{
+    cout << left << setw(15)<< subscriptionType << setw(15) << firstD << setw(15) << finalD << setw(15) << fare <<
+   setw(15) << ridePath.size() <<setw(15) << rideDate << setw(15) << rideTime << endl;
+}
+
+
+
+
+
+
 

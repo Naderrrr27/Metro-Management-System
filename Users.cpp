@@ -131,7 +131,7 @@ Users Users::Login(map<string, personalInformation> &usrData)
         isLogged_In = true;
     return newUser;
 }
-void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro) {
+void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans, Metro& metro, unordered_map<string, vector<Ride>>& rides) {
     int operation = 0;
 
     cout << "Welcome To Metro Mate\n";
@@ -157,22 +157,32 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
         }
 
         if (isLogged_In && !isAdmin) {
-            cout << "1: Check In\n2: Subscriptions\n3: Wallet\n4: Profile\n5: Log out\n";
+            cout << "1: Check In\n2: Subscriptions\n3: Wallet\n4: Profile\n5: Ride History\n6: Log out\n";
             cin >> operation;
 
             switch (operation) {
             case 1:
-                CheckIn(metro, *this);
+                cout << endl;
+                CheckIn(metro, *this, usrData, rides);
+                break;
             case 2:
+                cout << endl;
                 Subscribtions(*this, usrData, plans,metro);
                 break;
             case 3:
+                cout << endl;
                 Wallet(*this, usrData);
                 break;
             case 4:
+                cout << endl;
                 Profile(*this, usrData);
                 break;
             case 5:
+                cout << endl;
+                RideHistoryy(rides, usrData, *this);
+                break;
+            case 6:
+                cout << endl;
                 LogOut(*this);
                 break;
             default:
@@ -360,46 +370,170 @@ void Users::Wallet(Users &user, map<string, personalInformation> &usrData)
         if (op == 3) return;
     }
 }
-void Users::CheckIn(Metro& metro, Users& user)
+void Users::CheckIn(Metro& metro, Users& user, map<string, personalInformation> &usrData, unordered_map<string, vector<Ride>> &rides)
 {
     wallet walet;
     Ride ride;
-
-    string fdest, ldest;
-    cout << "Check in station: ";
-    string fstation = getStationName(metro, ride);
-    string lstation = getStationName(metro, ride);
-    vector<string> path=ride.bfsShortestPath(fdest,ldest,metro);
-
-    int op;
-    while(true) {
-        cin>>op;
-        if (op == 2)//wallet option
+    cin.ignore(numeric_limits<streamsize>::max(), '\n');
+    string fstation = getStationName(metro, ride, "Check in station:");
+    string lstation = getStationName(metro, ride, "Check out station:");
+    auto it = usrData.find(user.GetEmail());
+    user.Data = it->second;
+    bool involveInSubscription = CheckGraphs(metro, ride,fstation, lstation, user);
+    if (involveInSubscription && it->second.plan.Isplanactive(it->second.plan))
+    {
+        int choice;
+        cout << "This Path is included in your subscription\n";
+        cout << "1: Subscription\n";
+        cout << "2: Buy A ticket\n";
+        cout << "3: Exit\n";
+        cin >> choice;
+        if (choice == 1)
         {
-            int ticket = walet.Ticketprice(path.size());
-            cout << "Ticket Price is: " << ticket << " LE\n";
-            cout << "Book\n1:Yes\n2:No";
-            int book;
-            cin >> book;
-            if (book == 1)
-                walet.Deduct(ticket);
-            else
-                break;
+            SubscriptionTrip(user, usrData, fstation, lstation, metro, ride, rides);
         }
-
+        else if (choice == 2)
+        {
+            WalletTrip(user, usrData, fstation, lstation, metro, ride, rides);
+        }
+        else return;
+    }
+    else
+    {
+        WalletTrip(user, usrData, fstation, lstation, metro, ride, rides);
     }
 }
-string Users::getStationName(Metro& metro, Ride& ride)
+string Users::getStationName(Metro& metro, Ride& ride, const string &stationName)
 {
     string station;
 
-    getline(cin, station);
+    while (true)
+    {
+
+        cout << stationName;
+
+        getline(cin, station);
         if (ride.exists(station, metro))
         {
             return station;
         }
-    return "Invalid";
+        cout << "Invalid\n";
+    }
 
+}
+bool Users::CheckGraphs(Metro &metro, Ride &ride, string fdest, string ldest, Users &user)
+{
+    bool first = false, second = false;
+    if (user.Data.plan.plan.PlanName.empty())
+    {
+        return false;
+    }
+    vector<string> path = ride.bfsShortestPath(fdest, ldest, metro);
+    for (string station: path)
+    {
+        if (station == fdest) first = true;
+        else if (station == ldest) second = true;
+    }
+    return first & second;
+}
+void Users::WalletTrip(Users& user, map<string, personalInformation> &usrData, string &fdest, string &ldest, Metro& metro, Ride& ride, unordered_map<string, vector<Ride>> &rides)
+{
+    map<string, personalInformation>::iterator person = usrData.find(user.GetEmail());
+    /*vector<int> sizes = ride.GetPathsSize(metro, fdest, ldest);
+    for (int index: sizes)
+    {
+        int fare = person->second.plan.Stage(metro);
+        cout << fare << endl;
+    }*/
+    user.Data = person->second;
+    ride.getAllPaths(metro, fdest, ldest);
+
+    cout << "1: Choose Path\n";
+    cout << "7: Exit\n";
+    int op; cin >> op;
+    if (op == 1)
+    {
+        int numberOfPaths = ride.GetAllPathsSize();
+        int path;
+        while(true)
+        {
+            cout << "Path:";
+            cin >> path;
+            if (path <= numberOfPaths && path >= 1)
+            {
+                break;
+            }
+            if (path == 7) return;
+            cout << "Invalid data\n";
+        }
+
+        ride.SetRideData(path, fdest, ldest, "Ticket", metro);
+        if (person->second.balance.getbalance() < ride.getFare())
+        {
+            cout << "Your Balance is insufficent\n";
+            return;
+        }
+        person->second.balance.Deduct(ride.getFare());
+        auto rideMap = rides.find(person->first);
+        if (rideMap == rides.end())
+        {
+            rides[person->first] = {ride};
+        }
+        else rideMap->second.push_back(ride);
+        cout << "Your ticket has been reserved\n";
+        ride.DisplayRideData();
+        cout << endl;
+    }
+    }
+
+
+
+void Users::SubscriptionTrip(Users& user, map<string, personalInformation> &usrData, string &fdest, string &ldest, Metro& metro, Ride& ride, unordered_map<string, vector<Ride>> &rides)
+{
+    auto person = usrData.find(user.GetEmail());
+    int operation;
+    vector<string> path = ride.bfsShortestPath(fdest, ldest, metro);
+    cout << left << setw(20) << "From" << setw(20) << "To" << setw(20) << "Number of stations" << setw(20)
+    << "Remaining Trips" << endl;
+    cout << left << setw(20) << fdest << setw(20) << ldest << setw(20) << path.size() << setw(20) << person->second.plan.remainingtrips;
+    cout << endl;
+    ride.printShortestPath(path, metro);
+    cout << "1: Reserve\n";
+    cout << "2: Return\n";
+    cin >> operation;
+    if (operation == 1)
+    {
+        ride.SetRideData(1, fdest, ldest, "Subscription", metro);
+        person->second.plan.remainingtrips--;
+        auto personride = rides.find(person->first);
+        if (personride == rides.end())
+        {
+            rides[person->first] = {ride};
+        }
+        else
+            personride->second.push_back(ride);
+        cout << "Your Ticket has been Reserved\n";
+        ride.DisplayRideData();
+    }
+}
+void Users::RideHistoryy(unordered_map<string, vector<Ride>> &rides, map<string, personalInformation> &usrData, Users &users)
+{
+    auto usrHistory = rides.find(users.GetEmail());
+    if (usrHistory != rides.end())
+    {
+        if (!usrHistory->second.empty())
+        {
+            cout << left << setw(15)<< "Type" << setw(15) << "From" << setw(15) << "To" << setw(15) << "Price" <<
+            setw(15) << "stations" <<setw(15) << "Date" << setw(15) << "Time" << endl;
+
+            for (auto ride: usrHistory->second)
+            {
+                ride.DisplayHistory();
+                cout << endl;
+            }
+        }
+    }
+    else cout << "No Previous Rides\n\n";
 }
 Users::~Users()
 {

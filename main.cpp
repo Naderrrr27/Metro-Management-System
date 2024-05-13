@@ -72,6 +72,7 @@ int read(map<string, personalInformation> &usrData) {
     return 0;
 }
 int main() {
+    unordered_map<string, vector<Ride>> rides;
     Metro egypt_metro("Egypt");
 
 
@@ -161,7 +162,7 @@ int main() {
 
     for (auto it: mappp)
         cout << it.first << endl;
-    user.begin(mappp, plans,egypt_metro);
+    user.begin(mappp, plans,egypt_metro, rides);
     //user = mappp.find(user.GetEmail());
     for (auto it: mappp)
         cout << it.first << endl;

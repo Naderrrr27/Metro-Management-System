@@ -101,6 +101,7 @@ int subscription::Stage(Metro &metro) {
 }
 void subscription::chooseplan(map<string, Plan> &plans,Metro &metro)
 {
+
     Ride ride;
     wallet wallett;
     cout << "Enter Plan Name:";
@@ -111,23 +112,10 @@ auto it = plans.find(name);
         plan = plans.find(name)->second;
         string first, last;
        // Metro m;
-        while(true) {
-            cout << "From:";
-            cin >> first;
-            if(ride.exists(first,metro) ==true) {
-                cout << "To:";
-                cin >> last;
-                if (ride.exists(last, metro) == true)
-                    break;
-                else
-                   cout << "Last station is invalid\n";
-            }
-            else
-                cout<<"First station is invalid\n";
-        }
+        Ride r;
+        firstDestination = getStationName(metro, r, "From");
+        secondDestination = getStationName(metro, r, "To");
         //set the plan for the user
-        firstDestination = first;
-        secondDestination = last;
         int stagee = Stage(metro);
         Price = this->plan.stageprices[stagee];
         cout << "the best stage for you is " << stagee;
@@ -153,7 +141,7 @@ auto it = plans.find(name);
             plan.PlanName={};
     }
     else
-        cout<<"Invalid plan name\n";
+        cout << "Invalid plan name\n";
 }
 bool subscription::Isplanactive(subscription s) {
     chrono::time_point<chrono::system_clock> current;
@@ -190,6 +178,24 @@ string subscription::formatstring(int day, int month, int year) {
     string formatted_year = to_string(year);
 
     return formatted_day + "/" + formatted_month + "/" + formatted_year;
+}
+string subscription::getStationName(Metro& metro, Ride& ride, const string &stationName)
+{
+    string station;
+
+    while (true)
+    {
+
+        cout << stationName;
+
+        getline(cin, station);
+        if (ride.exists(station, metro))
+        {
+            return station;
+        }
+        cout << "Invalid\n";
+    }
+
 }
 
 

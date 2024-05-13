@@ -51,6 +51,8 @@ public:
     int Stage(Metro &metro);
     string Date(chrono::time_point<chrono::system_clock> start);
     string formatstring(int day, int month, int year);
+    string getStationName(Metro& metro, Ride& ride, const string& stationName);
+
     string getPlanName()
     {
         return plan.PlanName;

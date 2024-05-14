@@ -17,6 +17,9 @@ using namespace std;
 struct personalInformation
 {
     int id;
+
+    void setId(int id);
+
     string email, fname,  lname, password;
     subscription plan;
     vector<Ride> usrHistory;
@@ -43,7 +46,6 @@ private:
     void SubscriptionTrip(Users& user, map<string, personalInformation>& usrData, string& fdest, string& ldest,
                           Metro& metro,
                           Ride& ride, unordered_map<string, vector<Ride>>& rides);
-    void RideHistoryy(unordered_map<string, vector<Ride>>& rides, map<string, personalInformation>& usrData, Users& users);
 
 public:
     Users();
@@ -58,7 +60,10 @@ public:
     }
     Users Login(map<string, personalInformation> &usrData);
     Users Register(map<string, personalInformation> &usrData);
-    int GetId();
+    int GetId() const {
+        // Provide implementation to return user's ID
+        return Data.id;
+    }
     Users GetUser();
     string GetFirstName()
     {
@@ -77,7 +82,7 @@ public:
     void Charge(Users& user, map<string, personalInformation>& usrData);
     void CheckIn(Metro& metro, Users& user, map<string, personalInformation>& usrData, unordered_map<string, vector<Ride>>& rides);
     string getStationName(Metro& metro, Ride& ride, const string& stationName);
-    bool CheckGraphs(Metro& metro, Ride& ride, string fdest, string ldest, Users& user);
+    void RideHistoryy(unordered_map<string, vector<Ride>>& rides, map<string, personalInformation>& usrData, Users& users);
 
     ~Users();
 };

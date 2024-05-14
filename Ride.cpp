@@ -262,14 +262,14 @@ void Ride::calculateRideDateTime(){
     rideTime.append(":");
     rideTime.append(to_string(now->tm_sec));
 }
-string Ride::getTime(){
+string Ride::getTime() const {
     return rideTime;
 }
-string Ride::getDate(){
+string Ride::getDate() const {
     return rideDate;
 }
 ////stuffs to handle Ride date
-int Ride::getFare(){
+int Ride::getFare() const {
     return fare;
 }
 void Ride::SetRideData(int pathNumber, string &fdest, string &ldest, const string &type, Metro &metro){
@@ -308,6 +308,34 @@ void Ride::DisplayHistory()
 int Ride::getPathSize()
 {
     return (int)ridePath.size();
+}
+
+const string &Ride::getSubscriptionType() const {
+    return subscriptionType;
+}
+
+const string &Ride::getRideTime() const {
+    return rideTime;
+}
+
+const string &Ride::getRideDate() const {
+    return rideDate;
+}
+
+const string &Ride::getFinalD() const {
+    return finalD;
+}
+
+const string &Ride::getFirstD() const {
+    return firstD;
+}
+
+const vector<string> &Ride::getRidePath() const {
+    return ridePath;
+}
+
+const Ride::PathExplorer &Ride::getPathHandler() const {
+    return pathHandler;
 }
 
 

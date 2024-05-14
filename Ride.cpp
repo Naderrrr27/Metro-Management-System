@@ -281,12 +281,10 @@ void Ride::SetRideData(int pathNumber, string &fdest, string &ldest, const strin
         ridePath = bfsShortestPath(fdest, ldest, metro);
 
     }
-
-
     else
     {
-        fare = ticketPrice.Ticketprice((int)ridePath.size());
         ridePath = pathHandler.allPaths[pathNumber - 1];
+        fare = ticketPrice.Ticketprice((int)ridePath.size());
     }
     firstD = fdest;
     finalD = ldest;
@@ -306,6 +304,10 @@ void Ride::DisplayHistory()
 {
     cout << left << setw(15)<< subscriptionType << setw(15) << firstD << setw(15) << finalD << setw(15) << fare <<
    setw(15) << ridePath.size() <<setw(15) << rideDate << setw(15) << rideTime << endl;
+}
+int Ride::getPathSize()
+{
+    return (int)ridePath.size();
 }
 
 

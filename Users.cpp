@@ -434,7 +434,8 @@ bool Users::CheckGraphs(Metro &metro, Ride &ride, string fdest, string ldest, Us
         if (station == fdest) first = true;
         else if (station == ldest) second = true;
     }
-    return first & second;
+    if (first && second) return true;
+    else return false;
 }
 void Users::WalletTrip(Users& user, map<string, personalInformation> &usrData, string &fdest, string &ldest, Metro& metro, Ride& ride, unordered_map<string, vector<Ride>> &rides)
 {
@@ -473,7 +474,7 @@ void Users::WalletTrip(Users& user, map<string, personalInformation> &usrData, s
             cout << "Your Balance is insufficent\n";
             return;
         }
-        person->second.balance.Deduct(ride.getFare());
+        person->second.balance.Deduct(ride.getPathSize());
         auto rideMap = rides.find(person->first);
         if (rideMap == rides.end())
         {

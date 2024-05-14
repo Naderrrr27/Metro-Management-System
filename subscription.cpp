@@ -113,6 +113,7 @@ auto it = plans.find(name);
         string first, last;
        // Metro m;
         Ride r;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
         firstDestination = getStationName(metro, r, "From");
         secondDestination = getStationName(metro, r, "To");
         //set the plan for the user

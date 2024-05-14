@@ -56,6 +56,7 @@ public:
     int GetAllPathsSize();
     void DisplayRideData();
     void DisplayHistory();
+    int getPathSize();
 };
 
 

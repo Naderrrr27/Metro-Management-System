@@ -9,25 +9,31 @@ void Statistics::incrementPassengers(string stationName, int income=0)
 {
     // will be called in the checkin function in user's class
     stat[{__DATE__, stationName}].first++;
-    stat[{__DATE__, stationName}].second+=income; //in case of wallet subscription
 
 }
 
+
 void Statistics::incrementIncome(string stationName, int income)
 {
-    //will be called in the user's subscribe related function
-    stat[{__DATE__, stationName}].second += income;
+    //will be called in the subscription related function
+    stat[{__DATE__, stationName}].second.first += income;
+}
+
+void Statistics::incrementSoldTicket(string stationName)
+{
+    stat[{__DATE__, stationName}].second.second++; // in case of wallet chekin
 }
 
 void Statistics::showStatisticsDay(string date, string stationName)
 {
     cout << "Number of passenger in "<< date << "for the station"<< stationName<< "is: " << stat[{date, stationName}].first << endl;
-    cout << "The total income in " << date << "for the station" << stationName << "is: " << stat[{date, stationName}].second << endl;
+    cout << "The total income in " << date << "for the station" << stationName << "is: " << stat[{date, stationName}].second.first << endl;
+    cout << "The no. of sold tickets in " << date << "for the station" << stationName << "is: " << stat[{date, stationName}].second.first << endl;
 }
 
 void Statistics::showStatisticsMonth(string month, string stationName)
 {
-    int totalIncome = 0, totalPass = 0;
+    int totalIncome = 0, totalPass = 0,totalSoldTickets=0;
     auto it = stat.begin();
 
 
@@ -61,7 +67,8 @@ void Statistics::showStatisticsMonth(string month, string stationName)
         if (counter == 3) // the month matches
         {
             totalPass += it->second.first;
-            totalIncome += it->second.second;
+            totalIncome += it->second.second.first;
+            totalSoldTickets+=it->second.second.second;
         }
 
 
@@ -69,12 +76,13 @@ void Statistics::showStatisticsMonth(string month, string stationName)
 
     cout << " the total number of passengers in " << month << " for the station " << stationName << " is: " << totalPass << endl;
     cout << " the total income in " << month << " for the station " << stationName << " is " << totalIncome << endl;
+    cout << " the no. of sold  tickets in " << month << " for the station " << stationName << " is " << totalSoldTickets << endl;
 }
 
 void Statistics::showStatisticsYear(string year, string stationName)
 {
 
-    int totalIncome = 0, totalPass = 0;
+    int totalIncome = 0, totalPass = 0,totalSoldTickets=0;
     auto it = stat.begin();
 
     for (; it != stat.end(); it++)
@@ -109,14 +117,17 @@ void Statistics::showStatisticsYear(string year, string stationName)
         if (counter == 4) // year matches
         {
             totalPass += it->second.first;
-            totalIncome += it->second.second;
+            totalIncome += it->second.second.first;
+            totalSoldTickets+=it->second.second.second;
         }
 
     }
 
     cout << " the total number of passengers in " << year << " for the station " << stationName << " is: " << totalPass << endl;
     cout << " the total income in " << year << " for the station " << stationName << " is " << totalIncome << endl;
-
+    cout << " the no. of sold tickets in  " << year << " for the station " << stationName << " is " << totalSoldTickets << endl;
 }
+
+
 
 

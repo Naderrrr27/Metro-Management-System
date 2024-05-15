@@ -10,7 +10,7 @@ admin::admin()
 {
 
 }
-void admin::begin(Users &user,map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro)
+void admin::begin(Users &user,map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro,unordered_map<string, vector<Ride>> &rides)
 {
     int operation;
     cout << "1: Users\n2: Subscriptions\n3: Log out\n";
@@ -18,7 +18,7 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
 
     switch (operation) {
     case 1:
-        users(usrData, plans,metro);
+        users(usrData, plans,metro,rides,user);
         break;
     case 2:
         Subscription(user, usrData, plans);
@@ -31,16 +31,17 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
         break;
     }
 }
-void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro)
+void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro,unordered_map<string, vector<Ride>> &rides, Users &users)
 {
     int op;
-    while (op != 5)
+    while (true)
     {
         cout << "1: Display Users Data" << endl;
         cout << "2: Add User" << endl;
         cout << "3: Delete User" << endl;
         cout << "4: Modify User Data" << endl;
-        cout << "5: Home\n";
+        cout << "5: Ride History"<<endl;
+        cout << "6: Home\n";
         cin >> op;
         switch(op)
         {
@@ -56,8 +57,11 @@ void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& 
         case 4:
             ModifyUser(usrData, plans,metro);
             break;
-        default:
-            break;
+            case 5:
+                AllRidesHistory(rides,users);
+                break;
+        case 6:
+            return;
         }
     }
 }
@@ -131,18 +135,23 @@ void admin::Subscription(Users &user,map<string, personalInformation> &usrData,m
                             string namee;
                             cin >> namee;
                             it->second.plan.Modifyplan(plan, planname, namee, -1, -1, {});
+                            break;
                         }
                         case 2: {
                             cout << "New Duration\n";
                             int durationn;
                             cin >> durationn;
                             it->second.plan.Modifyplan(plan, planname, "", durationn, -1, {});
+                            break;
+
                         }
                         case 3: {
                             cout << "New trips allowed\n";
                             int trips;
                             cin >> trips;
                             it->second.plan.Modifyplan(plan, planname, "", -1, trips, {});
+                            break;
+
                         }
                         case 4:{
                         map<int, int> pricess;
@@ -153,7 +162,8 @@ void admin::Subscription(Users &user,map<string, personalInformation> &usrData,m
                             pricess[i] = x;
                         }
                         it->second.plan.Modifyplan(plan, planname, "", -1, -1, pricess);
-                    }
+                            break;
+                        }
                         default:
                              break;
                     }
@@ -161,6 +171,9 @@ void admin::Subscription(Users &user,map<string, personalInformation> &usrData,m
             }
             case 4:
                 it->second.plan.DisplaySubscriptionPlan(plan);
+                break;
+            case 5:
+                return;
         }
 
     }
@@ -262,6 +275,26 @@ void admin::ModifyUser(map<string, personalInformation> &usrData, map<string, Pl
             }
         }
     }
+}
+void admin:: AllRidesHistory(unordered_map<string, vector<Ride>> &rides,Users &users) {
+
+
+    cout << left << setw(15) << "User" << setw(15) << "Type" << setw(15) << "From" << setw(15) << "To" << setw(15)
+         << "Price" <<setw(15) << "stations" << setw(15) << "Date" << setw(15) << "Time" << endl;
+
+    map<string, personalInformation> usrData;
+    for (const auto &user: rides) {
+        auto usrHistory = rides.find(user.first);
+        for (const auto &ride: usrHistory->second) {
+
+            cout << left << setw(15) <<user.first << setw(15) << ride.getSubscriptionType() << setw(15)
+                 << ride.getFirstD() << setw(15) << ride.getFinalD() << setw(15) << ride.getFare() <<
+                 setw(15) << ride.getRidePath().size() << setw(15) << ride.getDate() << setw(15) << ride.getTime()
+                 << endl;
+        }
+    }
+
+
 }
 
 admin::~admin()

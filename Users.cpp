@@ -12,7 +12,7 @@
 
 Users::Users(): Data()
 {
-    this->Data.id = -1;
+    this->Data.id = 1;
 }
 
 Users::Users(string fname, string lname,string password, string email): Data()
@@ -21,6 +21,7 @@ Users::Users(string fname, string lname,string password, string email): Data()
     this->Data.password = password;
     this->Data.fname = fname;
     this->Data.lname = lname;
+
     //usrData.insert({email, Data});
 }
 
@@ -193,7 +194,7 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
         if (isLogged_In && isAdmin)
         {
             admin Admin;
-            Admin.begin(*this,usrData, plans,metro);
+            Admin.begin(*this,usrData, plans,metro,rides);
         }
 
     }
@@ -374,12 +375,19 @@ void Users::CheckIn(Metro& metro, Users& user, map<string, personalInformation> 
 {
     wallet walet;
     Ride ride;
+    string fstation,lstation;
     cin.ignore(numeric_limits<streamsize>::max(), '\n');
-    string fstation = getStationName(metro, ride, "Check in station:");
-    string lstation = getStationName(metro, ride, "Check out station:");
+    while(true) {
+         fstation = getStationName(metro, ride, "Check in station:");
+         lstation = getStationName(metro, ride, "Check out station:");
+        if (fstation != lstation)
+            break;
+        else
+            cout<<"Please enter the names of two different stations\n";
+    }
     auto it = usrData.find(user.GetEmail());
     user.Data = it->second;
-    bool involveInSubscription = CheckGraphs(metro, ride,fstation, lstation, user);
+    bool involveInSubscription = user.Data.plan.IsStationValidInPlan(metro,ride,fstation,lstation);
     if (involveInSubscription && it->second.plan.Isplanactive(it->second.plan))
     {
         int choice;
@@ -421,21 +429,7 @@ string Users::getStationName(Metro& metro, Ride& ride, const string &stationName
     }
 
 }
-bool Users::CheckGraphs(Metro &metro, Ride &ride, string fdest, string ldest, Users &user)
-{
-    bool first = false, second = false;
-    if (user.Data.plan.plan.PlanName.empty())
-    {
-        return false;
-    }
-    vector<string> path = ride.bfsShortestPath(fdest, ldest, metro);
-    for (string station: path)
-    {
-        if (station == fdest) first = true;
-        else if (station == ldest) second = true;
-    }
-    return first & second;
-}
+
 void Users::WalletTrip(Users& user, map<string, personalInformation> &usrData, string &fdest, string &ldest, Metro& metro, Ride& ride, unordered_map<string, vector<Ride>> &rides)
 {
     map<string, personalInformation>::iterator person = usrData.find(user.GetEmail());
@@ -473,7 +467,7 @@ void Users::WalletTrip(Users& user, map<string, personalInformation> &usrData, s
             cout << "Your Balance is insufficent\n";
             return;
         }
-        person->second.balance.Deduct(ride.getFare());
+        person->second.balance.Deduct(ride.getPathSize());
         auto rideMap = rides.find(person->first);
         if (rideMap == rides.end())
         {
@@ -485,8 +479,6 @@ void Users::WalletTrip(Users& user, map<string, personalInformation> &usrData, s
         cout << endl;
     }
     }
-
-
 
 void Users::SubscriptionTrip(Users& user, map<string, personalInformation> &usrData, string &fdest, string &ldest, Metro& metro, Ride& ride, unordered_map<string, vector<Ride>> &rides)
 {
@@ -539,3 +531,4 @@ Users::~Users()
 {
 
 }
+

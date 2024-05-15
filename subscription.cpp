@@ -101,8 +101,7 @@ int subscription::Stage(Metro &metro) {
 }
 void subscription::chooseplan(map<string, Plan> &plans,Metro &metro)
 {
-
-    Ride ride;
+    Ride r;
     wallet wallett;
     cout << "Enter Plan Name:";
     string name;
@@ -111,10 +110,15 @@ auto it = plans.find(name);
     if (it != plans.end()) {
         plan = plans.find(name)->second;
         string first, last;
-       // Metro m;
-        Ride r;
-        firstDestination = getStationName(metro, r, "From");
-        secondDestination = getStationName(metro, r, "To");
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        while(true) {
+            firstDestination = getStationName(metro, r, "From");
+            secondDestination = getStationName(metro, r, "To");
+            if(firstDestination!= secondDestination)
+                break;
+            else
+                cout<<"Please enter the names of two different stations\n";
+        }
         //set the plan for the user
         int stagee = Stage(metro);
         Price = this->plan.stageprices[stagee];
@@ -123,7 +127,6 @@ auto it = plans.find(name);
         cout<<"Confirm subscription\n1:Yes\n2:No\n";
         int confirm;cin>>confirm;
         if(confirm==1) {
-            //wallett.Deduct(Price);
             plan.PlanName = plans[name].PlanName;
             plan.Duration = plans[name].Duration;
             plan.tripsallowed = plans[name].tripsallowed;
@@ -152,10 +155,13 @@ bool subscription::Isplanactive(subscription s) {
     else
         return false;
 }
-bool subscription::IsStationValidInPlan(Metro &metro, std::string fdest, std::string ldest) {
-    Ride ride;
+bool subscription::IsStationValidInPlan(Metro &metro, Ride &ride,std::string fdest, std::string ldest) {
     bool fcheck=false,lcheck=false;
+
+    if(plan.PlanName.empty())
+        return false;
     vector<string> check=ride.bfsShortestPath(firstDestination,secondDestination,metro);
+
     for (auto &str : check){
             if(str==fdest)
                 fcheck=true;
@@ -189,11 +195,15 @@ string subscription::getStationName(Metro& metro, Ride& ride, const string &stat
         cout << stationName;
 
         getline(cin, station);
-        if (ride.exists(station, metro))
+        if(!ride.exists(station, metro))
+            cout << "Invalid\n";
+        else
+            return station;
+       /* if (ride.exists(station, metro))
         {
             return station;
         }
-        cout << "Invalid\n";
+        cout << "Invalid\n";*/
     }
 
 }

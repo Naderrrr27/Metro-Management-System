@@ -27,15 +27,15 @@ int amount = Ticketprice(stations);
     if (Balance >= amount)
         Balance -= amount;
     else
-        cout << "Recharge your balance";
+        return;
+        //cout << "Recharge your balance\n";
 }
 int wallet::Ticketprice(int stations) {
     if (stations >= 1 && stations <= 9)
         return 6;
-    else if (stations > 9 && stations <= 16)
+    if (stations > 9 && stations <= 16)
         return 8;
-    else if (stations > 16 && stations <= 23)
+    if (stations > 16 && stations <= 23)
         return 12;
-    else
-        return 15;
+    return 15;
 }

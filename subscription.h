@@ -46,7 +46,7 @@ public:
     void Renewplan();
     void Upgrade(map<string, Plan> &plans,Metro metro);
     bool Isplanactive(subscription s);
-    bool IsStationValidInPlan(Metro &metro,string fdest,string ldest);
+    bool IsStationValidInPlan(Metro &metro,Ride &ride,string fdest,string ldest);
     void DisplaySubscriptionPlan(map<string, Plan>& plans);
     int Stage(Metro &metro);
     string Date(chrono::time_point<chrono::system_clock> start);

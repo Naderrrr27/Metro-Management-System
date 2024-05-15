@@ -91,7 +91,7 @@ int main() {
     vector<string> red_line_stations = {
             "Shubra El Kheima", "Koleyet El Zeraa", "El Mazalat", "El Khalafawy",
             "Saint Threasa", "Rod El Farag", "Massara", "El Shohada", "Attaba",
-            "Nageeb", "El Sadat", "Opera", "El Dokki", "El Behoos", "Cairo University",
+            "2w", "El Sadat", "Opera", "El Dokki", "El Behoos", "Cairo University",
             "Faysal", "El Giza", "Om El Masryeen", "Sakyet Mekky", "El Moneeb"
     };
 

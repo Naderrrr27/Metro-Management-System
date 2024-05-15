@@ -22,9 +22,27 @@ private:
     };
     PathExplorer pathHandler;
     vector<string> ridePath;
+public:
+    const vector<string> &getRidePath() const;
+
+    const PathExplorer &getPathHandler() const;
+
+private:
     string firstD,finalD;
     string rideDate,rideTime;
     string subscriptionType;
+public:
+    const string &getSubscriptionType() const;
+
+    const string &getRideTime() const;
+
+    const string &getRideDate() const;
+
+    const string &getFinalD() const;
+
+    const string &getFirstD() const;
+
+private:
     int fare;
 
 
@@ -47,15 +65,16 @@ public:
     void fill_path(unordered_map<string,string>&parent,vector<string>&path,string root);
     void printShortestPath(vector<string>& path, Metro& metro);
     void getAllPaths(Metro &metro, string &firstDestination, string &);
-    string getTime();
-    string getDate();
-    int getFare();
+    string getTime() const;
+    string getDate() const;
+    int getFare() const;
     void SetRideData(int pathNumber, string& fdest, string& ldest, const string& type, Metro& metro);
     void setFirstDestination(string &fdest);
     string getFirstDestination();
     int GetAllPathsSize();
     void DisplayRideData();
     void DisplayHistory();
+    int getPathSize();
 };
 
 

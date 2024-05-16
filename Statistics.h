@@ -15,7 +15,7 @@ public:
 
     Statistics();
 
-    void incrementPassengers(string stationName,int income);
+    void incrementPassengers(string stationName);
     void incrementIncome(string stationName,int income);
     void incrementSoldTicket(string stationName);
     void showStatisticsDay(string date,string stationName);

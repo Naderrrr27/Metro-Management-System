@@ -5,7 +5,7 @@ Statistics::Statistics() {
 
 }
 
-void Statistics::incrementPassengers(string stationName, int income=0)
+void Statistics::incrementPassengers(string stationName)
 {
     // will be called in the checkin function in user's class
     stat[{__DATE__, stationName}].first++;

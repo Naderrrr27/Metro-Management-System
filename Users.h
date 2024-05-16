@@ -52,7 +52,7 @@ public:
     Users(string fname, string lname, string password, string email);
     void Wallet( Users& users, map<string, personalInformation>& map);
     void begin(map<string, personalInformation>& usrData, map<string, Plan>& plans, Metro& metro, unordered_map<string, vector<Ride>>&
-               rides);
+               rides,vector<vector<string>>&lines);
     void Subscribtions(Users& user, map<string, personalInformation>& usrData, map<string, Plan>& plan,Metro &metro);
     personalInformation getData()
     {

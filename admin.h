@@ -13,7 +13,7 @@ class admin: public Users
     subscription plan;
 public:
     admin();
-    void begin(Users &user, map<string, personalInformation> &usrData, map<string, Plan> &plans,Metro &metro,unordered_map<string, vector<Ride>> &rides);
+    void begin(Users &user, map<string, personalInformation> &usrData, map<string, Plan> &plans,Metro &metro,unordered_map<string, vector<Ride>> &rides,vector<vector<string>>&lines);
     void users(map<string, personalInformation> &usrData, map<string, Plan> &plans,Metro &metro,unordered_map<string, vector<Ride>> &rides, Users &users);
     void DisplayUserData(map<string, personalInformation> &usrData);
     void Subscription(Users &user,map<string, personalInformation> &usrData,map<string, Plan> &plans);
@@ -21,6 +21,9 @@ public:
     void DeleteUser(map<string, personalInformation> &usrData);
     void ModifyUser(map<string, personalInformation>& usrData, map<string, Plan>& plan,Metro &metro);
     void AllRidesHistory(unordered_map<string, vector<Ride>> &rides, Users &users);
+    void addStation(vector<vector<string>>&line);
+    void removeStation(vector<vector<string>>&line);
+    void renameStation(vector<vector<string>>&line);
 
 
     ~admin();

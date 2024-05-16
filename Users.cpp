@@ -131,7 +131,7 @@ Users Users::Login(map<string, personalInformation> &usrData)
         isLogged_In = true;
     return newUser;
 }
-void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans, Metro& metro, unordered_map<string, vector<Ride>>& rides) {
+void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& plans, Metro& metro, unordered_map<string, vector<Ride>>& rides,vector<vector<string>>&lines) {
     int operation = 0;
 
     cout << "Welcome To Metro Mate\n";
@@ -193,7 +193,7 @@ void Users::begin(map<string, personalInformation>& usrData, map<string, Plan>& 
         if (isLogged_In && isAdmin)
         {
             admin Admin;
-            Admin.begin(*this,usrData, plans,metro,rides);
+            Admin.begin(*this,usrData, plans,metro,rides,lines);
         }
 
     }

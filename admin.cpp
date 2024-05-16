@@ -60,10 +60,10 @@ string maintainFormat(int num){
     }
     return date;
 }
-void admin::begin(Users &user,map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro,unordered_map<string, vector<Ride>> &rides)
+void admin::begin(Users &user,map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro,unordered_map<string, vector<Ride>> &rides,vector<vector<string>>&lines)
 {
     int operation;
-    cout << "1: Users\n 2: Subscriptions\n 3: Statistics\n  4: Log out\n";
+    cout << "1: Users\n2: Subscriptions\n3: Statistics\n4: Metro\n5: Log out\n";
     cin >> operation;
 
     switch (operation) {
@@ -115,10 +115,29 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
                 }
             }
 
-        }else{
-            AllRidesHistory(rides,user);
+        }else {
+            AllRidesHistory(rides, user);
         }
     case 4:
+        cout<<"1: Add Station\n";
+        cout<<"2: Remove Station\n";
+        cout<<"3: Rename Station\n";
+
+        int op;
+        cin>>op;
+
+        if(op==1){
+            addStation(lines);
+        }
+        else if(op==2){
+            removeStation(lines);
+        }
+        else if(op==3){
+            renameStation(lines);
+        }
+
+        break;
+    case 5:
         LogOut(user);
         break;
     default:
@@ -391,6 +410,196 @@ void admin:: AllRidesHistory(unordered_map<string, vector<Ride>> &rides,Users &u
 
 admin::~admin()
 {
+
+}
+
+void admin::addStation(vector<vector<string>> &line) {
+
+
+    cout << "Enter The Line Color For The Station: " << endl;
+
+    string color;
+    getline(cin, color);
+
+    while (color != "Green" && color != "Red" && color != "Blue") {
+        cout << "Please Enter A Valid Color: " << endl;
+        getline(cin, color);
+    }
+
+    cout << "Enter The Station Name: " << endl;
+
+    string stationName;
+    getline(cin, stationName);
+
+    cout << "Enter The Number Of Connected Stations: " << endl;
+
+    int neighbors;
+    cin >> neighbors;
+    cin.ignore();
+
+    while (neighbors != 1 && neighbors != 2) {
+        cout << "Please Enter A Valid Number Of Connected Stations: " << endl;
+        cin >> neighbors;
+        cin.ignore();
+    }
+
+    int lineIdx = -1;
+
+    if (color == "Green") {
+        lineIdx = 0;
+    } else if (color == "Red") {
+        lineIdx = 1;
+    } else if (color == "Blue") {
+        lineIdx = 2;
+    }
+
+    if (neighbors == 1) {
+        cout << "Enter The Name Of Connected Station: " << endl;
+
+        string nextStation;
+        getline(cin, nextStation);
+
+        while (nextStation != line[lineIdx][0] && nextStation != line[lineIdx].back()) {
+            cout << "The Station Should Be A Tail" << endl;
+            getline(cin, nextStation);
+        }
+
+        if (nextStation == line[lineIdx][0]) {
+            line[lineIdx].insert(line[lineIdx].begin(), stationName);
+            cout << "Added The Station" << endl;
+            return;
+        } else if (nextStation == line[lineIdx].back()) {
+            line[lineIdx].push_back(stationName);
+            cout << "Added The Station" << endl;
+            return;
+        }
+
+    } else {
+        string firstStation, secondStation;
+
+        cout << "Enter The Name Of 1st Connected Station: " << endl;
+        getline(cin, firstStation);
+        cout << "Enter The Name Of 2nd Connected Station: " << endl;
+        getline(cin, secondStation);
+
+        while (true) {
+            for (int i = 0; i < line[lineIdx].size() - 1; i++) {
+                if ((line[lineIdx][i] == firstStation && line[lineIdx][i + 1] == secondStation) ||
+                    (line[lineIdx][i] == secondStation && line[lineIdx][i + 1] == firstStation)) {
+                    line[lineIdx].insert(line[lineIdx].begin() + i + 1, stationName);
+                    cout << "Added The Station" << endl;
+                    return;
+                }
+            }
+            cout << "Make Sure To Add Valid Station Names (Consecutive)" << endl;
+            cout << "Enter The Name Of 1st Connected Station: " << endl;
+            getline(cin, firstStation);
+            cout << "Enter The Name Of 2nd Connected Station: " << endl;
+            getline(cin, secondStation);
+        }
+    }
+
+}
+
+void admin::removeStation(vector<vector<string>> &line) {
+
+    cout << "Enter The Line Color For The Station: " << endl;
+
+    string color;
+    getline(cin, color);
+
+    while (color != "Green" && color != "Red" && color != "Blue") {
+        cout << "Please Enter A Valid Color: " << endl;
+        getline(cin, color);
+    }
+
+    int lineIdx = -1;
+
+    if (color == "Green") {
+        lineIdx = 0;
+    } else if (color == "Red") {
+        lineIdx = 1;
+    } else if (color == "Blue") {
+        lineIdx = 2;
+    }
+
+    cout << "Enter The Station Name To Delete: " << endl;
+
+    string stationToDelete;
+    getline(cin, stationToDelete);
+
+
+    while(true){
+        for (auto it = line[lineIdx].begin(); it != line[lineIdx].end(); ++it) {
+            if (*it == stationToDelete) {
+                line[lineIdx].erase(it); // Remove the station from the vector
+                cout << "Station '" << stationToDelete << "' Deleted Successfully" << endl;
+                return;
+            }
+        }
+
+        cout << "Station '" << stationToDelete << "' Not Found in Line " << color << endl;
+
+        cout << "Enter The Station Name To Delete: " << endl;
+        getline(cin, stationToDelete);
+
+
+    }
+
+}
+
+void admin::renameStation(vector<vector<string>> &line) {
+    cout << "Enter The Line Color For The Station: " << endl;
+
+    string color;
+    getline(cin, color);
+
+
+    while (color != "Green" && color != "Red" && color != "Blue") {
+        cout << "Please Enter A Valid Color: " << endl;
+        getline(cin, color);
+    }
+
+    int lineIdx = -1;
+
+    if (color == "Green") {
+        lineIdx = 0;
+    } else if (color == "Red") {
+        lineIdx = 1;
+    } else if (color == "Blue") {
+        lineIdx = 2;
+    }
+
+
+    cout << "Enter The Current Station Name: " << endl;
+
+    string currentStationName;
+    getline(cin, currentStationName);
+
+
+    cout << "Enter The New Station Name: " << endl;
+
+    string newStationName;
+    getline(cin, newStationName);
+
+    while(true){
+
+        for (auto& station : line[lineIdx]) {
+            if (station == currentStationName) {
+                station = newStationName; // Rename the station
+                cout << "Station '" << currentStationName << "' Renamed to '" << newStationName << "' Successfully" << endl;
+                return;
+            }
+        }
+        cout << "Station '" << currentStationName << "' Not Found in Line " << color << endl;
+
+        cout << "Enter The Current Station Name: " << endl;
+        getline(cin, currentStationName);
+
+        cout << "Enter The New Station Name: " << endl;
+        getline(cin, newStationName);
+
+    }
 
 }
 

@@ -7,6 +7,7 @@
 #include "subscription.h"
 #include <fstream>
 #include "Ride.h"
+#include "admin.h"
 #include <iostream>
 #include <fstream>
 #include <map>
@@ -144,8 +145,10 @@ int main() {
     unordered_map<string, vector<Ride>> rides;
     Metro egypt_metro("Egypt");
 
+    vector<vector<string>>colored_line_stations;
 
-    vector<string> green_line_stations = {
+    colored_line_stations.push_back(vector<string>());
+    colored_line_stations[0] = {
             "Adly Mansour", "El Haykesteb", "Omar Ibn El Khatab", "Qubaa", "Hesham Barakat",
             "El Nozha", "El Shams Club", "Alf Maskan", "Heliopolis", "Haroun", "El Ahram",
             "Kolleyet El Banat", "Stadium", "Fair Zone", "El Abassya", "Abdo Basha",
@@ -155,18 +158,20 @@ int main() {
     };
 
 
-    Metro::build_line(egypt_metro, "Green", green_line_stations);
+    Metro::build_line(egypt_metro, "Green", colored_line_stations[0]);
 
-    vector<string> red_line_stations = {
+    colored_line_stations.push_back(vector<string>());
+    colored_line_stations[1] = {
             "Shubra El Kheima", "Koleyet El Zeraa", "El Mazalat", "El Khalafawy",
             "Saint Threasa", "Rod El Farag", "Massara", "El Shohada", "Attaba",
             "2w", "El Sadat", "Opera", "El Dokki", "El Behoos", "Cairo University",
             "Faysal", "El Giza", "Om El Masryeen", "Sakyet Mekky", "El Moneeb"
     };
 
-    Metro::build_line(egypt_metro, "Red", red_line_stations);
+    Metro::build_line(egypt_metro, "Red", colored_line_stations[1]);
 
-    vector<string> blue_line_stations = {
+    colored_line_stations.push_back(vector<string>());
+    colored_line_stations[2] = {
             "New El Marg", "El Marg", "Ezbet El Nakhl", "Ain Shams", "Mattareya",
             "Helmeyet El Zaytoun", "Hadayek El Zaytoun", "Saraya El Qubba",
             "Hamamat El Qubba", "Kobry El Qubba", "Manshyet El Sadr", "El Demerdash",
@@ -180,7 +185,11 @@ int main() {
 
 
 
-    Metro::build_line(egypt_metro, "Blue", blue_line_stations);
+    Metro::build_line(egypt_metro, "Blue", colored_line_stations[2]);
+
+
+
+
 
 
 
@@ -213,7 +222,7 @@ int main() {
 
     for (auto it: mappp)
         cout << it.first << endl;
-    user.begin(mappp, plans,egypt_metro, rides);
+    user.begin(mappp, plans,egypt_metro, rides,colored_line_stations);
     //user = mappp.find(user.GetEmail());
     for (auto it: mappp)
         cout << it.first << endl;

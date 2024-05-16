@@ -14,7 +14,7 @@
 using namespace std;
 class Ride {
 private:
-    ///To use in DFS
+    //To use in DFS
     struct PathExplorer{
         unordered_map<string,bool> visited;
         vector<vector<string>> allPaths;
@@ -55,6 +55,7 @@ private:
     void colorText(string &color, string text);
     bool checkTransformationPointOrNot(string &satationn);
     static bool compare (const vector<string>&v1, const vector<string>&v2);
+
 public:
     Ride(string,string);
     Ride();

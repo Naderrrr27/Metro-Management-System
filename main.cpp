@@ -7,65 +7,76 @@
 #include "subscription.h"
 #include <fstream>
 #include "Ride.h"
-using namespace std;
-
-
 #include <iostream>
 #include <fstream>
 #include <map>
 #include <string>
-
 using namespace std;
 
 
-int write(const map<string, personalInformation> &usrData) {
-    ofstream outputFile("C:\\Users\\DELL\\Metro-Management-System\\cmake-build-debug\\users.txt");
+
+
+
+int write(const std::map<std::string, personalInformation> &usrData) {
+    std::ofstream outputFile("users.txt");
     if (!outputFile.is_open()) {
-        cerr << "Error: Unable to open file for writing." << endl;
+        std::cerr << "Error: Unable to open file for writing." << std::endl;
         return 1;
     }
 
     for (const auto &pair : usrData) {
         const personalInformation &user = pair.second;
-        outputFile << user.id << ' '
-                   << user.email << ' '
-                   << user.password << ' '
-                   << user.fname << ' '
-                   << user.lname << ' '
-                   << user.plan.plan.PlanName << ' '
-                   << user.plan.firstDestination << ' '
-                   << user.plan.secondDestination << ' '
-                   << user.plan.plan.Duration << ' '
-                   << user.plan.plan.tripsallowed << '\n';
+        outputFile
+            << user.email << '|'
+            << user.password << '|'
+            << user.fname << '|'
+            << user.lname << '|'
+            << user.plan.plan.PlanName << '|'
+            << user.plan.firstDestination << '|'
+            << user.plan.secondDestination << '|'
+            << user.plan.StartDate << '|'
+            << user.plan.Enddate << '|'
+            << user.plan.remainingtrips << '|'
+        << user.plan.plan.tripsallowed << '|' << user.plan.plan.Duration <<
+            '|' << user.plan.Price
+            << '\n';
     }
 
     outputFile.close();
     return 0;
 }
-int read(map<string, personalInformation> &usrData) {
-    ifstream inputFile("C:\\Users\\DELL\\Metro-Management-System\\cmake-build-debug\\users.txt");
+
+int read(std::map<std::string, personalInformation> &usrData) {
+    std::ifstream inputFile("users.txt");
     if (!inputFile.is_open()) {
-        cerr << "Error: Unable to open file for reading." << endl;
+        std::cerr << "Error: Unable to open file for reading." << std::endl;
         return 1;
     }
 
-    int userId, duration, trip;
-    string email, password, fname, lname, pname, fd, ld;
-
-    while (inputFile >> userId >> email >> password >> fname >> lname >> pname >> fd >> ld >> duration >> trip) {
+    std::string line;
+    while (getline(inputFile, line)) {
         personalInformation temp;
-        temp.id = userId;
-        temp.email = email;
-        temp.password = password;
-        temp.fname = fname;
-        temp.lname = lname;
-        temp.plan.plan.PlanName = pname;
-        temp.plan.firstDestination = fd;
-        temp.plan.secondDestination = ld;
-        temp.plan.plan.Duration = duration;
-        temp.plan.plan.tripsallowed = trip;
+        istringstream ss(line);
+        string token, token2, token3, token4;
+        getline(ss, temp.email, '|');
+        getline(ss, temp.password, '|');
+        getline(ss, temp.fname, '|');
+        getline(ss, temp.lname, '|');
+        getline(ss, temp.plan.plan.PlanName, '|');
+        getline(ss, temp.plan.firstDestination, '|');
+        getline(ss, temp.plan.secondDestination, '|');
+        getline(ss, temp.plan.StartDate, '|');
+        getline(ss, temp.plan.Enddate, '|');
 
-        usrData.emplace(email, temp);
+        getline(ss, token, '|');
+        getline(ss, token2, '|');
+        getline(ss, token3, '|');
+        getline(ss, token4, '|');
+        temp.plan.remainingtrips = stoi(token);
+        temp.plan.plan.tripsallowed = stoi(token2);
+        temp.plan.plan.Duration = stoi(token3);
+        temp.plan.Price = stoi(token4);
+        usrData.emplace(temp.email, temp);
     }
 
     inputFile.close();
@@ -166,6 +177,6 @@ int main() {
     //user = mappp.find(user.GetEmail());
     for (auto it: mappp)
         cout << it.first << endl;
-    //write(mappp);
+    write(mappp);
     return 0;
 }

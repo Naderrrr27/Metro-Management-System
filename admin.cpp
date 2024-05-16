@@ -88,14 +88,14 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
                     int exit ;
                     int day, month, year;
                     string date, stationName;
-                    cout<<"Please fill in the following date:";
-                    cout<<"Please enter the day of the date  \n";
+                    cout<<"Please fill in the following date: \n";
+                    cout<<"Please enter the day of the date  : \n";
                     cin>>day;
                     checkDayMonth(day, true);
-                    cout<<"Please enter the month  of the date  \n";
+                    cout<<"Please enter the month  of the date  : \n";
                     cin>>month;
                     checkDayMonth(month, false);
-                    cout<<"Please enter the year of the date  \n";
+                    cout<<"Please enter the year of the date   : \n";
                     cin>>year;
                     checkYear(year);
                     date.append(maintainFormat(day)),date.push_back('/');
@@ -118,6 +118,7 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
         }else {
             AllRidesHistory(rides, user);
         }
+            break;
     case 4:
         cout<<"1: Add Station\n";
         cout<<"2: Remove Station\n";

@@ -29,6 +29,7 @@ void Statistics::incrementSoldTicket(string date,string stationName)
 
 bool Statistics::showStatisticsDay(string date, string stationName){
     pair<string, string> key = {date, stationName};
+    cout<<stat.count(key)<<"\n";
     if(stat.count(key)) {
         cout << "Number of passenger in " << date << " for the station" << stationName << " is: "
              << stat[{date, stationName}].first << endl;
@@ -83,6 +84,7 @@ void Statistics::showStatisticsMonth(string month, string stationName)
 
 
     }
+
 
     cout << " the total number of passengers in " << month << " for the station " << stationName << " is: " << totalPass << endl;
     cout << " the total income in " << month << " for the station " << stationName << " is " << totalIncome << endl;

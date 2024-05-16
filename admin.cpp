@@ -5,15 +5,65 @@
 #include "admin.h"
 
 #include <iomanip>
+#include "Statistics.h"
 using namespace std;
 admin::admin()
 {
 
 }
+void checkDayMonth(int &num, bool dayOrNot){
+    int again, endRange ;
+    string text ;
+    bool valid = false;
+    if (dayOrNot == true) {
+        endRange = 31;
+        text = "Valid day\n";
+    }else{
+        endRange = 12;
+        text = "Valid month\n";
+    }
+    while(!valid){
+        if(num <= 0 || num > endRange){
+            cout<<"invalid data please try again:\n";
+            cin>>again;
+            num = again;
+            valid = false;
+        }else
+            valid = true;
+    }
+    if(valid)
+        cout<<text;
+}
+void checkYear(int &year){
+    int again;
+    bool valid = false;
+    while(!valid){
+        if(year < 2024){
+            cout<<"invalid year please try again:\n";
+            cin>>again;
+            year = again;
+            valid = false;
+        }else
+            valid = true;
+    }
+    if(valid)
+        cout<<"Valid year \n";
+}
+string maintainFormat(int num){
+    string date;
+    if(num < 10){
+        char convertt = num + '0';
+        date.push_back('0');
+        date.push_back(convertt);
+    }else{
+        date.append(to_string(num));
+    }
+    return date;
+}
 void admin::begin(Users &user,map<string, personalInformation>& usrData, map<string, Plan>& plans,Metro &metro,unordered_map<string, vector<Ride>> &rides)
 {
     int operation;
-    cout << "1: Users\n2: Subscriptions\n3: Log out\n";
+    cout << "1: Users\n 2: Subscriptions\n 3: Statistics\n  4: Log out\n";
     cin >> operation;
 
     switch (operation) {
@@ -23,7 +73,52 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
     case 2:
         Subscription(user, usrData, plans);
         break;
-    case 3:
+    case 3 :
+        cout<<"1: Statistical Reports\n";
+        cout<<"2: Ride History\n";
+        int input;
+        cin>>input;
+        if(input == 1){
+            int choisee;
+            cout<<"1: Statistical Reports for Each Day\n";
+            cin>>choisee;
+            if(choisee == 1){
+                bool check = false;
+                while (!check){
+                    int exit ;
+                    int day, month, year;
+                    string date, stationName;
+                    cout<<"Please fill in the following date:";
+                    cout<<"Please enter the day of the date  \n";
+                    cin>>day;
+                    checkDayMonth(day, true);
+                    cout<<"Please enter the month  of the date  \n";
+                    cin>>month;
+                    checkDayMonth(month, false);
+                    cout<<"Please enter the year of the date  \n";
+                    cin>>year;
+                    checkYear(year);
+                    date.append(maintainFormat(day)),date.push_back('/');
+                    date.append(maintainFormat(month)) ,date.push_back('/');
+                    date.append(maintainFormat(year));
+                    cout<<"Please enter the name of the station \n";
+                    cin>>stationName;
+                    check = Statistics::showStatisticsDay(date,stationName);
+                    if(check == false){
+                        cout<<"This date is not found \n";
+                        cout<<"1. enter new date\n";
+                        cout<<"2. exit\n";
+                        cin>>exit;
+                        if(exit == 2)
+                            check = true;
+                    }
+                }
+            }
+
+        }else{
+            AllRidesHistory(rides,user);
+        }
+    case 4:
         LogOut(user);
         break;
     default:
@@ -57,10 +152,7 @@ void admin::users(map<string, personalInformation>& usrData, map<string, Plan>& 
         case 4:
             ModifyUser(usrData, plans,metro);
             break;
-            case 5:
-                AllRidesHistory(rides,users);
-                break;
-        case 6:
+        case 5:
             return;
         }
     }

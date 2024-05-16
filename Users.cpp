@@ -9,7 +9,7 @@
 #include  <bits/stdc++.h>
 #include "admin.h"
 #include "subscription.h"
-
+#include "Statistics.h"
 Users::Users(): Data()
 {
     this->Data.id = 1;
@@ -71,7 +71,6 @@ string Users::ToLower(string s)
     }
     return s;
 }
-
 string Users::Password()
 {
     bool check = false;
@@ -285,6 +284,8 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                 cin >> operation;
                 if (operation == 1) {
                     it->second.plan.chooseplan(plan,metro);
+                    ///handelling stat
+                    Statistics::incrementIncome( it->second.plan.StartDate, it->second.plan.firstDestination,it->second.plan.Price);
                 } else if (operation == 2)
                     break;
             }
@@ -320,6 +321,7 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                         if(n==1) {
                             it->second.plan.Renewplan();
                             cout << "Your plan is Renewed\n";
+                            Statistics::incrementIncome( it->second.plan.StartDate, it->second.plan.firstDestination,it->second.plan.Price);
                         }
                         else
                             return;
@@ -327,6 +329,7 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                     case 3:
                         it->second.plan.Upgrade(plan,metro);
                         cout << "Your plan is Upgraded\n";
+                        Statistics::incrementIncome( it->second.plan.StartDate, it->second.plan.firstDestination,it->second.plan.Price);
                         break;
                     case 4:
                         return;
@@ -476,6 +479,8 @@ void Users::WalletTrip(Users& user, map<string, personalInformation> &usrData, s
         else rideMap->second.push_back(ride);
         cout << "Your ticket has been reserved\n";
         ride.DisplayRideData();
+        Statistics::incrementPassengers(ride.getDate(),fdest);
+        Statistics::incrementIncome(ride.getDate(),fdest,ride.getFare());
         cout << endl;
     }
     }
@@ -506,6 +511,7 @@ void Users::SubscriptionTrip(Users& user, map<string, personalInformation> &usrD
             personride->second.push_back(ride);
         cout << "Your Ticket has been Reserved\n";
         ride.DisplayRideData();
+        Statistics::incrementPassengers(ride.getDate(),fdest);
     }
 }
 void Users::RideHistoryy(unordered_map<string, vector<Ride>> &rides, map<string, personalInformation> &usrData, Users &users)

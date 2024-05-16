@@ -250,10 +250,10 @@ void Ride::getAllPaths(Metro &metro, string &firstDestination, string &secondDes
 void Ride::calculateRideDateTime(){
     time_t t = time(0);
     tm* now = localtime(&t);
-    rideDate.append(to_string(now->tm_mon + 1));
-    rideDate.append("-");
     rideDate.append(to_string(now->tm_mday));
-    rideDate.append("-");
+    rideDate.append("/");
+    rideDate.append(to_string(now->tm_mon + 1));
+    rideDate.append("/");
     rideDate.append(to_string(now->tm_year + 1900));
 
     rideTime.append(to_string(now->tm_hour));

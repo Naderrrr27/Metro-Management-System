@@ -181,24 +181,6 @@ int main() {
 
 
     Metro::build_line(egypt_metro, "Blue", blue_line_stations);
-    ///
-    Ride r;
-
-    int cases=1;
-//    cin >> cases;
-
-    while (cases--) {
-        string start = "Adly Mansour", final = "New El Marg";
-//        cin>>start>>final;
-        vector<string>path=r.bfsShortestPath(start,final,egypt_metro);
-
-        for(auto &station:path){
-            cout<<station<<"\n";
-        }
-
-        cout << "\n\n\n";
-    }
-
 
 
 

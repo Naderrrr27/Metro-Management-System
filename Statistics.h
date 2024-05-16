@@ -9,17 +9,18 @@ class Statistics {
 
 private:
     //      date   stationName    pass   income  noOfTickets
-    map<pair<string, string>, pair<int,pair<int,int>>> stat;
+    static map<pair<string, string>, pair<int,pair<int,int>>> stat;
 
 public:
 
     Statistics();
 
-    void incrementPassengers(string stationName);
-    void incrementIncome(string stationName,int income);
-    void incrementSoldTicket(string stationName);
-    void showStatisticsDay(string date,string stationName);
-    void showStatisticsMonth(string month, string stationName);
-    void showStatisticsYear(string year, string stationName);
+   static void incrementPassengers(string date,string stationName);
+   static void incrementIncome(string date,string stationName,int income);
+   static void incrementSoldTicket(string date,string stationName);
+
+   static bool showStatisticsDay(string date,string stationName);
+   static void showStatisticsMonth(string month, string stationName);
+   static void showStatisticsYear(string year, string stationName);
 
 };

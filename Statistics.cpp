@@ -4,31 +4,41 @@
 Statistics::Statistics() {
 
 }
+// Definition of static member variable
+map<pair<string, string>, pair<int, pair<int, int>>> Statistics::stat;
 
-void Statistics::incrementPassengers(string stationName)
+void Statistics::incrementPassengers(string date,string stationName)
 {
     // will be called in the checkin function in user's class
-    stat[{__DATE__, stationName}].first++;
+    stat[{date, stationName}].first++;
 
 }
 
 
-void Statistics::incrementIncome(string stationName, int income)
+void Statistics::incrementIncome(string date, string stationName, int income)
 {
     //will be called in the subscription related function
-    stat[{__DATE__, stationName}].second.first += income;
+    stat[{date, stationName}].second.first += income;
 }
 
-void Statistics::incrementSoldTicket(string stationName)
+void Statistics::incrementSoldTicket(string date,string stationName)
 {
-    stat[{__DATE__, stationName}].second.second++; // in case of wallet chekin
+    stat[{date, stationName}].second.second++; // in case of wallet chekin
 }
 
-void Statistics::showStatisticsDay(string date, string stationName)
-{
-    cout << "Number of passenger in "<< date << "for the station"<< stationName<< "is: " << stat[{date, stationName}].first << endl;
-    cout << "The total income in " << date << "for the station" << stationName << "is: " << stat[{date, stationName}].second.first << endl;
-    cout << "The no. of sold tickets in " << date << "for the station" << stationName << "is: " << stat[{date, stationName}].second.first << endl;
+
+bool Statistics::showStatisticsDay(string date, string stationName){
+    pair<string, string> key = {date, stationName};
+    if(stat.count(key)) {
+        cout << "Number of passenger in " << date << " for the station" << stationName << " is: "
+             << stat[{date, stationName}].first << endl;
+        cout << "The total income in " << date << " for the station " << stationName << " is: "
+             << stat[{date, stationName}].second.first << endl;
+        cout << "The no. of sold tickets in " << date << " for the station " << stationName << " is: "
+             << stat[{date, stationName}].second.second<< endl;
+        return true;
+    }
+    return false;
 }
 
 void Statistics::showStatisticsMonth(string month, string stationName)
@@ -78,7 +88,6 @@ void Statistics::showStatisticsMonth(string month, string stationName)
     cout << " the total income in " << month << " for the station " << stationName << " is " << totalIncome << endl;
     cout << " the no. of sold  tickets in " << month << " for the station " << stationName << " is " << totalSoldTickets << endl;
 }
-
 void Statistics::showStatisticsYear(string year, string stationName)
 {
 

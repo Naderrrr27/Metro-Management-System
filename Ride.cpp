@@ -337,6 +337,38 @@ const vector<string> &Ride::getRidePath() const {
 const Ride::PathExplorer &Ride::getPathHandler() const {
     return pathHandler;
 }
+void Ride::setLastDestination(string &ldest)
+{
+    finalD = ldest;
+}
+void Ride::setDate(string &date)
+{
+    rideDate = date;
+}
+void Ride::setTime(string &time)
+{
+    rideTime = time;
+}
+void Ride::setType(string &type)
+{
+    subscriptionType = type;
+}
+void Ride::setFare(int fare)
+{
+    this->fare = fare;
+}
+int Ride::getFare()
+{
+    return fare;
+}
+
+void Ride::setFirstDestination(string& dest)
+{
+    firstD = dest;
+}
+
+
+
 
 
 

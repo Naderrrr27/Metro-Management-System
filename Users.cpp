@@ -289,30 +289,30 @@ void Users::Subscribtions(Users &user,map<string, personalInformation> &usrData,
                     break;
             }
             else {
-                cout << "1:Display your plan details\n2:Renew your plan\n3:Upgrade your plan\n4:Exist";
+                cout << "1:Display your plan details\n2:Renew your plan\n3:Upgrade your plan\n4:Exit\n";
                 cin >> operation;
                 switch (operation) {
                     case 1:
-                        cout << left << setw(20) << "Name"
-                             << setw(15) << "From"
-                             << setw(15) << "To"
-                             << setw(15) << "Trips"
-                             << setw(15) << "Stage"
-                             <<setw(15)<<"Price"
-                             << setw(15) << "EndDate"
-                             << setw(15) << "StartDate"
-                             << endl;
+                        cout << left << setw(15) << "Name"
+                        << setw(20) << "From"
+                        << setw(20) << "To"
+                        << setw(10) << "Trips"
+                        << setw(10) << "Stage"
+                    << setw(10) << "Price"
+                    << setw(15) << "Start Date"
+                    << setw(15) << "End Date"
+                    << endl;
 
-                        // Displaying plan information in a formatted table
-                        cout << setw(20) << it->second.plan.plan.PlanName
-                             << setw(15) << it->second.plan.firstDestination
-                             << setw(15) << it->second.plan.secondDestination
-                             << setw(15) << it->second.plan.getTrips()
-                             << setw(15) << it->second.plan.stage
-                             << setw(15) << it->second.plan.Price
-                             << setw(15) << it->second.plan.StartDate
-                             << setw(15) << it->second.plan.Enddate << endl;
-                        break;
+                    // Displaying plan information in a formatted table
+                    cout << setw(15) << it->second.plan.plan.PlanName
+                         << setw(20) << it->second.plan.firstDestination
+                         << setw(20) << it->second.plan.secondDestination
+                         << setw(10) << it->second.plan.getTrips()
+                         << setw(10) << it->second.plan.stage
+                         << setw(10) << it->second.plan.Price
+                         << setw(15) << it->second.plan.StartDate
+                         << setw(15) << it->second.plan.Enddate << endl;
+                    break;
                     case 2:
                         cout<<it->second.plan.Price<<" LE will be Deducted from your wallet\n";
                         cout<<"confirm\n1:Yes\n2:No";

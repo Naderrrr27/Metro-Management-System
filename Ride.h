@@ -41,6 +41,7 @@ public:
     const string &getFinalD() const;
 
     const string &getFirstD() const;
+    int getFare();
 
 private:
     int fare;
@@ -69,12 +70,17 @@ public:
     string getDate() const;
     int getFare() const;
     void SetRideData(int pathNumber, string& fdest, string& ldest, const string& type, Metro& metro);
-    void setFirstDestination(string &fdest);
+    void setFirstDestination(string& dest);
     string getFirstDestination();
     int GetAllPathsSize();
     void DisplayRideData();
     void DisplayHistory();
     int getPathSize();
+    void setLastDestination(string& ldest);
+    void setDate(string& date);
+    void setTime(string& time);
+    void setType(string& type);
+    void setFare(int fare);
 };
 
 

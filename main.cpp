@@ -38,7 +38,7 @@ int write(const std::map<std::string, personalInformation> &usrData) {
             << user.plan.Enddate << '|'
             << user.plan.remainingtrips << '|'
         << user.plan.plan.tripsallowed << '|' << user.plan.plan.Duration <<
-            '|' << user.plan.Price
+            '|' << user.plan.Price << '|' << user.plan.stage
             << '\n';
     }
 
@@ -57,7 +57,7 @@ int read(std::map<std::string, personalInformation> &usrData) {
     while (getline(inputFile, line)) {
         personalInformation temp;
         istringstream ss(line);
-        string token, token2, token3, token4;
+        string token, token2, token3, token4, token5;
         getline(ss, temp.email, '|');
         getline(ss, temp.password, '|');
         getline(ss, temp.fname, '|');
@@ -72,10 +72,12 @@ int read(std::map<std::string, personalInformation> &usrData) {
         getline(ss, token2, '|');
         getline(ss, token3, '|');
         getline(ss, token4, '|');
+        getline(ss, token5, '|');
         temp.plan.remainingtrips = stoi(token);
         temp.plan.plan.tripsallowed = stoi(token2);
         temp.plan.plan.Duration = stoi(token3);
         temp.plan.Price = stoi(token4);
+        temp.plan.stage = stoi(token5);
         usrData.emplace(temp.email, temp);
     }
 

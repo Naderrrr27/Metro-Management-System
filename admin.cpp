@@ -6,6 +6,7 @@
 
 #include <iomanip>
 #include "Statistics.h"
+#include "metro.h"
 using namespace std;
 admin::admin()
 {
@@ -128,13 +129,13 @@ void admin::begin(Users &user,map<string, personalInformation>& usrData, map<str
         cin>>op;
 
         if(op==1){
-            addStation(lines);
+            addStation(lines,metro);
         }
         else if(op==2){
-            removeStation(lines);
+            removeStation(lines,metro);
         }
         else if(op==3){
-            renameStation(lines);
+            renameStation(lines,metro);
         }
 
         break;
@@ -414,7 +415,7 @@ admin::~admin()
 
 }
 
-void admin::addStation(vector<vector<string>> &line) {
+void admin::addStation(vector<vector<string>> &line,Metro&metro) {
 
 
     cout << "Enter The Line Color For The Station: " << endl;
@@ -468,9 +469,13 @@ void admin::addStation(vector<vector<string>> &line) {
         if (nextStation == line[lineIdx][0]) {
             line[lineIdx].insert(line[lineIdx].begin(), stationName);
             cout << "Added The Station" << endl;
+            metro.delete_line(color);
+            Metro::build_line(metro,color,line[lineIdx]);
             return;
         } else if (nextStation == line[lineIdx].back()) {
             line[lineIdx].push_back(stationName);
+            metro.delete_line(color);
+            Metro::build_line(metro,color,line[lineIdx]);
             cout << "Added The Station" << endl;
             return;
         }
@@ -488,6 +493,8 @@ void admin::addStation(vector<vector<string>> &line) {
                 if ((line[lineIdx][i] == firstStation && line[lineIdx][i + 1] == secondStation) ||
                     (line[lineIdx][i] == secondStation && line[lineIdx][i + 1] == firstStation)) {
                     line[lineIdx].insert(line[lineIdx].begin() + i + 1, stationName);
+                    metro.delete_line(color);
+                    Metro::build_line(metro,color,line[lineIdx]);
                     cout << "Added The Station" << endl;
                     return;
                 }
@@ -502,7 +509,7 @@ void admin::addStation(vector<vector<string>> &line) {
 
 }
 
-void admin::removeStation(vector<vector<string>> &line) {
+void admin::removeStation(vector<vector<string>> &line,Metro&metro) {
 
     cout << "Enter The Line Color For The Station: " << endl;
 
@@ -533,8 +540,10 @@ void admin::removeStation(vector<vector<string>> &line) {
     while(true){
         for (auto it = line[lineIdx].begin(); it != line[lineIdx].end(); ++it) {
             if (*it == stationToDelete) {
-                line[lineIdx].erase(it); // Remove the station from the vector
+                line[lineIdx].erase(it);
                 cout << "Station '" << stationToDelete << "' Deleted Successfully" << endl;
+                metro.delete_line(color);
+                Metro::build_line(metro,color,line[lineIdx]);
                 return;
             }
         }
@@ -549,7 +558,7 @@ void admin::removeStation(vector<vector<string>> &line) {
 
 }
 
-void admin::renameStation(vector<vector<string>> &line) {
+void admin::renameStation(vector<vector<string>> &line,Metro&metro) {
     cout << "Enter The Line Color For The Station: " << endl;
 
     string color;
@@ -587,7 +596,9 @@ void admin::renameStation(vector<vector<string>> &line) {
 
         for (auto& station : line[lineIdx]) {
             if (station == currentStationName) {
-                station = newStationName; // Rename the station
+                station = newStationName;
+                metro.delete_line(color);
+                Metro::build_line(metro,color,line[lineIdx]);
                 cout << "Station '" << currentStationName << "' Renamed to '" << newStationName << "' Successfully" << endl;
                 return;
             }

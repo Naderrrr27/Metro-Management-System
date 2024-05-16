@@ -47,5 +47,8 @@ unordered_map<string, Line> &Metro::get_lines() {
     return this->lines;
 }
 
+void Metro::delete_line(string color) {
+    lines.erase(color);
+}
 
 //

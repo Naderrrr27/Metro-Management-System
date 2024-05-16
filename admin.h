@@ -7,6 +7,7 @@
 #include "Users.h"
 #include "subscription.h"
 #include "Users.h"
+#include "metro.h"
 using namespace std;
 class admin: public Users
 {
@@ -21,9 +22,9 @@ public:
     void DeleteUser(map<string, personalInformation> &usrData);
     void ModifyUser(map<string, personalInformation>& usrData, map<string, Plan>& plan,Metro &metro);
     void AllRidesHistory(unordered_map<string, vector<Ride>> &rides, Users &users);
-    void addStation(vector<vector<string>>&line);
-    void removeStation(vector<vector<string>>&line);
-    void renameStation(vector<vector<string>>&line);
+    void addStation(vector<vector<string>>&line,Metro&metro);
+    void removeStation(vector<vector<string>>&line,Metro&metro);
+    void renameStation(vector<vector<string>>&line,Metro&metro);
 
 
     ~admin();

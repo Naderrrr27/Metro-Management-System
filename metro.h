@@ -16,10 +16,11 @@ public:
     ~Metro();
 
     Line& get_line(string &color);
-
     void add_new_line(Line& new_line);
-
     static void build_line(Metro& metro, string color, vector<string>& stationNames);
+    void delete_line( string color);
+
+
 
     unordered_map<string,Line>&get_lines();
 
